@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BarCodeDataSet" targetNamespace="http://tempuri.org/BarCodeDataSet.xsd" xmlns:mstns="http://tempuri.org/BarCodeDataSet.xsd" xmlns="http://tempuri.org/BarCodeDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BarCodeDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BarCodeDataSet" msprop:Generator_UserDSName="BarCodeDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Barcode" msprop:Generator_TableClassName="BarcodeDataTable" msprop:Generator_TableVarName="tableBarcode" msprop:Generator_RowChangedName="BarcodeRowChanged" msprop:Generator_TablePropName="Barcode" msprop:Generator_RowDeletingName="BarcodeRowDeleting" msprop:Generator_RowChangingName="BarcodeRowChanging" msprop:Generator_RowEvHandlerName="BarcodeRowChangeEventHandler" msprop:Generator_RowDeletedName="BarcodeRowDeleted" msprop:Generator_RowClassName="BarcodeRow" msprop:Generator_UserTableName="Barcode" msprop:Generator_RowEvArgName="BarcodeRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Location" msprop:Generator_ColumnVarNameInTable="columnLocation" msprop:Generator_ColumnPropNameInRow="Location" msprop:Generator_ColumnPropNameInTable="LocationColumn" msprop:Generator_UserColumnName="Location" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionCode" msprop:Generator_ColumnVarNameInTable="columnSectionCode" msprop:Generator_ColumnPropNameInRow="SectionCode" msprop:Generator_ColumnPropNameInTable="SectionCodeColumn" msprop:Generator_UserColumnName="SectionCode" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionName" msprop:Generator_ColumnVarNameInTable="columnSectionName" msprop:Generator_ColumnPropNameInRow="SectionName" msprop:Generator_ColumnPropNameInTable="SectionNameColumn" msprop:Generator_UserColumnName="SectionName" type="xs:string" minOccurs="0" />
+              <xs:element name="LocationCode" msprop:Generator_ColumnVarNameInTable="columnLocationCode" msprop:Generator_ColumnPropNameInRow="LocationCode" msprop:Generator_ColumnPropNameInTable="LocationCodeColumn" msprop:Generator_UserColumnName="LocationCode" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

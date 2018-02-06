@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b01d9da5b4f5453ebb935ec9fd6c1790" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="Model.BackupHistory" Width="1.5" PointX="5.75" PointY="12" />
+        <EntityTypeShape EntityType="Model.BackupHistoryDetail" Width="1.5" PointX="8" PointY="12" />
+        <EntityTypeShape EntityType="Model.ConfigBackupTable" Width="1.5" PointX="5.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.ConfigFileAS400" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model.ConfigFileDetailAS400" Width="1.5" PointX="11" PointY="6" />
+        <EntityTypeShape EntityType="Model.ConfigReport" Width="1.5" PointX="3" PointY="13.25" />
+        <EntityTypeShape EntityType="Model.ConfigUserGroup" Width="1.5" PointX="6" PointY="5.375" />
+        <EntityTypeShape EntityType="Model.ConfigUserGroupPermission" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.ConfigUserGroupReport" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="Model.ConfigUserGroupScreen" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="Model.DownloadLocation" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Model.DownloadSKU" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.Location" Width="1.5" PointX="10" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.MasterBrand" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.MasterPack" Width="1.5" PointX="14.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.MasterReport" Width="1.5" PointX="0.75" PointY="9.375" />
+        <EntityTypeShape EntityType="Model.MasterScanMode" Width="1.5" PointX="14.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Model.MasterScreen" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.MasterUnit" Width="1.5" PointX="15.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Model.Section" Width="1.5" PointX="7.75" PointY="1" />
+        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="5.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Model.SystemSetting" Width="1.5" PointX="7.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="3.75" PointY="9" />
+        <EntityTypeShape EntityType="Model.UserGroup" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="Model.MasterSKU" Width="1.5" PointX="16.75" PointY="7.75" />
+        <AssociationConnector Association="Model.FK_BACKUPHI_REFERENCE_BACKUPHI" />
+        <AssociationConnector Association="Model.FK_ConfigFileDetailAS400_ConfigFileAS400" />
+        <AssociationConnector Association="Model.FK_USERREPO_REFERENCE_USERREPO" />
+        <AssociationConnector Association="Model.FK_USERGROUP_USER" />
+        <AssociationConnector Association="Model.FK_USERGROUPMAP_USERGROUP" />
+        <AssociationConnector Association="Model.FK_USERSCREENPERM_USERSCREENMAP" />
+        <AssociationConnector Association="Model.FK_USERGROU_REFERENCE_USERGROU" />
+        <AssociationConnector Association="Model.FK_USERGROU_REFERENCE_USERREPO" />
+        <AssociationConnector Association="Model.FK_USERGROU_FK_USERGR_USERSCRE" />
+        <AssociationConnector Association="Model.FK_USERGROUP_SCREENMAP" />
+        <AssociationConnector Association="Model.FK_Location_Section" />
+        <EntityTypeShape EntityType="Model.tmpHHTStocktaking" Width="1.5" PointX="12.375" PointY="16.75" />
+        <EntityTypeShape EntityType="Model.MasterBarcode" Width="1.5" PointX="14.375" PointY="16.75" />
+        <EntityTypeShape EntityType="Model.HHTStocktaking" Width="1.5" PointX="16.375" PointY="16.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

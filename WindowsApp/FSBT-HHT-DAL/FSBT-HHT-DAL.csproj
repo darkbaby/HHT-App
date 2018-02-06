@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5FA8FC1-3F03-48B5-9711-63C69DEB587C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FSBT_HHT_DAL</RootNamespace>
+    <AssemblyName>FSBT-HHT-DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\FSBT-HHT-App\Resources\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\FSBT-HHT-App\Resources\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackupHistory.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BackupHistoryDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class1.cs" />
+    <Compile Include="ConfigBackupTable.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigFileAS400.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigFileDetailAS400.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigReport.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigUserGroup.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigUserGroupPermission.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigUserGroupReport.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigUserGroupScreen.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\AuthenticationDAO.cs" />
+    <Compile Include="DAO\BackupRestoreDAO.cs" />
+    <Compile Include="DAO\AuditManagementDAO.cs" />
+    <Compile Include="DAO\DownloadMasterDAO.cs" />
+    <Compile Include="DAO\GenTextFileDAO.cs" />
+    <Compile Include="DAO\HHTSyncDAO.cs" />
+    <Compile Include="DAO\SystemSettingDAO.cs" />
+    <Compile Include="DAO\UserManagementDAO.cs" />
+    <Compile Include="DAO\UserGroupManagementDAO.cs" />
+    <Compile Include="DAO\LocationManagementDAO.cs" />
+    <Compile Include="DAO\PermissionDAO.cs" />
+    <Compile Include="DAO\ReportManagementDAO.cs" />
+    <Compile Include="DownloadLocation.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadSKU.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FsbtEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FsbtEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FsbtEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FsbtEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FsbtEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\DbHelper.cs" />
+    <Compile Include="HHTStocktaking.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterBarcode.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterBrand.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPack.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterReport.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterScanMode.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterScreen.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterSKU.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterUnit.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Section.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemSetting.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tmpHHTStocktaking.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserGroup.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="FsbtEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FsbtEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FsbtEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FsbtEntity.edmx</DependentUpon>
+      <LastGenOutput>FsbtEntity.Context.cs</LastGenOutput>
+    </None>
+    <None Include="FsbtEntity.edmx.diagram">
+      <DependentUpon>FsbtEntity.edmx</DependentUpon>
+    </None>
+    <None Include="FsbtEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FsbtEntity.edmx</DependentUpon>
+      <LastGenOutput>FsbtEntity.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FSBT-HHT-Model\FSBT-HHT-Model.csproj">
+      <Project>{2eccaa4d-0299-42cd-a0b5-129a50c5dd31}</Project>
+      <Name>FSBT-HHT-Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

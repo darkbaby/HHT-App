@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSBT-HHT-Batch", "FSBT-HHT-Batch\FSBT-HHT-Batch.csproj", "{4BC46EC7-92EE-4859-BDE1-9E2F5452436D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D65037BA-EA71-473C-80DE-A318C2045C27} = {D65037BA-EA71-473C-80DE-A318C2045C27}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSBT-HHT-BatchCommon", "FSBT-HHT-BatchCommon\FSBT-HHT-BatchCommon.csproj", "{D65037BA-EA71-473C-80DE-A318C2045C27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BC46EC7-92EE-4859-BDE1-9E2F5452436D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BC46EC7-92EE-4859-BDE1-9E2F5452436D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BC46EC7-92EE-4859-BDE1-9E2F5452436D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BC46EC7-92EE-4859-BDE1-9E2F5452436D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D65037BA-EA71-473C-80DE-A318C2045C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D65037BA-EA71-473C-80DE-A318C2045C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D65037BA-EA71-473C-80DE-A318C2045C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D65037BA-EA71-473C-80DE-A318C2045C27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

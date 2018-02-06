@@ -1,0 +1,1803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BackupHistory">
+          <Key>
+            <PropertyRef Name="BackupID" />
+          </Key>
+          <Property Name="BackupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BackupName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteBy" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="BackupHistoryDetail">
+          <Key>
+            <PropertyRef Name="BackupID" />
+            <PropertyRef Name="BackupSeq" />
+          </Key>
+          <Property Name="BackupID" Type="int" Nullable="false" />
+          <Property Name="BackupSeq" Type="int" Nullable="false" />
+          <Property Name="BackupTable" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigBackupTable">
+          <Key>
+            <PropertyRef Name="TableSeq" />
+          </Key>
+          <Property Name="TableSeq" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigFileAS400">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="FileCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigFileDetailAS400">
+          <Key>
+            <PropertyRef Name="FileDetailID" />
+          </Key>
+          <Property Name="FileDetailID" Type="int" Nullable="false" />
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="Index" Type="int" Nullable="false" />
+          <Property Name="PrimaryKey" Type="varchar" MaxLength="2" />
+          <Property Name="Field" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Length" Type="int" Nullable="false" />
+          <Property Name="DecPos" Type="int" Nullable="false" />
+          <Property Name="StartPos" Type="int" Nullable="false" />
+          <Property Name="EndPos" Type="int" Nullable="false" />
+          <Property Name="Default" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigReport">
+          <Key>
+            <PropertyRef Name="ReportCode" />
+            <PropertyRef Name="ConditionName" />
+          </Key>
+          <Property Name="ReportCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ConditionName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ConditionObject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DefaultValue" Type="varchar" MaxLength="100" />
+          <Property Name="AllowChange" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroup">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="GroupID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroupPermission">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="ScreenID" />
+            <PropertyRef Name="ComponentName" />
+          </Key>
+          <Property Name="GroupID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ScreenID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ComponentName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ComponentType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ComponentAlias" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AllowAdd" Type="bit" Nullable="false" />
+          <Property Name="AllowEdit" Type="bit" Nullable="false" />
+          <Property Name="AllowDelete" Type="bit" Nullable="false" />
+          <Property Name="Enable" Type="bit" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroupReport">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="ReportCode" />
+          </Key>
+          <Property Name="GroupID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ReportCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroupScreen">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="ScreenID" />
+          </Key>
+          <Property Name="GroupID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ScreenID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DownloadLocation">
+          <Key>
+            <PropertyRef Name="DownloadLID" />
+          </Key>
+          <Property Name="DownloadLID" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="HHTName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="LocationCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="SectionCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="SectionName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BrandCode" Type="varchar" MaxLength="5" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DownloadSKU">
+          <Key>
+            <PropertyRef Name="DownloadSID" />
+          </Key>
+          <Property Name="DownloadSID" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="HHTName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="BrandCode" Type="varchar" MaxLength="5" />
+          <Property Name="BrandName" Type="varchar" MaxLength="50" />
+          <Property Name="ExBarcode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="InBarcode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="QTYOnHand" Type="int" />
+          <Property Name="StockOnHand" Type="int" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HHTStocktaking">
+          <Key>
+            <PropertyRef Name="StocktakingID" />
+          </Key>
+          <Property Name="StocktakingID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="LocationCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Barcode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="NewQuantity" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="UnitCode" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="25" />
+          <Property Name="ExBarCode" Type="varchar" MaxLength="25" />
+          <Property Name="InBarCode" Type="varchar" MaxLength="25" />
+          <Property Name="SKUMode" Type="bit" Nullable="false" />
+          <Property Name="HHTName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CountDate" Type="date" Nullable="false" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="MKCode" Type="varchar" MaxLength="5" />
+          <Property Name="ProductType" Type="varchar" MaxLength="1" />
+          <Property Name="FlagPrint" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationCode" />
+          </Key>
+          <Property Name="LocationCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="SectionCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterBarcode">
+          <Key>
+            <PropertyRef Name="ExBarcode" />
+          </Key>
+          <Property Name="ExBarcode" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="6" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterBrand">
+          <Key>
+            <PropertyRef Name="BrandCode" />
+          </Key>
+          <Property Name="BrandCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="BrandName" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MasterPack">
+          <Key>
+            <PropertyRef Name="GroupCode" />
+            <PropertyRef Name="ProductCode" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="STATUS" Type="varchar" MaxLength="1" />
+          <Property Name="GroupCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Barcode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="45" />
+          <Property Name="UnitQTY" Type="int" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="25" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MasterReport">
+          <Key>
+            <PropertyRef Name="ReportCode" />
+          </Key>
+          <Property Name="ReportCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ReportName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ReportFile" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterScanMode">
+          <Key>
+            <PropertyRef Name="ScanModeID" />
+          </Key>
+          <Property Name="ScanModeID" Type="int" Nullable="false" />
+          <Property Name="ScanModeName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterScreen">
+          <Key>
+            <PropertyRef Name="ScreenID" />
+          </Key>
+          <Property Name="ScreenID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ScreenName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MenuName" Type="varchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MasterSKU">
+          <Key>
+            <PropertyRef Name="ExBarcode" />
+            <PropertyRef Name="InBarcode" />
+            <PropertyRef Name="SKUCode" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="ScanMode" />
+          </Key>
+          <Property Name="ExBarcode" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="InBarcode" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="BrandCode" Type="varchar" MaxLength="5" />
+          <Property Name="QTYOnHand" Type="int" />
+          <Property Name="StockOnHand" Type="int" />
+          <Property Name="QTYOnHandW" Type="int" />
+          <Property Name="StockOnHandW" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="30" />
+          <Property Name="Vendor" Type="varchar" MaxLength="5" />
+          <Property Name="MKCode" Type="varchar" MaxLength="5" />
+          <Property Name="ProductType" Type="varchar" MaxLength="1" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MasterUnit">
+          <Key>
+            <PropertyRef Name="UnitCode" />
+          </Key>
+          <Property Name="UnitCode" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="UnitFullName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CodeType" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionCode" />
+            <PropertyRef Name="ScanMode" />
+          </Key>
+          <Property Name="SectionCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="SectionName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="LocationFrom" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="LocationTo" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="BrandCode" Type="varchar" MaxLength="5" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="SystemSettings">
+          <Key>
+            <PropertyRef Name="SettingKey" />
+          </Key>
+          <Property Name="SettingKey" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DataType" Type="int" Nullable="false" />
+          <Property Name="ValueString" Type="varchar(max)" />
+          <Property Name="ValueInt" Type="int" />
+          <Property Name="ValueDouble" Type="float" />
+          <Property Name="ValueBoolean" Type="bit" />
+          <Property Name="ValueDate" Type="date" />
+          <Property Name="ValueDateTime" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tmpHHTStocktaking">
+          <Key>
+            <PropertyRef Name="StocktakingID" />
+          </Key>
+          <Property Name="StocktakingID" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="LocationCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Barcode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="NewQuantity" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="UnitCode" Type="int" Nullable="false" />
+          <Property Name="Flag" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="25" />
+          <Property Name="ExBarCode" Type="varchar" MaxLength="25" />
+          <Property Name="InBarCode" Type="varchar" MaxLength="25" />
+          <Property Name="SKUMode" Type="bit" Nullable="false" />
+          <Property Name="HHTName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CountDate" Type="date" Nullable="false" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FlagImport" Type="bit" Nullable="false" />
+          <Property Name="HHTID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ImportDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Enable" Type="bit" Nullable="false" />
+          <Property Name="Lock" Type="bit" Nullable="false" />
+          <Property Name="WrongPasswordCount" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BACKUPHI_REFERENCE_BACKUPHI">
+          <End Role="BackupHistory" Type="Self.BackupHistory" Multiplicity="1" />
+          <End Role="BackupHistoryDetail" Type="Self.BackupHistoryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BackupHistory">
+              <PropertyRef Name="BackupID" />
+            </Principal>
+            <Dependent Role="BackupHistoryDetail">
+              <PropertyRef Name="BackupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigFileDetailAS400_ConfigFileAS400">
+          <End Role="ConfigFileAS400" Type="Self.ConfigFileAS400" Multiplicity="1" />
+          <End Role="ConfigFileDetailAS400" Type="Self.ConfigFileDetailAS400" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigFileAS400">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="ConfigFileDetailAS400">
+              <PropertyRef Name="FileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Location_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionCode" />
+              <PropertyRef Name="ScanMode" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="SectionCode" />
+              <PropertyRef Name="ScanMode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROU_FK_USERGR_USERSCRE">
+          <End Role="MasterScreen" Type="Self.MasterScreen" Multiplicity="1" />
+          <End Role="ConfigUserGroupScreen" Type="Self.ConfigUserGroupScreen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterScreen">
+              <PropertyRef Name="ScreenID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupScreen">
+              <PropertyRef Name="ScreenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROU_REFERENCE_USERGROU">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="1" />
+          <End Role="ConfigUserGroupReport" Type="Self.ConfigUserGroupReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupReport">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROU_REFERENCE_USERREPO">
+          <End Role="MasterReport" Type="Self.MasterReport" Multiplicity="1" />
+          <End Role="ConfigUserGroupReport" Type="Self.ConfigUserGroupReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterReport">
+              <PropertyRef Name="ReportCode" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupReport">
+              <PropertyRef Name="ReportCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUP_SCREENMAP">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="1" />
+          <End Role="ConfigUserGroupScreen" Type="Self.ConfigUserGroupScreen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupScreen">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUP_USER">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ConfigUserGroup" Type="Self.ConfigUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="ConfigUserGroup">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUPMAP_USERGROUP">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="1" />
+          <End Role="ConfigUserGroup" Type="Self.ConfigUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroup">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERREPO_REFERENCE_USERREPO">
+          <End Role="MasterReport" Type="Self.MasterReport" Multiplicity="1" />
+          <End Role="ConfigReport" Type="Self.ConfigReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterReport">
+              <PropertyRef Name="ReportCode" />
+            </Principal>
+            <Dependent Role="ConfigReport">
+              <PropertyRef Name="ReportCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERSCREENPERM_USERSCREENMAP">
+          <End Role="ConfigUserGroupScreen" Type="Self.ConfigUserGroupScreen" Multiplicity="1" />
+          <End Role="ConfigUserGroupPermission" Type="Self.ConfigUserGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigUserGroupScreen">
+              <PropertyRef Name="GroupID" />
+              <PropertyRef Name="ScreenID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupPermission">
+              <PropertyRef Name="GroupID" />
+              <PropertyRef Name="ScreenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="BackupHistory" EntityType="Self.BackupHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BackupHistoryDetail" EntityType="Self.BackupHistoryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigBackupTable" EntityType="Self.ConfigBackupTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigFileAS400" EntityType="Self.ConfigFileAS400" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigFileDetailAS400" EntityType="Self.ConfigFileDetailAS400" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigReport" EntityType="Self.ConfigReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigUserGroup" EntityType="Self.ConfigUserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigUserGroupPermission" EntityType="Self.ConfigUserGroupPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigUserGroupReport" EntityType="Self.ConfigUserGroupReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigUserGroupScreen" EntityType="Self.ConfigUserGroupScreen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DownloadLocation" EntityType="Self.DownloadLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DownloadSKU" EntityType="Self.DownloadSKU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HHTStocktaking" EntityType="Self.HHTStocktaking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterBarcode" EntityType="Self.MasterBarcode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterBrand" EntityType="Self.MasterBrand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterPack" EntityType="Self.MasterPack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterReport" EntityType="Self.MasterReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterScanMode" EntityType="Self.MasterScanMode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterScreen" EntityType="Self.MasterScreen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterUnit" EntityType="Self.MasterUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemSettings" EntityType="Self.SystemSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tmpHHTStocktaking" EntityType="Self.tmpHHTStocktaking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterSKU" EntityType="Self.MasterSKU" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MasterSKU].[ExBarcode] AS [ExBarcode], 
+    [MasterSKU].[InBarcode] AS [InBarcode], 
+    [MasterSKU].[BrandCode] AS [BrandCode], 
+    [MasterSKU].[QTYOnHand] AS [QTYOnHand], 
+    [MasterSKU].[StockOnHand] AS [StockOnHand], 
+    [MasterSKU].[QTYOnHandW] AS [QTYOnHandW], 
+    [MasterSKU].[StockOnHandW] AS [StockOnHandW], 
+    [MasterSKU].[Price] AS [Price], 
+    [MasterSKU].[Description] AS [Description], 
+    [MasterSKU].[SKUCode] AS [SKUCode], 
+    [MasterSKU].[Department] AS [Department], 
+    [MasterSKU].[DepartmentName] AS [DepartmentName], 
+    [MasterSKU].[Vendor] AS [Vendor], 
+    [MasterSKU].[MKCode] AS [MKCode], 
+    [MasterSKU].[ProductType] AS [ProductType], 
+    [MasterSKU].[ScanMode] AS [ScanMode], 
+    [MasterSKU].[CreateDate] AS [CreateDate], 
+    [MasterSKU].[CreateBy] AS [CreateBy]
+    FROM [dbo].[MasterSKU] AS [MasterSKU]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_BACKUPHI_REFERENCE_BACKUPHI" Association="Self.FK_BACKUPHI_REFERENCE_BACKUPHI">
+            <End Role="BackupHistory" EntitySet="BackupHistory" />
+            <End Role="BackupHistoryDetail" EntitySet="BackupHistoryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigFileDetailAS400_ConfigFileAS400" Association="Self.FK_ConfigFileDetailAS400_ConfigFileAS400">
+            <End Role="ConfigFileAS400" EntitySet="ConfigFileAS400" />
+            <End Role="ConfigFileDetailAS400" EntitySet="ConfigFileDetailAS400" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Location_Section" Association="Self.FK_Location_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROU_FK_USERGR_USERSCRE" Association="Self.FK_USERGROU_FK_USERGR_USERSCRE">
+            <End Role="MasterScreen" EntitySet="MasterScreen" />
+            <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROU_REFERENCE_USERGROU" Association="Self.FK_USERGROU_REFERENCE_USERGROU">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="ConfigUserGroupReport" EntitySet="ConfigUserGroupReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROU_REFERENCE_USERREPO" Association="Self.FK_USERGROU_REFERENCE_USERREPO">
+            <End Role="MasterReport" EntitySet="MasterReport" />
+            <End Role="ConfigUserGroupReport" EntitySet="ConfigUserGroupReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUP_SCREENMAP" Association="Self.FK_USERGROUP_SCREENMAP">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUP_USER" Association="Self.FK_USERGROUP_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="ConfigUserGroup" EntitySet="ConfigUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUPMAP_USERGROUP" Association="Self.FK_USERGROUPMAP_USERGROUP">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="ConfigUserGroup" EntitySet="ConfigUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERREPO_REFERENCE_USERREPO" Association="Self.FK_USERREPO_REFERENCE_USERREPO">
+            <End Role="MasterReport" EntitySet="MasterReport" />
+            <End Role="ConfigReport" EntitySet="ConfigReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERSCREENPERM_USERSCREENMAP" Association="Self.FK_USERSCREENPERM_USERSCREENMAP">
+            <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreen" />
+            <End Role="ConfigUserGroupPermission" EntitySet="ConfigUserGroupPermission" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BackupHistories" EntityType="Model.BackupHistory" />
+          <EntitySet Name="BackupHistoryDetails" EntityType="Model.BackupHistoryDetail" />
+          <EntitySet Name="ConfigBackupTables" EntityType="Model.ConfigBackupTable" />
+          <EntitySet Name="ConfigFileAS400" EntityType="Model.ConfigFileAS400" />
+          <EntitySet Name="ConfigFileDetailAS400" EntityType="Model.ConfigFileDetailAS400" />
+          <EntitySet Name="ConfigReports" EntityType="Model.ConfigReport" />
+          <EntitySet Name="ConfigUserGroups" EntityType="Model.ConfigUserGroup" />
+          <EntitySet Name="ConfigUserGroupPermissions" EntityType="Model.ConfigUserGroupPermission" />
+          <EntitySet Name="ConfigUserGroupReports" EntityType="Model.ConfigUserGroupReport" />
+          <EntitySet Name="ConfigUserGroupScreens" EntityType="Model.ConfigUserGroupScreen" />
+          <EntitySet Name="DownloadLocations" EntityType="Model.DownloadLocation" />
+          <EntitySet Name="DownloadSKUs" EntityType="Model.DownloadSKU" />
+          <EntitySet Name="Locations" EntityType="Model.Location" />
+          <EntitySet Name="MasterBrands" EntityType="Model.MasterBrand" />
+          <EntitySet Name="MasterPacks" EntityType="Model.MasterPack" />
+          <EntitySet Name="MasterReports" EntityType="Model.MasterReport" />
+          <EntitySet Name="MasterScanModes" EntityType="Model.MasterScanMode" />
+          <EntitySet Name="MasterScreens" EntityType="Model.MasterScreen" />
+          <EntitySet Name="MasterUnits" EntityType="Model.MasterUnit" />
+          <EntitySet Name="Sections" EntityType="Model.Section" />
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
+          <EntitySet Name="SystemSettings" EntityType="Model.SystemSetting" />
+          <EntitySet Name="Users" EntityType="Model.User" />
+          <EntitySet Name="UserGroups" EntityType="Model.UserGroup" />
+          <EntitySet Name="MasterSKUs" EntityType="Model.MasterSKU" />
+          <AssociationSet Name="FK_BACKUPHI_REFERENCE_BACKUPHI" Association="Model.FK_BACKUPHI_REFERENCE_BACKUPHI">
+            <End Role="BackupHistory" EntitySet="BackupHistories" />
+            <End Role="BackupHistoryDetail" EntitySet="BackupHistoryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigFileDetailAS400_ConfigFileAS400" Association="Model.FK_ConfigFileDetailAS400_ConfigFileAS400">
+            <End Role="ConfigFileAS400" EntitySet="ConfigFileAS400" />
+            <End Role="ConfigFileDetailAS400" EntitySet="ConfigFileDetailAS400" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERREPO_REFERENCE_USERREPO" Association="Model.FK_USERREPO_REFERENCE_USERREPO">
+            <End Role="MasterReport" EntitySet="MasterReports" />
+            <End Role="ConfigReport" EntitySet="ConfigReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUP_USER" Association="Model.FK_USERGROUP_USER">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ConfigUserGroup" EntitySet="ConfigUserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUPMAP_USERGROUP" Association="Model.FK_USERGROUPMAP_USERGROUP">
+            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="ConfigUserGroup" EntitySet="ConfigUserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERSCREENPERM_USERSCREENMAP" Association="Model.FK_USERSCREENPERM_USERSCREENMAP">
+            <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreens" />
+            <End Role="ConfigUserGroupPermission" EntitySet="ConfigUserGroupPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROU_REFERENCE_USERGROU" Association="Model.FK_USERGROU_REFERENCE_USERGROU">
+            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="ConfigUserGroupReport" EntitySet="ConfigUserGroupReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROU_REFERENCE_USERREPO" Association="Model.FK_USERGROU_REFERENCE_USERREPO">
+            <End Role="MasterReport" EntitySet="MasterReports" />
+            <End Role="ConfigUserGroupReport" EntitySet="ConfigUserGroupReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROU_FK_USERGR_USERSCRE" Association="Model.FK_USERGROU_FK_USERGR_USERSCRE">
+            <End Role="MasterScreen" EntitySet="MasterScreens" />
+            <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUP_SCREENMAP" Association="Model.FK_USERGROUP_SCREENMAP">
+            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Location_Section" Association="Model.FK_Location_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="Location" EntitySet="Locations" />
+          </AssociationSet>
+          <EntitySet Name="tmpHHTStocktakings" EntityType="Model.tmpHHTStocktaking" />
+          <EntitySet Name="MasterBarcodes" EntityType="Model.MasterBarcode" />
+          <EntitySet Name="HHTStocktakings" EntityType="Model.HHTStocktaking" />
+        </EntityContainer>
+        <EntityType Name="BackupHistory">
+          <Key>
+            <PropertyRef Name="BackupID" />
+          </Key>
+          <Property Name="BackupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BackupName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BackupHistoryDetails" Relationship="Model.FK_BACKUPHI_REFERENCE_BACKUPHI" FromRole="BackupHistory" ToRole="BackupHistoryDetail" />
+        </EntityType>
+        <EntityType Name="BackupHistoryDetail">
+          <Key>
+            <PropertyRef Name="BackupID" />
+            <PropertyRef Name="BackupSeq" />
+          </Key>
+          <Property Name="BackupID" Type="Int32" Nullable="false" />
+          <Property Name="BackupSeq" Type="Int32" Nullable="false" />
+          <Property Name="BackupTable" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BackupHistory" Relationship="Model.FK_BACKUPHI_REFERENCE_BACKUPHI" FromRole="BackupHistoryDetail" ToRole="BackupHistory" />
+        </EntityType>
+        <EntityType Name="ConfigBackupTable">
+          <Key>
+            <PropertyRef Name="TableSeq" />
+          </Key>
+          <Property Name="TableSeq" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ConfigFileAS400">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="FileCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigFileDetailAS400" Relationship="Model.FK_ConfigFileDetailAS400_ConfigFileAS400" FromRole="ConfigFileAS400" ToRole="ConfigFileDetailAS400" />
+        </EntityType>
+        <EntityType Name="ConfigFileDetailAS400">
+          <Key>
+            <PropertyRef Name="FileDetailID" />
+          </Key>
+          <Property Name="FileDetailID" Type="Int32" Nullable="false" />
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="Index" Type="Int32" Nullable="false" />
+          <Property Name="PrimaryKey" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Field" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="DecPos" Type="Int32" Nullable="false" />
+          <Property Name="StartPos" Type="Int32" Nullable="false" />
+          <Property Name="EndPos" Type="Int32" Nullable="false" />
+          <Property Name="Default" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigFileAS400" Relationship="Model.FK_ConfigFileDetailAS400_ConfigFileAS400" FromRole="ConfigFileDetailAS400" ToRole="ConfigFileAS400" />
+        </EntityType>
+        <EntityType Name="ConfigReport">
+          <Key>
+            <PropertyRef Name="ReportCode" />
+            <PropertyRef Name="ConditionName" />
+          </Key>
+          <Property Name="ReportCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ConditionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ConditionObject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DefaultValue" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AllowChange" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MasterReport" Relationship="Model.FK_USERREPO_REFERENCE_USERREPO" FromRole="ConfigReport" ToRole="MasterReport" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroup">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="GroupID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Model.FK_USERGROUP_USER" FromRole="ConfigUserGroup" ToRole="User" />
+          <NavigationProperty Name="UserGroup" Relationship="Model.FK_USERGROUPMAP_USERGROUP" FromRole="ConfigUserGroup" ToRole="UserGroup" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroupPermission">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="ScreenID" />
+            <PropertyRef Name="ComponentName" />
+          </Key>
+          <Property Name="GroupID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ScreenID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComponentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComponentType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComponentAlias" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AllowAdd" Type="Boolean" Nullable="false" />
+          <Property Name="AllowEdit" Type="Boolean" Nullable="false" />
+          <Property Name="AllowDelete" Type="Boolean" Nullable="false" />
+          <Property Name="Enable" Type="Boolean" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigUserGroupScreen" Relationship="Model.FK_USERSCREENPERM_USERSCREENMAP" FromRole="ConfigUserGroupPermission" ToRole="ConfigUserGroupScreen" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroupReport">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="ReportCode" />
+          </Key>
+          <Property Name="GroupID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ReportCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserGroup" Relationship="Model.FK_USERGROU_REFERENCE_USERGROU" FromRole="ConfigUserGroupReport" ToRole="UserGroup" />
+          <NavigationProperty Name="MasterReport" Relationship="Model.FK_USERGROU_REFERENCE_USERREPO" FromRole="ConfigUserGroupReport" ToRole="MasterReport" />
+        </EntityType>
+        <EntityType Name="ConfigUserGroupScreen">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="ScreenID" />
+          </Key>
+          <Property Name="GroupID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ScreenID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigUserGroupPermissions" Relationship="Model.FK_USERSCREENPERM_USERSCREENMAP" FromRole="ConfigUserGroupScreen" ToRole="ConfigUserGroupPermission" />
+          <NavigationProperty Name="MasterScreen" Relationship="Model.FK_USERGROU_FK_USERGR_USERSCRE" FromRole="ConfigUserGroupScreen" ToRole="MasterScreen" />
+          <NavigationProperty Name="UserGroup" Relationship="Model.FK_USERGROUP_SCREENMAP" FromRole="ConfigUserGroupScreen" ToRole="UserGroup" />
+        </EntityType>
+        <EntityType Name="DownloadLocation">
+          <Key>
+            <PropertyRef Name="DownloadLID" />
+          </Key>
+          <Property Name="DownloadLID" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="HHTName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="SectionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DownloadSKU">
+          <Key>
+            <PropertyRef Name="DownloadSID" />
+          </Key>
+          <Property Name="DownloadSID" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="HHTName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BrandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InBarcode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="QTYOnHand" Type="Int32" />
+          <Property Name="StockOnHand" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationCode" />
+          </Key>
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Section" Relationship="Model.FK_Location_Section" FromRole="Location" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="MasterBrand">
+          <Key>
+            <PropertyRef Name="BrandCode" />
+          </Key>
+          <Property Name="BrandCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BrandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MasterPack">
+          <Key>
+            <PropertyRef Name="GroupCode" />
+            <PropertyRef Name="ProductCode" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="GroupCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="UnitQTY" Type="Int32" />
+          <Property Name="SKUCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MasterReport">
+          <Key>
+            <PropertyRef Name="ReportCode" />
+          </Key>
+          <Property Name="ReportCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ReportName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ReportFile" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigReports" Relationship="Model.FK_USERREPO_REFERENCE_USERREPO" FromRole="MasterReport" ToRole="ConfigReport" />
+          <NavigationProperty Name="ConfigUserGroupReports" Relationship="Model.FK_USERGROU_REFERENCE_USERREPO" FromRole="MasterReport" ToRole="ConfigUserGroupReport" />
+        </EntityType>
+        <EntityType Name="MasterScanMode">
+          <Key>
+            <PropertyRef Name="ScanModeID" />
+          </Key>
+          <Property Name="ScanModeID" Type="Int32" Nullable="false" />
+          <Property Name="ScanModeName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="MasterScreen">
+          <Key>
+            <PropertyRef Name="ScreenID" />
+          </Key>
+          <Property Name="ScreenID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ScreenName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MenuName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigUserGroupScreens" Relationship="Model.FK_USERGROU_FK_USERGR_USERSCRE" FromRole="MasterScreen" ToRole="ConfigUserGroupScreen" />
+        </EntityType>
+        <EntityType Name="MasterUnit">
+          <Key>
+            <PropertyRef Name="UnitCode" />
+          </Key>
+          <Property Name="UnitCode" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="UnitFullName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodeType" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionCode" />
+            <PropertyRef Name="ScanMode" />
+          </Key>
+          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SectionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="LocationFrom" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Locations" Relationship="Model.FK_Location_Section" FromRole="Section" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SystemSetting">
+          <Key>
+            <PropertyRef Name="SettingKey" />
+          </Key>
+          <Property Name="SettingKey" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DataType" Type="Int32" Nullable="false" />
+          <Property Name="ValueString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ValueInt" Type="Int32" />
+          <Property Name="ValueDouble" Type="Double" />
+          <Property Name="ValueBoolean" Type="Boolean" />
+          <Property Name="ValueDate" Type="DateTime" Precision="0" />
+          <Property Name="ValueDateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Enable" Type="Boolean" Nullable="false" />
+          <Property Name="Lock" Type="Boolean" Nullable="false" />
+          <Property Name="WrongPasswordCount" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigUserGroups" Relationship="Model.FK_USERGROUP_USER" FromRole="User" ToRole="ConfigUserGroup" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ConfigUserGroups" Relationship="Model.FK_USERGROUPMAP_USERGROUP" FromRole="UserGroup" ToRole="ConfigUserGroup" />
+          <NavigationProperty Name="ConfigUserGroupReports" Relationship="Model.FK_USERGROU_REFERENCE_USERGROU" FromRole="UserGroup" ToRole="ConfigUserGroupReport" />
+          <NavigationProperty Name="ConfigUserGroupScreens" Relationship="Model.FK_USERGROUP_SCREENMAP" FromRole="UserGroup" ToRole="ConfigUserGroupScreen" />
+        </EntityType>
+        <EntityType Name="MasterSKU">
+          <Key>
+            <PropertyRef Name="ExBarcode" />
+            <PropertyRef Name="InBarcode" />
+            <PropertyRef Name="SKUCode" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="ScanMode" />
+          </Key>
+          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="InBarcode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="QTYOnHand" Type="Int32" />
+          <Property Name="StockOnHand" Type="Int32" />
+          <Property Name="QTYOnHandW" Type="Int32" />
+          <Property Name="StockOnHandW" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Vendor" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="MKCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProductType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_BACKUPHI_REFERENCE_BACKUPHI">
+          <End Type="Model.BackupHistory" Role="BackupHistory" Multiplicity="1" />
+          <End Type="Model.BackupHistoryDetail" Role="BackupHistoryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BackupHistory">
+              <PropertyRef Name="BackupID" />
+            </Principal>
+            <Dependent Role="BackupHistoryDetail">
+              <PropertyRef Name="BackupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigFileDetailAS400_ConfigFileAS400">
+          <End Type="Model.ConfigFileAS400" Role="ConfigFileAS400" Multiplicity="1" />
+          <End Type="Model.ConfigFileDetailAS400" Role="ConfigFileDetailAS400" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigFileAS400">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="ConfigFileDetailAS400">
+              <PropertyRef Name="FileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERREPO_REFERENCE_USERREPO">
+          <End Type="Model.MasterReport" Role="MasterReport" Multiplicity="1" />
+          <End Type="Model.ConfigReport" Role="ConfigReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterReport">
+              <PropertyRef Name="ReportCode" />
+            </Principal>
+            <Dependent Role="ConfigReport">
+              <PropertyRef Name="ReportCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUP_USER">
+          <End Type="Model.User" Role="User" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroup" Role="ConfigUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="ConfigUserGroup">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUPMAP_USERGROUP">
+          <End Type="Model.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroup" Role="ConfigUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroup">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERSCREENPERM_USERSCREENMAP">
+          <End Type="Model.ConfigUserGroupScreen" Role="ConfigUserGroupScreen" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroupPermission" Role="ConfigUserGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigUserGroupScreen">
+              <PropertyRef Name="GroupID" />
+              <PropertyRef Name="ScreenID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupPermission">
+              <PropertyRef Name="GroupID" />
+              <PropertyRef Name="ScreenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROU_REFERENCE_USERGROU">
+          <End Type="Model.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroupReport" Role="ConfigUserGroupReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupReport">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROU_REFERENCE_USERREPO">
+          <End Type="Model.MasterReport" Role="MasterReport" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroupReport" Role="ConfigUserGroupReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterReport">
+              <PropertyRef Name="ReportCode" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupReport">
+              <PropertyRef Name="ReportCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROU_FK_USERGR_USERSCRE">
+          <End Type="Model.MasterScreen" Role="MasterScreen" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroupScreen" Role="ConfigUserGroupScreen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterScreen">
+              <PropertyRef Name="ScreenID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupScreen">
+              <PropertyRef Name="ScreenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUP_SCREENMAP">
+          <End Type="Model.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="Model.ConfigUserGroupScreen" Role="ConfigUserGroupScreen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="ConfigUserGroupScreen">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Location_Section">
+          <End Type="Model.Section" Role="Section" Multiplicity="1" />
+          <End Type="Model.Location" Role="Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionCode" />
+              <PropertyRef Name="ScanMode" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="SectionCode" />
+              <PropertyRef Name="ScanMode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tmpHHTStocktaking">
+          <Key>
+            <PropertyRef Name="StocktakingID" />
+          </Key>
+          <Property Name="StocktakingID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="NewQuantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="UnitCode" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ExBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SKUMode" Type="Boolean" Nullable="false" />
+          <Property Name="HHTName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CountDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FlagImport" Type="Boolean" Nullable="false" />
+          <Property Name="HHTID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ImportDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="MasterBarcode">
+          <Key>
+            <PropertyRef Name="ExBarcode" />
+          </Key>
+          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="HHTStocktaking">
+          <Key>
+            <PropertyRef Name="StocktakingID" />
+          </Key>
+          <Property Name="StocktakingID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="NewQuantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="UnitCode" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ExBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SKUMode" Type="Boolean" Nullable="false" />
+          <Property Name="HHTName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CountDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MKCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProductType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FlagPrint" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="BackupHistories">
+            <EntityTypeMapping TypeName="Model.BackupHistory">
+              <MappingFragment StoreEntitySet="BackupHistory">
+                <ScalarProperty Name="DeleteBy" ColumnName="DeleteBy" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="BackupName" ColumnName="BackupName" />
+                <ScalarProperty Name="BackupID" ColumnName="BackupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BackupHistoryDetails">
+            <EntityTypeMapping TypeName="Model.BackupHistoryDetail">
+              <MappingFragment StoreEntitySet="BackupHistoryDetail">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="BackupTable" ColumnName="BackupTable" />
+                <ScalarProperty Name="BackupSeq" ColumnName="BackupSeq" />
+                <ScalarProperty Name="BackupID" ColumnName="BackupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigBackupTables">
+            <EntityTypeMapping TypeName="Model.ConfigBackupTable">
+              <MappingFragment StoreEntitySet="ConfigBackupTable">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="TableSeq" ColumnName="TableSeq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigFileAS400">
+            <EntityTypeMapping TypeName="Model.ConfigFileAS400">
+              <MappingFragment StoreEntitySet="ConfigFileAS400">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileCode" ColumnName="FileCode" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigFileDetailAS400">
+            <EntityTypeMapping TypeName="Model.ConfigFileDetailAS400">
+              <MappingFragment StoreEntitySet="ConfigFileDetailAS400">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Default" ColumnName="Default" />
+                <ScalarProperty Name="EndPos" ColumnName="EndPos" />
+                <ScalarProperty Name="StartPos" ColumnName="StartPos" />
+                <ScalarProperty Name="DecPos" ColumnName="DecPos" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+                <ScalarProperty Name="Index" ColumnName="Index" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="FileDetailID" ColumnName="FileDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigReports">
+            <EntityTypeMapping TypeName="Model.ConfigReport">
+              <MappingFragment StoreEntitySet="ConfigReport">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AllowChange" ColumnName="AllowChange" />
+                <ScalarProperty Name="DefaultValue" ColumnName="DefaultValue" />
+                <ScalarProperty Name="ConditionObject" ColumnName="ConditionObject" />
+                <ScalarProperty Name="ConditionName" ColumnName="ConditionName" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigUserGroups">
+            <EntityTypeMapping TypeName="Model.ConfigUserGroup">
+              <MappingFragment StoreEntitySet="ConfigUserGroup">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigUserGroupPermissions">
+            <EntityTypeMapping TypeName="Model.ConfigUserGroupPermission">
+              <MappingFragment StoreEntitySet="ConfigUserGroupPermission">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
+                <ScalarProperty Name="AllowEdit" ColumnName="AllowEdit" />
+                <ScalarProperty Name="AllowAdd" ColumnName="AllowAdd" />
+                <ScalarProperty Name="ComponentAlias" ColumnName="ComponentAlias" />
+                <ScalarProperty Name="ComponentType" ColumnName="ComponentType" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigUserGroupReports">
+            <EntityTypeMapping TypeName="Model.ConfigUserGroupReport">
+              <MappingFragment StoreEntitySet="ConfigUserGroupReport">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigUserGroupScreens">
+            <EntityTypeMapping TypeName="Model.ConfigUserGroupScreen">
+              <MappingFragment StoreEntitySet="ConfigUserGroupScreen">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DownloadLocations">
+            <EntityTypeMapping TypeName="Model.DownloadLocation">
+              <MappingFragment StoreEntitySet="DownloadLocation">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="HHTName" ColumnName="HHTName" />
+                <ScalarProperty Name="DownloadLID" ColumnName="DownloadLID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DownloadSKUs">
+            <EntityTypeMapping TypeName="Model.DownloadSKU">
+              <MappingFragment StoreEntitySet="DownloadSKU">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="StockOnHand" ColumnName="StockOnHand" />
+                <ScalarProperty Name="QTYOnHand" ColumnName="QTYOnHand" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InBarcode" ColumnName="InBarcode" />
+                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="HHTName" ColumnName="HHTName" />
+                <ScalarProperty Name="DownloadSID" ColumnName="DownloadSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="Model.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterBrands">
+            <EntityTypeMapping TypeName="Model.MasterBrand">
+              <MappingFragment StoreEntitySet="MasterBrand">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterPacks">
+            <EntityTypeMapping TypeName="Model.MasterPack">
+              <MappingFragment StoreEntitySet="MasterPack">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="UnitQTY" ColumnName="UnitQTY" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterReports">
+            <EntityTypeMapping TypeName="Model.MasterReport">
+              <MappingFragment StoreEntitySet="MasterReport">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ReportFile" ColumnName="ReportFile" />
+                <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterScanModes">
+            <EntityTypeMapping TypeName="Model.MasterScanMode">
+              <MappingFragment StoreEntitySet="MasterScanMode">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ScanModeName" ColumnName="ScanModeName" />
+                <ScalarProperty Name="ScanModeID" ColumnName="ScanModeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterScreens">
+            <EntityTypeMapping TypeName="Model.MasterScreen">
+              <MappingFragment StoreEntitySet="MasterScreen">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
+                <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterUnits">
+            <EntityTypeMapping TypeName="Model.MasterUnit">
+              <MappingFragment StoreEntitySet="MasterUnit">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CodeType" ColumnName="CodeType" />
+                <ScalarProperty Name="UnitFullName" ColumnName="UnitFullName" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="Model.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+                <ScalarProperty Name="LocationTo" ColumnName="LocationTo" />
+                <ScalarProperty Name="LocationFrom" ColumnName="LocationFrom" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemSettings">
+            <EntityTypeMapping TypeName="Model.SystemSetting">
+              <MappingFragment StoreEntitySet="SystemSettings">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ValueDateTime" ColumnName="ValueDateTime" />
+                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
+                <ScalarProperty Name="ValueBoolean" ColumnName="ValueBoolean" />
+                <ScalarProperty Name="ValueDouble" ColumnName="ValueDouble" />
+                <ScalarProperty Name="ValueInt" ColumnName="ValueInt" />
+                <ScalarProperty Name="ValueString" ColumnName="ValueString" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="SettingKey" ColumnName="SettingKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="WrongPasswordCount" ColumnName="WrongPasswordCount" />
+                <ScalarProperty Name="Lock" ColumnName="Lock" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="Model.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroup">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterSKUs">
+            <EntityTypeMapping TypeName="Model.MasterSKU">
+              <MappingFragment StoreEntitySet="MasterSKU">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="MKCode" ColumnName="MKCode" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="StockOnHandW" ColumnName="StockOnHandW" />
+                <ScalarProperty Name="QTYOnHandW" ColumnName="QTYOnHandW" />
+                <ScalarProperty Name="StockOnHand" ColumnName="StockOnHand" />
+                <ScalarProperty Name="QTYOnHand" ColumnName="QTYOnHand" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+                <ScalarProperty Name="InBarcode" ColumnName="InBarcode" />
+                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tmpHHTStocktakings">
+            <EntityTypeMapping TypeName="Model.tmpHHTStocktaking">
+              <MappingFragment StoreEntitySet="tmpHHTStocktaking">
+                <ScalarProperty Name="ImportDate" ColumnName="ImportDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="HHTID" ColumnName="HHTID" />
+                <ScalarProperty Name="FlagImport" ColumnName="FlagImport" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="CountDate" ColumnName="CountDate" />
+                <ScalarProperty Name="HHTName" ColumnName="HHTName" />
+                <ScalarProperty Name="SKUMode" ColumnName="SKUMode" />
+                <ScalarProperty Name="InBarCode" ColumnName="InBarCode" />
+                <ScalarProperty Name="ExBarCode" ColumnName="ExBarCode" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="NewQuantity" ColumnName="NewQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="StocktakingID" ColumnName="StocktakingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterBarcodes">
+            <EntityTypeMapping TypeName="Model.MasterBarcode">
+              <MappingFragment StoreEntitySet="MasterBarcode">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HHTStocktakings">
+            <EntityTypeMapping TypeName="Model.HHTStocktaking">
+              <MappingFragment StoreEntitySet="HHTStocktaking">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FlagPrint" ColumnName="FlagPrint" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="MKCode" ColumnName="MKCode" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="CountDate" ColumnName="CountDate" />
+                <ScalarProperty Name="HHTName" ColumnName="HHTName" />
+                <ScalarProperty Name="SKUMode" ColumnName="SKUMode" />
+                <ScalarProperty Name="InBarCode" ColumnName="InBarCode" />
+                <ScalarProperty Name="ExBarCode" ColumnName="ExBarCode" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="NewQuantity" ColumnName="NewQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="StocktakingID" ColumnName="StocktakingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

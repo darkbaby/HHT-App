@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SectionLocationDataSet" targetNamespace="http://tempuri.org/SectionLocationDataSet.xsd" xmlns:mstns="http://tempuri.org/SectionLocationDataSet.xsd" xmlns="http://tempuri.org/SectionLocationDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="SectionLocationDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="SectionLocationDataSet" msprop:Generator_UserDSName="SectionLocationDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Section" msprop:Generator_TableClassName="SectionDataTable" msprop:Generator_TableVarName="tableSection" msprop:Generator_RowChangedName="SectionRowChanged" msprop:Generator_TablePropName="Section" msprop:Generator_RowDeletingName="SectionRowDeleting" msprop:Generator_RowChangingName="SectionRowChanging" msprop:Generator_RowEvHandlerName="SectionRowChangeEventHandler" msprop:Generator_RowDeletedName="SectionRowDeleted" msprop:Generator_RowClassName="SectionRow" msprop:Generator_UserTableName="Section" msprop:Generator_RowEvArgName="SectionRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SectionCode" msprop:Generator_ColumnVarNameInTable="columnSectionCode" msprop:Generator_ColumnPropNameInRow="SectionCode" msprop:Generator_ColumnPropNameInTable="SectionCodeColumn" msprop:Generator_UserColumnName="SectionCode" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionType" msprop:Generator_ColumnVarNameInTable="columnSectionType" msprop:Generator_ColumnPropNameInRow="SectionType" msprop:Generator_ColumnPropNameInTable="SectionTypeColumn" msprop:Generator_UserColumnName="SectionType" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionName" msprop:Generator_ColumnVarNameInTable="columnSectionName" msprop:Generator_ColumnPropNameInRow="SectionName" msprop:Generator_ColumnPropNameInTable="SectionNameColumn" msprop:Generator_UserColumnName="SectionName" type="xs:string" minOccurs="0" />
+              <xs:element name="LocationFrom" msprop:Generator_ColumnVarNameInTable="columnLocationFrom" msprop:Generator_ColumnPropNameInRow="LocationFrom" msprop:Generator_ColumnPropNameInTable="LocationFromColumn" msprop:Generator_UserColumnName="LocationFrom" type="xs:string" minOccurs="0" />
+              <xs:element name="LocationTo" msprop:Generator_ColumnVarNameInTable="columnLocationTo" msprop:Generator_ColumnPropNameInRow="LocationTo" msprop:Generator_ColumnPropNameInTable="LocationToColumn" msprop:Generator_UserColumnName="LocationTo" type="xs:string" minOccurs="0" />
+              <xs:element name="BrandCode" msprop:Generator_ColumnVarNameInTable="columnBrandCode" msprop:Generator_ColumnPropNameInRow="BrandCode" msprop:Generator_ColumnPropNameInTable="BrandCodeColumn" msprop:Generator_UserColumnName="BrandCode" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Location" msprop:Generator_TableClassName="LocationDataTable" msprop:Generator_TableVarName="tableLocation" msprop:Generator_RowChangedName="LocationRowChanged" msprop:Generator_TablePropName="Location" msprop:Generator_RowDeletingName="LocationRowDeleting" msprop:Generator_RowChangingName="LocationRowChanging" msprop:Generator_RowEvHandlerName="LocationRowChangeEventHandler" msprop:Generator_RowDeletedName="LocationRowDeleted" msprop:Generator_RowClassName="LocationRow" msprop:Generator_UserTableName="Location" msprop:Generator_RowEvArgName="LocationRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SectionCode" msprop:Generator_ColumnVarNameInTable="columnSectionCode" msprop:Generator_ColumnPropNameInRow="SectionCode" msprop:Generator_ColumnPropNameInTable="SectionCodeColumn" msprop:Generator_UserColumnName="SectionCode" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionName" msprop:Generator_ColumnVarNameInTable="columnSectionName" msprop:Generator_ColumnPropNameInRow="SectionName" msprop:Generator_ColumnPropNameInTable="SectionNameColumn" msprop:Generator_UserColumnName="SectionName" type="xs:string" minOccurs="0" />
+              <xs:element name="LocationCode" msprop:Generator_ColumnVarNameInTable="columnLocationCode" msprop:Generator_ColumnPropNameInRow="LocationCode" msprop:Generator_ColumnPropNameInTable="LocationCodeColumn" msprop:Generator_UserColumnName="LocationCode" type="xs:string" minOccurs="0" />
+              <xs:element name="Recognised" msprop:Generator_ColumnVarNameInTable="columnRecognised" msprop:Generator_ColumnPropNameInRow="Recognised" msprop:Generator_ColumnPropNameInTable="RecognisedColumn" msprop:Generator_UserColumnName="Recognised" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalCount" msprop:Generator_ColumnVarNameInTable="columnTotalCount" msprop:Generator_ColumnPropNameInRow="TotalCount" msprop:Generator_ColumnPropNameInTable="TotalCountColumn" msprop:Generator_UserColumnName="TotalCount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Check" msprop:Generator_ColumnVarNameInTable="columnCheck" msprop:Generator_ColumnPropNameInRow="Check" msprop:Generator_ColumnPropNameInTable="CheckColumn" msprop:Generator_UserColumnName="Check" type="xs:string" minOccurs="0" />
+              <xs:element name="Unit" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Store" msprop:Generator_TableClassName="StoreDataTable" msprop:Generator_TableVarName="tableStore" msprop:Generator_TablePropName="Store" msprop:Generator_RowDeletingName="StoreRowDeleting" msprop:Generator_RowChangingName="StoreRowChanging" msprop:Generator_RowEvHandlerName="StoreRowChangeEventHandler" msprop:Generator_RowDeletedName="StoreRowDeleted" msprop:Generator_UserTableName="Store" msprop:Generator_RowChangedName="StoreRowChanged" msprop:Generator_RowEvArgName="StoreRowChangeEvent" msprop:Generator_RowClassName="StoreRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StoreName" msprop:Generator_ColumnVarNameInTable="columnStoreName" msprop:Generator_ColumnPropNameInRow="StoreName" msprop:Generator_ColumnPropNameInTable="StoreNameColumn" msprop:Generator_UserColumnName="StoreName" type="xs:string" minOccurs="0" />
+              <xs:element name="NumberCountLocation" msprop:Generator_ColumnVarNameInTable="columnNumberCountLocation" msprop:Generator_ColumnPropNameInRow="NumberCountLocation" msprop:Generator_ColumnPropNameInTable="NumberCountLocationColumn" msprop:Generator_UserColumnName="NumberCountLocation" type="xs:int" minOccurs="0" />
+              <xs:element name="NumberUnCountLocation" msprop:Generator_ColumnVarNameInTable="columnNumberUnCountLocation" msprop:Generator_ColumnPropNameInRow="NumberUnCountLocation" msprop:Generator_ColumnPropNameInTable="NumberUnCountLocationColumn" msprop:Generator_UserColumnName="NumberUnCountLocation" type="xs:int" minOccurs="0" />
+              <xs:element name="NumberUnitsCount" msprop:Generator_ColumnVarNameInTable="columnNumberUnitsCount" msprop:Generator_ColumnPropNameInRow="NumberUnitsCount" msprop:Generator_ColumnPropNameInTable="NumberUnitsCountColumn" msprop:Generator_UserColumnName="NumberUnitsCount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Unit" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

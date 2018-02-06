@@ -1,0 +1,107 @@
+﻿No|Version|DateTime|Description
+1|1.0.0|2017-02-22 16:00|Version เริ่มต้น Window 7 Only Server Authen (Local) Framwork 4.5
+2|1.0.1|2017-02-23 09:50|Version เริ่มต้น Window 7 Only Window Authen (Local) Framwork 4.5
+3|1.0.2|2017-02-23 14:45|Version Window Authen (Local) Framwork 4.6.1 VS 2015
+4|1.0.3|2017-03-10 14:45|Version Window Authen (Local) Framwork 4.6.1 VS 2015 ส่งลูกค้า
+5|1.0.4|2017-03-22 13:56|Version Window Authen (Local) Framwork 4.6.1 VS 2015 ส่งลูกค้า
+	1. ในเมนู Sync HHT -> PC ปุ่ม Report Stocktaking Audit check ขอเงื่อนไขเลือก Location ได้
+	2. ในเมนู Sync HHT -> PC ปุ่ม Report Stocktaking Audit Adjust ขอเงื่อนไขเลือก Location ได้
+	3. ในเมนู Edit QTY กรณีเพิ่ม New record ถ้า Barcode+Location ซ้ำให้เด้ง Cursor ไปบรรทัดที่ซ้ำ
+	4. ปรับเส้นบรรทัด ใน Report Inventory Control Difference ให้ขีดใต้ Location
+	6. ใน Report Inventory Control Difference ขอเงือนไขเลือก Location ได้
+	7. เมนู Text file เพิ่ม Total record, Sum QTY เพื่อให้ทราบจำนวนรวมทั้งหมดก่อนส่งขึ้น AS400
+	8. เมนู Back up ปุ่ม Clear Data, Delete Data ขอเปลี่ยนปุ่มเป็นสีแดง และย้ายปุ่ม Restore ไปด้านซ้ายของจอ
+	9. เมนูหน้า Download AS400 ขอเป็น Pop-up รายงาน Summary by department แสดงจำนวน Stockonhand, Qtyonhand
+6|1.0.5-1.0.6|2017-03-29 10:35|Version Window Authen (Local) Framwork 4.6.1 VS 2015 ส่งลูกค้าทั้งหมด
+7|1.0.7|2017-04-07 15:00|Version Window Authen (Local) Framwork 4.6.1 VS 2015
+	1.แก้ไข หน้า Location เมื่อ ImportSection แล้วเปลี่ยน ScanMode ให้ Save ลง Table Location ได้ 
+	2.แก้ไข Report Inventory Warehouse Pack ให้คำนวน PCK/PCS ให่้ถูกต้อง
+	3.แก้ไข หน้า Edit Qty Case ScanMode = 3 เมื่อ Mapping Barcode เจอในMasterBarcode ให้ เปลี่ยน UnitCode เป็น PCK 
+8|1.0.9|2017-04-25 11:12|Version Window Authen (Local) Framwork 4.6.1 VS 2015
+	1.แก้ DownloadMaster (ต่อ string Brand) departmentCode(2)+BrandCode(3) ที่ SKUFront,SKUFreshFood,Brand
+	2.แก้ DownloadMaster Barcode (เปลี่ยน Format Import File) เหลือ Exbarcode,DepartmentCode,SKUCode
+9|1.0.11|2017-05-02 17:35|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+	1.DownloadMasterForm : New Button Search
+	2.LocationFrom : แก้ Validate Locationfrom to เติม 0 ด้านหน้าให้ครบ 5 หลัก
+	3.Stocktaking All => Description(Front 12pt),Qty,Total Bold
+	4.Check Run ProgramStocktaking Duplicate
+	5.ปรับ Report Barcode Newpaper กระดาษมีขอบสีดำด้านซ้าย
+	6.Connect DB Local (ServerAuthen) User : sa, Password : P@ssw0rd
+9|1.0.12|2017-05-10 15:10|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+    1.Sync Form => โหลด ข้อมูลจากล่างขึ้น บน/Print จากล่างขึ้นบน
+	2.GentextFile Form => 
+	 - Search แสดงหน่วยที่ Gridview
+	 - Export แสดงRecord แรกเป็น ComID,Sum จำนวนqty
+	 - Merge File ไม่ Check Duplicate
+	 - Merge File แสดง Popup Summary ผลรวมการ Merge File
+	3.Report Unidentify
+	 - ไม่ต้องแสดง Group by ตาม Section Code
+	- เมื่อ Search ไม่พบข้อมูล ให้ออก Report เปล่า
+	4.Report Control Sheet
+	 - Delete Cloumn 1.Unit Count/Counted 2.Errors 3.100 Counts
+	5.ห้ามเปิด App Stocktaking ซ้อนกันหลาย App
+	6.Download Master Form => เพิ่ม Catagory Mode : Department(ใช้Value ที่ TextFile) & Super => Set Departmentcode(Fornt:97,Warehouse:98,Freshfood:99)
+	7.EditQty Form : Column Location เติม 0 ด้านหน้าให้ครบ5ตัว
+	8.Report Inventory All ช่อง Desctipyion ใช้ wordwrap
+	9.hhtStocktaking เพิ่ม Field : ProductType เพื่อให้ Report Stocktaking All แสดง โดยไม่ต้อง Join กับ SKU อีก
+	10.Edit Qty CRUD เพิ่ม Field : ProductType
+	11.Sync Form  เพิ่ม Field : ProductType ตอนAdd ลง Table : hhtStocktaking
+10|1.0.14|2017-05-29 14:07|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+	fix bug
+	1.hhtsync แก้ไข textname "Report stocktaking"
+	2.Confition Search : SectionCode,Locationfrom,LocationTo ให้พิมพ์ 0 ด้านหน้า
+	- Locationform
+	- PrintBarCodeForm
+	- EditQTYForm
+	3.Report 26,23 แก้ไข parameter pReportName
+	4.Report 25 Search sp ไม่เอา freshfood
+	5.HHTSyncDAO
+	- แก้ไข InsertAutoImport ให้ checkก่อนว่า hhtstocktaking มีข้อมูลก่อนหรือเปล่า แล้วค่อย FirstOrDefaulte
+11|1.0.14|2017-05-30 10:42|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+	1.แก้ autofill 0  หน้า Report(locationfromto),Location Autofile sectioncode (gridview)
+	2.แก้ report stocktaking เอาStocktaker ไว้ footer by location
+	3.fixbug ปรับขนาดความกว้างของ field report stocktaking
+	4.Program.cs check มี batch รันอยู่หรือเปล่า ถ้ามี kill Batch
+	5.ปรับ Design DownloadAS400,printBarcode,Report
+	6.หน้า Location ชอบขึ้น UIdesign not response เพราะมีการเปิด loading เมื่อทำงานเสร็จแล้วไม่ปิด loading ทำให้Process การทำงานมันค้าง
+12|1.0.16|2017-05-30 10:42|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+	##Delete Report##
+	Table: MasterReport delete Report=>Stocktaking Audit Check,Stocktaking Audit Adjust ถ้าจะนำกลับมาใช้ให้ Insert ข้อมูลด้านล่างลง Master Report
+	ReportCode|ReportName|ReportFile
+	R07|09 Stocktaking Audit Check|RPT_StocktakingAuditCheck.rpt
+	R10|11 Stocktaking Audit Adjust|RPT_StocktakingAuditAdjust.rpt
+	--------------------------
+13|1.0.17|2017-06-12 11:38|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+1.แก้ไข Report Stocktaking Audit Adjust with unit เพิ่ม Total - Delete
+2.แก้ไข Report inventory All Fresh เพิ่ม Total Sum ตาม GroupProductType
+3.Check Report inventory all Search ตาม Criteria ให้ถูกต้อง
+4.Item pysical All field Price ทศนิยม 2 หลัก
+5.SyncHhtForm print ไม่ต้องgroupตามbarcode
+6.Location เมื่อ auto file Location in gridview แล้ว ต้องCheckDupด้วย
+	--------------------------
+14|1.0.21|2017-06-20 13:51|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+1.แก้ไข Text file Fresh Food : ถ้า exbarcode ='' ให้แสดง MKCode/หน่ายจาก G ให้เป็น KG
+2.แก้ไข edit QTY case Warehouse Add data ซ้ำได้ถ้าคนละ UnitCode
+3.Report inventory Warehouse Delete column Dp, Inbarcode, ใส่ SKUCode แทน/เปลี่ยน Font จาก tahoma เป็น TH Sarabun New
+	--------------------------
+15|1.0.22|2017-06-22 12:30|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+หน้า AS 400 SKUImport
+- Depart Front : Depart+brandcode => brandcode
+- Super Front : 97+brandcode => brandcode
+- Super Warehouse : 98+depart => brandcode
+- Super FF : 99+depart => brandcode
+16|1.0.30|2017-06-28 11:18|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- Report Inventory Search data ทำให้เร็วขึ้น
+17|1.0.32|2017-06-29 12:04|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- Report Inventory All + Itempysical All แสดง BrandName
+18|1.0.34|2017-07-03 13:31|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- Report Group Summary Front&Back : แก้ไข Store โดย เอาMasterSKUเป็นหลัก
+- Barcode หน้า Location ใหญ่ขึ้นจาก 20เป็น24
+19|1.0.35|2017-07-07 13:31|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- Report Notice Warehouse&FreshFood : Type ที่เป็น G,F ให้เป็นทศนิยม 3 หลัก
+20|1.0.37|2017-07-13 15:07|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- HHtSync : AutoPrint Set docReport.Close();docReport.Dispose(); เนื่องจากปริ้นจำนวนมากแล้วไม่สามารถปริ้นได้
+21|1.0.38|2017-07-21 17:21|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- Report Inventory Barcode ALL : Search ไม่พบข้อมูลให้แสดง Report เปล่า
+22|1.0.39|2017-07-25 17:10|Version Server Authen (Local) Framwork 4.6.1 VS 2015
+- InsertAutoImport DAO : แก้ dbContext.SaveChanges() ทีละ Record

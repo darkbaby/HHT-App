@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ControlSheetDataset" targetNamespace="http://tempuri.org/ControlSheetDataset.xsd" xmlns:mstns="http://tempuri.org/ControlSheetDataset.xsd" xmlns="http://tempuri.org/ControlSheetDataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ControlSheetDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ControlSheetDataset" msprop:Generator_UserDSName="ControlSheetDataset">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ControlSheet" msprop:Generator_TableClassName="ControlSheetDataTable" msprop:Generator_TableVarName="tableControlSheet" msprop:Generator_TablePropName="ControlSheet" msprop:Generator_RowDeletingName="ControlSheetRowDeleting" msprop:Generator_RowChangingName="ControlSheetRowChanging" msprop:Generator_RowEvHandlerName="ControlSheetRowChangeEventHandler" msprop:Generator_RowDeletedName="ControlSheetRowDeleted" msprop:Generator_UserTableName="ControlSheet" msprop:Generator_RowChangedName="ControlSheetRowChanged" msprop:Generator_RowEvArgName="ControlSheetRowChangeEvent" msprop:Generator_RowClassName="ControlSheetRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Location" msprop:Generator_ColumnVarNameInTable="columnLocation" msprop:Generator_ColumnPropNameInRow="Location" msprop:Generator_ColumnPropNameInTable="LocationColumn" msprop:Generator_UserColumnName="Location" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionCode" msprop:Generator_ColumnVarNameInTable="columnSectionCode" msprop:Generator_ColumnPropNameInRow="SectionCode" msprop:Generator_ColumnPropNameInTable="SectionCodeColumn" msprop:Generator_UserColumnName="SectionCode" type="xs:string" minOccurs="0" />
+              <xs:element name="SectionName" msprop:Generator_ColumnVarNameInTable="columnSectionName" msprop:Generator_ColumnPropNameInRow="SectionName" msprop:Generator_ColumnPropNameInTable="SectionNameColumn" msprop:Generator_UserColumnName="SectionName" type="xs:string" minOccurs="0" />
+              <xs:element name="JC" msprop:Generator_ColumnVarNameInTable="columnJC" msprop:Generator_ColumnPropNameInRow="JC" msprop:Generator_ColumnPropNameInTable="JCColumn" msprop:Generator_UserColumnName="JC" type="xs:string" minOccurs="0" />
+              <xs:element name="Client" msprop:Generator_ColumnVarNameInTable="columnClient" msprop:Generator_ColumnPropNameInRow="Client" msprop:Generator_ColumnPropNameInTable="ClientColumn" msprop:Generator_UserColumnName="Client" type="xs:string" minOccurs="0" />
+              <xs:element name="HNTNumber" msprop:Generator_ColumnVarNameInTable="columnHNTNumber" msprop:Generator_ColumnPropNameInRow="HNTNumber" msprop:Generator_ColumnPropNameInTable="HNTNumberColumn" msprop:Generator_UserColumnName="HNTNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Stocktaker" msprop:Generator_ColumnVarNameInTable="columnStocktaker" msprop:Generator_ColumnPropNameInRow="Stocktaker" msprop:Generator_ColumnPropNameInTable="StocktakerColumn" msprop:Generator_UserColumnName="Stocktaker" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitCount_x002F_Counted" msprop:Generator_ColumnVarNameInTable="_columnUnitCount_Counted" msprop:Generator_ColumnPropNameInRow="_UnitCount_Counted" msprop:Generator_ColumnPropNameInTable="_UnitCount_CountedColumn" msprop:Generator_UserColumnName="UnitCount/Counted" type="xs:string" minOccurs="0" />
+              <xs:element name="ErrorsFound" msprop:Generator_ColumnVarNameInTable="columnErrorsFound" msprop:Generator_ColumnPropNameInRow="ErrorsFound" msprop:Generator_ColumnPropNameInTable="ErrorsFoundColumn" msprop:Generator_UserColumnName="ErrorsFound" type="xs:string" minOccurs="0" />
+              <xs:element name="_x0031_00Counts" msprop:Generator_ColumnVarNameInTable="column100Counts" msprop:Generator_ColumnPropNameInRow="_100Counts" msprop:Generator_ColumnPropNameInTable="_100CountsColumn" msprop:Generator_UserColumnName="100Counts" type="xs:string" minOccurs="0" />
+              <xs:element name="FinalUnitCount" msprop:Generator_ColumnVarNameInTable="columnFinalUnitCount" msprop:Generator_ColumnPropNameInRow="FinalUnitCount" msprop:Generator_ColumnPropNameInTable="FinalUnitCountColumn" msprop:Generator_UserColumnName="FinalUnitCount" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
