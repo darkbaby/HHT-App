@@ -11,12 +11,13 @@ using FSBT_HHT_BLL;
 using FSBT_HHT_Model;
 using FSBT_HHT_DAL.DAO;
 using FSBT.HHT.App.Resources;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
     public partial class UserManagementForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+private LogErrorBll logBll = new LogErrorBll(); 
         private UserManagementBll userBLL = new UserManagementBll();
         private UserManagementDAO dao = new UserManagementDAO();
         private int selectedRow = -1;
@@ -39,7 +40,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -85,7 +86,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -143,7 +144,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
         #endregion
@@ -207,7 +208,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -269,7 +270,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -382,7 +383,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -439,7 +440,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
         #endregion
@@ -479,7 +480,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -601,7 +602,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -616,7 +617,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -639,7 +640,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -670,7 +671,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 

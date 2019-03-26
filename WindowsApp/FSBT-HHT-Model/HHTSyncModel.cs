@@ -29,9 +29,9 @@ namespace FSBT_HHT_Model
     {
         public string LocationCode { get; set; }
         public string SectionCode { get; set; }
-        public int ScanMode { get; set; }
         public string SectionName { get; set; }
         public string BrandCode { get; set; }
+        public string StorageLocationCode { get; set; }
     }
 
     public class PCSKUModel
@@ -88,14 +88,24 @@ namespace FSBT_HHT_Model
         public DateTime ImportDate { get; set; }
         public string MKCode { get; set; }
         public string ProductType { get; set; }
-        public string FlagLoation { get; set; }
-
+        public string FlagLocation { get; set; }
+        public string SerialNumber { get; set; } // เพิ่มใหม่
+        public string ConversionCounter { get; set; }// เพิ่มใหม่
+        public string StorageLocation { get; set; }// เพิ่มใหม่
+        public string StorageLocationDesc { get; set; }// เพิ่มใหม่
+        public string Plant { get; set; }// เพิ่มใหม่
+        public string PIDoc { get; set; }// เพิ่มใหม่
+        public string MCHLevel1 { get; set; }// เพิ่มใหม่
+        public string MCHLevel2 { get; set; }// เพิ่มใหม่
+        public string MCHLevel3 { get; set; }// เพิ่มใหม่
+        public string MaterialGroup { get; set; }// เพิ่มใหม่
+        public string ComputerName { get; set; }// เพิ่มใหม่
     }
 
     public class InsertAutoResultModel
     {
         public bool result { get; set; }
-        public string hhtID { get; set; } 
+        public string hhtID { get; set; }
         public string hhtName { get; set; }
         public string stocktaker { get; set; }
     }
@@ -111,6 +121,17 @@ namespace FSBT_HHT_Model
         public string ProductCode { get; set; }
         public string SKUCode { get; set; }
         public int ScanMode { get; set; }
+    }
+
+    public class MasterSerialNumberModel
+    {
+        public string SKUCode { get; set; }
+        public string Barcode { get; set; }
+        public string SerialNumber { get; set; }
+        public string StorageLocation { get; set; }
+        public string StorageLocationDesc { get; set; }
+        public string createdate { get; set; }
+        public string createby { get; set; }
     }
 
     public class MasterPackModel
@@ -141,8 +162,8 @@ namespace FSBT_HHT_Model
         public string Manufacturer { get; private set; }
     }
 
-    
-    
+
+
 
     //public class DriveDetection
     //{
@@ -178,5 +199,5 @@ namespace FSBT_HHT_Model
     //    }
     //}
 
-    
+
 }

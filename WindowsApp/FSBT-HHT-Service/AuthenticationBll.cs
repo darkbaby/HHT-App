@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using FSBT_HHT_DAL.DAO;
 using System.Security.Cryptography;
 using FSBT_HHT_Model;
+using System.Reflection;
 
 namespace FSBT_HHT_BLL
 {
     public class AuthenticationBll
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         private AuthenticationDAO authenDAO = new AuthenticationDAO();
 
         public string CheckLogin(string username, string password)
@@ -50,7 +51,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return result = null;
             }
         }
@@ -68,7 +69,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 resultPassword = string.Empty;
             }
             return resultPassword;
@@ -91,7 +92,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 passwordEncrypt = new StringBuilder();
             }
             return passwordEncrypt.ToString();

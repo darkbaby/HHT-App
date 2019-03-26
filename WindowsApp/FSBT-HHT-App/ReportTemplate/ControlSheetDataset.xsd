@@ -27,6 +27,9 @@
               <xs:element name="_x0031_00Counts" msprop:Generator_ColumnVarNameInTable="column100Counts" msprop:Generator_ColumnPropNameInRow="_100Counts" msprop:Generator_ColumnPropNameInTable="_100CountsColumn" msprop:Generator_UserColumnName="100Counts" type="xs:string" minOccurs="0" />
               <xs:element name="FinalUnitCount" msprop:Generator_ColumnVarNameInTable="columnFinalUnitCount" msprop:Generator_ColumnPropNameInRow="FinalUnitCount" msprop:Generator_ColumnPropNameInTable="FinalUnitCountColumn" msprop:Generator_UserColumnName="FinalUnitCount" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Plant" msprop:Generator_ColumnVarNameInTable="columnPlant" msprop:Generator_ColumnPropNameInRow="Plant" msprop:Generator_ColumnPropNameInTable="PlantColumn" msprop:Generator_UserColumnName="Plant" type="xs:string" minOccurs="0" />
+              <xs:element name="PlantDesc" msprop:Generator_ColumnVarNameInTable="columnPlantDesc" msprop:Generator_ColumnPropNameInRow="PlantDesc" msprop:Generator_ColumnPropNameInTable="PlantDescColumn" msprop:Generator_UserColumnName="PlantDesc" type="xs:string" minOccurs="0" />
+              <xs:element name="CountSheet" msprop:Generator_ColumnVarNameInTable="columnCountSheet" msprop:Generator_ColumnPropNameInRow="CountSheet" msprop:Generator_ColumnPropNameInTable="CountSheetColumn" msprop:Generator_UserColumnName="CountSheet" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

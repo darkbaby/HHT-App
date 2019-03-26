@@ -9,20 +9,20 @@ using System.Text;
 using System.Threading.Tasks;
 using FSBT_HHT_DAL;
 using System.Reflection;
-
+using FSBT_HHT_DAL.DAO;
 
 namespace FSBT_HHT_DAL.Helper
 {
-    public static class DbHelper
+    public class DbHelper
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorDAO logBll = new LogErrorDAO();  
         /// <summary>
         /// Convert List<T> to DataTable
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
         /// <returns>DataTable of List<T>.</returns>
-        public static DataTable ToDataTable<T>(List<T> items)
+        public DataTable ToDataTable<T>(List<T> items)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);
 
@@ -62,33 +62,51 @@ namespace FSBT_HHT_DAL.Helper
         /// <param name="connString">Connection String to Connect Database.</param>
         /// <param name="sqlQuery">SqlQuery to create schema DataTable.</param>
         /// <returns>Schema DataTable.</returns>
-        public static DataTable GetSchemaDataTable(string connString,string sqlQuery)
+        public DataTable GetSchemaDataTable(string connString,string sqlQuery)
         {
             try
             {
                 DataTable dt = new DataTable();
                 string column = "";
-                SqlConnection conn = new SqlConnection();
-                conn.ConnectionString = connString;
-                conn.Close();
-                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                for (int i = 0; i < reader.FieldCount; i++)
+                //SqlConnection conn = new SqlConnection();
+                //conn.ConnectionString = connString;
+                //conn.Close();
+                //SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                //conn.Open();
+                //SqlDataReader reader = cmd.ExecuteReader();
+                //for (int i = 0; i < reader.FieldCount; i++)
+                //{
+                //    if (column == "")
+                //        column += reader.GetName(i);
+                //    else
+                //        column += "," + reader.GetName(i);
+                //    dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+                //}
+                //conn.Close();
+                //conn.Dispose();
+
+                
+                using (SqlConnection conn = new SqlConnection(connString))
                 {
-                    if (column == "")
-                        column += reader.GetName(i);
-                    else
-                        column += "," + reader.GetName(i);
-                    dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+                    SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        if (column == "")
+                            column += reader.GetName(i);
+                        else
+                            column += "," + reader.GetName(i);
+                        dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+                    }
+                    conn.Close();
+                    conn.Dispose();
                 }
-                conn.Close();
-                conn.Dispose();
                 return dt;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return null;
             }
         }
@@ -99,27 +117,38 @@ namespace FSBT_HHT_DAL.Helper
         /// <param name="connString">Connection String to Connect Database.</param>
         /// <param name="sqlQuery">SqlQuery to get data</param>
         /// <returns>DataTable of data which get from database.</returns>
-        public static DataTable GetDataToDataTableBySqlCmd(string connString, string sqlQuery)
+        public DataTable GetDataToDataTableBySqlCmd(string connString, string sqlQuery)
         {
             DataTable dt = new DataTable();
             try
             {
                 
                 dt = GetSchemaDataTable(connString, sqlQuery);
-                SqlConnection conn = new SqlConnection();
-                conn.ConnectionString = connString;
-                conn.Close();
-                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
-                conn.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-                conn.Close();
-                conn.Dispose();
+                //SqlConnection conn = new SqlConnection();
+                //conn.ConnectionString = connString;
+                //conn.Close();
+                //SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                //conn.Open();
+                //SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                //adapter.Fill(dt);
+                //conn.Close();
+                //conn.Dispose();
+                //return dt;
+
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                    conn.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dt);
+                    conn.Close();
+                    conn.Dispose();
+                }
                 return dt;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return dt;
             }
         }
@@ -130,30 +159,35 @@ namespace FSBT_HHT_DAL.Helper
         /// <param name="connString">Connection String to Connect Database.</param>
         /// <param name="tableName">table name in database to get data.</param>
         /// <returns>DataTable of data which get from database.</returns>
-        public static DataTable GetDataToDataTableByTableName(string connString, string tableName)
+        public DataTable GetDataToDataTableByTableName(string connString, string tableName)
         {
             DataTable dt = new DataTable();
             string sqlQuery = "";
+
             StringBuilder sb = new StringBuilder();
-            SqlConnection conn = new SqlConnection();
+            //SqlConnection conn = new SqlConnection();
             try
             {
                 sb.AppendFormat("SELECT * FROM [dbo].[{0}]", tableName);
                 sqlQuery = sb.ToString();
                 dt = GetSchemaDataTable(connString, sqlQuery);
                 
-                conn.ConnectionString = connString;
-                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
-                conn.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-                conn.Close();
-                conn.Dispose();
+                //conn.ConnectionString = connString;
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                    conn.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(dt);
+                    conn.Close();
+                    conn.Dispose();
+                }
+
                 return dt;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return dt;
             }
         }
@@ -165,7 +199,7 @@ namespace FSBT_HHT_DAL.Helper
         /// <param name="dtImport">Data of DataTable to import.</param>
         /// <param name="targetTable">Which Table to import.</param>
         /// <returns>Import data successful.</returns>
-        public static bool InsertDataTableToDatabase(string connString, DataTable dtImport, string targetTable)
+        public bool InsertDataTableToDatabase(string connString, DataTable dtImport, string targetTable)
         {
             bool success = false;
             using(SqlConnection conn = new SqlConnection(connString))
@@ -185,7 +219,7 @@ namespace FSBT_HHT_DAL.Helper
             return success;
         }
     }
-    //public static class DbHelper
+    //public class DbHelper
     //{
     //    private static string connectionString;
     //    private static Entities FsbtEntities;

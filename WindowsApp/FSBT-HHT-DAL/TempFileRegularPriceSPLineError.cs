@@ -12,12 +12,12 @@ namespace FSBT_HHT_DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class TempFileRegularPriceSPLineError
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID { get; set; }
+        public string LineString { get; set; }
+        public string ErrorDesc { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
     }
 }

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgdUserGroup = new System.Windows.Forms.DataGridView();
             this.GroupID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GroupName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -86,33 +86,32 @@
             // 
             this.dgdUserGroup.AllowUserToAddRows = false;
             this.dgdUserGroup.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgdUserGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgdUserGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgdUserGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgdUserGroup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GroupID,
             this.GroupName,
             this.LastUpdate,
             this.UpdateBy});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgdUserGroup.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dgdUserGroup.Location = new System.Drawing.Point(4, 51);
-            this.dgdUserGroup.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgdUserGroup.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgdUserGroup.Location = new System.Drawing.Point(3, 33);
             this.dgdUserGroup.Name = "dgdUserGroup";
             this.dgdUserGroup.ReadOnly = true;
-            this.dgdUserGroup.Size = new System.Drawing.Size(1050, 152);
+            this.dgdUserGroup.Size = new System.Drawing.Size(700, 99);
             this.dgdUserGroup.TabIndex = 1;
             this.dgdUserGroup.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgdUserGroup_CellBeginEdit);
             this.dgdUserGroup.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgdUserGroup_CellEndEdit);
@@ -160,23 +159,21 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dgdUserGroup, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 18);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 262F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1100, 218);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(733, 142);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 29);
+            this.label1.Size = new System.Drawing.Size(102, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "User Group";
             // 
@@ -188,13 +185,12 @@
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(18, 246);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 160);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 569F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1476, 569);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(984, 370);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // panel1
@@ -205,10 +201,9 @@
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.Controls.Add(this.tabControl1);
-            this.panel1.Location = new System.Drawing.Point(4, 5);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1468, 559);
+            this.panel1.Size = new System.Drawing.Size(978, 364);
             this.panel1.TabIndex = 0;
             // 
             // tabControl1
@@ -219,11 +214,10 @@
             this.tabControl1.Controls.Add(this.userTabPage);
             this.tabControl1.Controls.Add(this.screenTabPage);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(6, 5);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabControl1.Location = new System.Drawing.Point(4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1457, 550);
+            this.tabControl1.Size = new System.Drawing.Size(970, 358);
             this.tabControl1.TabIndex = 0;
             // 
             // userTabPage
@@ -231,11 +225,10 @@
             this.userTabPage.Controls.Add(this.label3);
             this.userTabPage.Controls.Add(this.dgdUser);
             this.userTabPage.Controls.Add(this.textBox2);
-            this.userTabPage.Location = new System.Drawing.Point(4, 38);
-            this.userTabPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.userTabPage.Location = new System.Drawing.Point(4, 27);
             this.userTabPage.Name = "userTabPage";
-            this.userTabPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.userTabPage.Size = new System.Drawing.Size(1449, 508);
+            this.userTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.userTabPage.Size = new System.Drawing.Size(962, 327);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "User";
             this.userTabPage.UseVisualStyleBackColor = true;
@@ -243,10 +236,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 11);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(6, 7);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(146, 29);
+            this.label3.Size = new System.Drawing.Size(91, 18);
             this.label3.TabIndex = 6;
             this.label3.Text = "Search User";
             // 
@@ -265,11 +257,10 @@
             this.lastname,
             this.addBy,
             this.addDate});
-            this.dgdUser.Location = new System.Drawing.Point(4, 49);
-            this.dgdUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dgdUser.Location = new System.Drawing.Point(3, 32);
             this.dgdUser.Name = "dgdUser";
             this.dgdUser.ReadOnly = true;
-            this.dgdUser.Size = new System.Drawing.Size(1432, 444);
+            this.dgdUser.Size = new System.Drawing.Size(954, 290);
             this.dgdUser.TabIndex = 0;
             // 
             // memberUserCheckBox
@@ -317,10 +308,9 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(163, 8);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox2.Location = new System.Drawing.Point(109, 5);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(424, 33);
+            this.textBox2.Size = new System.Drawing.Size(284, 24);
             this.textBox2.TabIndex = 3;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
@@ -329,11 +319,10 @@
             this.screenTabPage.Controls.Add(this.tableLayoutPanel3);
             this.screenTabPage.Controls.Add(this.label2);
             this.screenTabPage.Controls.Add(this.textBox1);
-            this.screenTabPage.Location = new System.Drawing.Point(4, 38);
-            this.screenTabPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.screenTabPage.Location = new System.Drawing.Point(4, 27);
             this.screenTabPage.Name = "screenTabPage";
-            this.screenTabPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.screenTabPage.Size = new System.Drawing.Size(1449, 508);
+            this.screenTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.screenTabPage.Size = new System.Drawing.Size(962, 327);
             this.screenTabPage.TabIndex = 1;
             this.screenTabPage.Text = "Screen";
             this.screenTabPage.UseVisualStyleBackColor = true;
@@ -348,12 +337,11 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel3.Controls.Add(this.dgdScreen, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.dgdComponent, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(9, 46);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 30);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1427, 447);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(950, 292);
             this.tableLayoutPanel3.TabIndex = 9;
             // 
             // dgdScreen
@@ -368,11 +356,10 @@
             this.screenVisibleCheckBox,
             this.screenName,
             this.screenID});
-            this.dgdScreen.Location = new System.Drawing.Point(4, 5);
-            this.dgdScreen.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dgdScreen.Location = new System.Drawing.Point(3, 3);
             this.dgdScreen.Name = "dgdScreen";
             this.dgdScreen.ReadOnly = true;
-            this.dgdScreen.Size = new System.Drawing.Size(562, 437);
+            this.dgdScreen.Size = new System.Drawing.Size(374, 286);
             this.dgdScreen.TabIndex = 0;
             this.dgdScreen.SelectionChanged += new System.EventHandler(this.dgdScreen_SelectionChanged);
             // 
@@ -419,11 +406,10 @@
             this.enable,
             this.visible,
             this.objectName});
-            this.dgdComponent.Location = new System.Drawing.Point(574, 5);
-            this.dgdComponent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dgdComponent.Location = new System.Drawing.Point(383, 3);
             this.dgdComponent.Name = "dgdComponent";
             this.dgdComponent.ReadOnly = true;
-            this.dgdComponent.Size = new System.Drawing.Size(849, 437);
+            this.dgdComponent.Size = new System.Drawing.Size(564, 286);
             this.dgdComponent.TabIndex = 1;
             // 
             // objectAlias
@@ -500,29 +486,26 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 11);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(6, 7);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(172, 29);
+            this.label2.Size = new System.Drawing.Size(106, 18);
             this.label2.TabIndex = 8;
             this.label2.Text = "Search Screen";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(184, 6);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox1.Location = new System.Drawing.Point(123, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(424, 33);
+            this.textBox1.Size = new System.Drawing.Size(284, 24);
             this.textBox1.TabIndex = 7;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSave.Location = new System.Drawing.Point(1203, 69);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSave.Location = new System.Drawing.Point(802, 45);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(136, 75);
+            this.btnSave.Size = new System.Drawing.Size(91, 49);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -531,10 +514,9 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnCancel.Location = new System.Drawing.Point(1348, 69);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCancel.Location = new System.Drawing.Point(899, 45);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(136, 75);
+            this.btnCancel.Size = new System.Drawing.Size(91, 49);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -542,17 +524,16 @@
             // 
             // UserGroupManagementForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1512, 834);
+            this.ClientSize = new System.Drawing.Size(1008, 542);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "UserGroupManagementForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -74,7 +74,58 @@
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="ConfigFileFormat">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="FileCode" Type="varchar" MaxLength="25" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" />
+          <Property Name="TempTableName" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="varchar" MaxLength="25" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" />
+          <Property Name="TempTableErrorName" Type="varchar" MaxLength="50" />
+          <Property Name="TempTableLineErrorName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ConfigFileFormatDetail">
+          <Key>
+            <PropertyRef Name="FileDetailID" />
+          </Key>
+          <Property Name="FileDetailID" Type="int" Nullable="false" />
+          <Property Name="FileID" Type="int" />
+          <Property Name="ColumnNo" Type="int" />
+          <Property Name="PrimaryKey" Type="varchar" MaxLength="2" />
+          <Property Name="Field" Type="varchar" MaxLength="25" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="varchar" MaxLength="10" />
+          <Property Name="Length" Type="int" />
+          <Property Name="Required" Type="char" MaxLength="1" />
+          <Property Name="Default" Type="varchar" MaxLength="25" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" />
+          <Property Name="AllFilePrimaryKey" Type="varchar" MaxLength="1" />
+        </EntityType>
         <EntityType Name="ConfigReport">
+          <Key>
+            <PropertyRef Name="ReportCode" />
+            <PropertyRef Name="ConditionName" />
+          </Key>
+          <Property Name="ReportCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ConditionName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ConditionObject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DefaultValue" Type="varchar" MaxLength="100" />
+          <Property Name="AllowChange" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigReport_bak">
           <Key>
             <PropertyRef Name="ReportCode" />
             <PropertyRef Name="ConditionName" />
@@ -155,9 +206,8 @@
           <Property Name="DownloadLID" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="HHTName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="LocationCode" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="SectionCode" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="ScanMode" Type="int" Nullable="false" />
-          <Property Name="SectionName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StorageCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="StorageName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="BrandCode" Type="varchar" MaxLength="5" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
@@ -194,7 +244,7 @@
           <Property Name="UnitCode" Type="int" Nullable="false" />
           <Property Name="Flag" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" />
-          <Property Name="SKUCode" Type="varchar" MaxLength="25" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="40" />
           <Property Name="ExBarCode" Type="varchar" MaxLength="25" />
           <Property Name="InBarCode" Type="varchar" MaxLength="25" />
           <Property Name="SKUMode" Type="bit" Nullable="false" />
@@ -208,29 +258,74 @@
           <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="100" />
+          <Property Name="ConversionCounter" Type="varchar" MaxLength="10" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialGroup" Type="varchar" MaxLength="50" />
+          <Property Name="ComputerName" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
             <PropertyRef Name="LocationCode" />
+            <PropertyRef Name="SectionCode" />
+            <PropertyRef Name="StorageLocationCode" />
           </Key>
           <Property Name="LocationCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="SectionCode" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="StorageLocationCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogError">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ErrorClass" Type="varchar" MaxLength="50" />
+          <Property Name="ErrorMethod" Type="varchar" MaxLength="50" />
+          <Property Name="Exception" Type="varchar(max)" Nullable="false" />
+          <Property Name="ErrorDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogSystem">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class" Type="varchar" MaxLength="50" />
+          <Property Name="Method" Type="varchar" MaxLength="50" />
+          <Property Name="Exception" Type="varchar(max)" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MasterBarcode">
           <Key>
             <PropertyRef Name="ExBarcode" />
           </Key>
-          <Property Name="ExBarcode" Type="varchar" MaxLength="13" Nullable="false" />
-          <Property Name="DepartmentCode" Type="varchar" MaxLength="6" />
-          <Property Name="SKUCode" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="ExBarcode" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="10" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterBranch">
+          <Key>
+            <PropertyRef Name="BranchCode" />
+          </Key>
+          <Property Name="BranchCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="BranchEName" Type="varchar" MaxLength="50" />
+          <Property Name="BranchTName" Type="varchar" MaxLength="50" />
+          <Property Name="EffDate" Type="datetime" />
+          <Property Name="ExpDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="10" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="MasterBrand">
           <Key>
@@ -238,7 +333,7 @@
           </Key>
           <Property Name="BrandCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="BrandName" Type="varchar" MaxLength="50" />
-          <Property Name="DepartmentCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" />
         </EntityType>
@@ -249,14 +344,25 @@
             <PropertyRef Name="Barcode" />
           </Key>
           <Property Name="STATUS" Type="varchar" MaxLength="1" />
-          <Property Name="GroupCode" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="ProductCode" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="GroupCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Barcode" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ProductName" Type="varchar" MaxLength="45" />
           <Property Name="UnitQTY" Type="int" />
           <Property Name="SKUCode" Type="varchar" MaxLength="25" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MasterPlant">
+          <Key>
+            <PropertyRef Name="PlantCode" />
+          </Key>
+          <Property Name="PlantCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PlantDescription" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MasterReport">
           <Key>
@@ -270,16 +376,17 @@
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <EntityType Name="MasterScanMode">
+        <EntityType Name="MasterReport_bak">
           <Key>
-            <PropertyRef Name="ScanModeID" />
+            <PropertyRef Name="ReportCode" />
           </Key>
-          <Property Name="ScanModeID" Type="int" Nullable="false" />
-          <Property Name="ScanModeName" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ReportCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ReportName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ReportFile" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
-          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="MasterScreen">
           <Key>
@@ -293,18 +400,31 @@
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="MasterSerialNumber">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="40" />
+          <Property Name="Barcode" Type="varchar" MaxLength="18" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="18" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="4" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="createdate" Type="datetime" />
+          <Property Name="createby" Type="varchar" MaxLength="20" />
+        </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'STOCKTAKING_APP_Phase2.dbo.MasterSKU' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="MasterSKU">
           <Key>
             <PropertyRef Name="ExBarcode" />
             <PropertyRef Name="InBarcode" />
             <PropertyRef Name="SKUCode" />
             <PropertyRef Name="Department" />
-            <PropertyRef Name="ScanMode" />
+            <PropertyRef Name="StorageLocation" />
           </Key>
-          <Property Name="ExBarcode" Type="varchar" MaxLength="13" Nullable="false" />
-          <Property Name="InBarcode" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="ExBarcode" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="InBarcode" Type="varchar" MaxLength="18" Nullable="false" />
           <Property Name="BrandCode" Type="varchar" MaxLength="5" />
           <Property Name="QTYOnHand" Type="int" />
           <Property Name="StockOnHand" Type="int" />
@@ -312,15 +432,27 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="StockOnHandW" Type="int" />
           <Property Name="Price" Type="decimal" Precision="9" Scale="2" />
           <Property Name="Description" Type="varchar" MaxLength="45" />
-          <Property Name="SKUCode" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="Department" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="DepartmentName" Type="varchar" MaxLength="30" />
-          <Property Name="Vendor" Type="varchar" MaxLength="5" />
+          <Property Name="Vendor" Type="varchar" MaxLength="10" />
           <Property Name="MKCode" Type="varchar" MaxLength="5" />
-          <Property Name="ProductType" Type="varchar" MaxLength="1" />
-          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="ProductType" Type="varchar" MaxLength="30" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MasterStorageLocation">
+          <Key>
+            <PropertyRef Name="StorageLocationCode" />
+          </Key>
+          <Property Name="StorageLocationCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="StorageLocationName" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MasterUnit">
           <Key>
@@ -335,32 +467,118 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="MastMCHLevel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel4" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MastSAP_Barcode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="AltUOM" Type="varchar" MaxLength="50" />
+          <Property Name="MarerialDesc" Type="varchar" MaxLength="50" />
+          <Property Name="BarCode" Type="varchar" MaxLength="50" />
+          <Property Name="EANCodeCat" Type="varchar" MaxLength="50" />
+          <Property Name="ConversionCounter" Type="varchar" MaxLength="50" />
+          <Property Name="ConversionDenominator" Type="varchar" MaxLength="50" />
+          <Property Name="BaseUOM" Type="varchar" MaxLength="50" />
+          <Property Name="SAPIdoc" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MastSAP_RegularPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="SKU" Type="varchar" MaxLength="50" />
+          <Property Name="UPC" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MastSAP_SKU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="LineItem" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreate" Type="varchar" MaxLength="50" />
+          <Property Name="CycleFullCount" Type="varchar" MaxLength="50" />
+          <Property Name="PIRefDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialDesc" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialGroup" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialGroupDesc" Type="varchar" MaxLength="50" />
+          <Property Name="SubDepartment" Type="varchar" MaxLength="50" />
+          <Property Name="SubDepartmentDesc" Type="varchar" MaxLength="50" />
+          <Property Name="WeightingValue" Type="varchar" MaxLength="50" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="BrandDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="PlantDesc" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="SpecialStock" Type="varchar" MaxLength="50" />
+          <Property Name="StockType" Type="varchar" MaxLength="50" />
+          <Property Name="Vendor" Type="varchar" MaxLength="50" />
+          <Property Name="WBS" Type="varchar" MaxLength="50" />
+          <Property Name="BaseUOM" Type="varchar" MaxLength="50" />
+          <Property Name="BookQTY" Type="varchar" MaxLength="50" />
+          <Property Name="CountedQTY" Type="varchar" MaxLength="50" />
+          <Property Name="ActualCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="PlanCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="SAPIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1Desc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2Desc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3Desc" Type="varchar" MaxLength="50" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Section">
           <Key>
             <PropertyRef Name="SectionCode" />
-            <PropertyRef Name="ScanMode" />
+            <PropertyRef Name="SectionName" />
+            <PropertyRef Name="StorageLocationCode" />
+            <PropertyRef Name="PlantCode" />
+            <PropertyRef Name="CountSheet" />
           </Key>
           <Property Name="SectionCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="SectionName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ScanMode" Type="int" Nullable="false" />
+          <Property Name="StorageLocationCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PlantCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="CountSheet" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel4" Type="varchar" MaxLength="50" />
           <Property Name="LocationFrom" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="LocationTo" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="BrandCode" Type="varchar" MaxLength="5" />
-          <Property Name="DepartmentCode" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="SystemSettings">
           <Key>
@@ -378,6 +596,288 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="CreateBy" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempFileAcknowledgeBarDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Line" Type="int" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+          <Property Name="Total" Type="varchar" MaxLength="50" />
+          <Property Name="Success" Type="varchar" MaxLength="50" />
+          <Property Name="Error" Type="varchar" MaxLength="50" />
+          <Property Name="SuccessTime" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TempFileAcknowledgeSKUDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Line" Type="int" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+          <Property Name="Total" Type="varchar" MaxLength="50" />
+          <Property Name="Success" Type="varchar" MaxLength="50" />
+          <Property Name="Error" Type="varchar" MaxLength="50" />
+          <Property Name="SuccessTime" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TempFileBarcodeDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="AltUOM" Type="varchar" MaxLength="50" />
+          <Property Name="MarerialDesc" Type="varchar" MaxLength="50" />
+          <Property Name="BarCode" Type="varchar" MaxLength="50" />
+          <Property Name="EANCodeCat" Type="varchar" MaxLength="50" />
+          <Property Name="ConversionCounter" Type="varchar" MaxLength="50" />
+          <Property Name="ConversionDenominator" Type="varchar" MaxLength="50" />
+          <Property Name="BaseUOM" Type="varchar" MaxLength="50" />
+          <Property Name="SAPIdoc" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TempFileBarcodeError">
+          <Key>
+            <PropertyRef Name="URNO" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="PIDoc" Type="text" />
+          <Property Name="Year" Type="text" />
+          <Property Name="Material" Type="text" />
+          <Property Name="AltUOM" Type="text" />
+          <Property Name="MarerialDesc" Type="text" />
+          <Property Name="BarCode" Type="text" />
+          <Property Name="EANCodeCat" Type="text" />
+          <Property Name="ConversionCounter" Type="text" />
+          <Property Name="ConversionDenominator" Type="text" />
+          <Property Name="BaseUOM" Type="text" />
+          <Property Name="SAPIdoc" Type="text" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+          <Property Name="Error" Type="varchar(max)" />
+          <Property Name="URNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempFileBarcodeLineError">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LineString" Type="varchar(max)" />
+          <Property Name="ErrorDesc" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TempFileExportDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Line" Type="int" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="LineItem" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreate" Type="varchar" MaxLength="50" />
+          <Property Name="CycleFullCount" Type="varchar" MaxLength="50" />
+          <Property Name="PIRefDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialDesc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1Desc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2Desc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3Desc" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialGroup" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialGroupDesc" Type="varchar" MaxLength="50" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="50" />
+          <Property Name="WeightingValue" Type="varchar" MaxLength="50" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="BrandDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="PlantDesc" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="SpecialStock" Type="varchar" MaxLength="50" />
+          <Property Name="StockType" Type="varchar" MaxLength="50" />
+          <Property Name="Vendor" Type="varchar" MaxLength="50" />
+          <Property Name="WBS" Type="varchar" MaxLength="50" />
+          <Property Name="BaseUOM" Type="varchar" MaxLength="50" />
+          <Property Name="BookQTY" Type="varchar" MaxLength="50" />
+          <Property Name="CountedQTY" Type="varchar" MaxLength="50" />
+          <Property Name="ActualCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="PlanCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="SAPIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TempFileRegularPriceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="SKU" Type="varchar" MaxLength="50" />
+          <Property Name="UPC" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TempFileRegularPriceError">
+          <Key>
+            <PropertyRef Name="URNO" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Plant" Type="text" />
+          <Property Name="SKU" Type="text" />
+          <Property Name="UPC" Type="text" />
+          <Property Name="Price" Type="text" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+          <Property Name="Error" Type="varchar(max)" />
+          <Property Name="URNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempFileRegularPriceLineError">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LineString" Type="varchar(max)" />
+          <Property Name="ErrorDesc" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TempFileSKUDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="LineItem" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreate" Type="varchar" MaxLength="50" />
+          <Property Name="CycleFullCount" Type="varchar" MaxLength="50" />
+          <Property Name="PIRefDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialDesc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="20" />
+          <Property Name="MCHLevel1Desc" Type="varchar" MaxLength="40" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="20" />
+          <Property Name="MCHLevel2Desc" Type="varchar" MaxLength="40" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="20" />
+          <Property Name="MCHLevel3Desc" Type="varchar" MaxLength="40" />
+          <Property Name="MaterialGroup" Type="varchar" MaxLength="20" />
+          <Property Name="MaterialGroupDesc" Type="varchar" MaxLength="40" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="40" />
+          <Property Name="WeightingValue" Type="varchar" MaxLength="50" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="BrandDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="PlantDesc" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="SpecialStock" Type="varchar" MaxLength="50" />
+          <Property Name="StockType" Type="varchar" MaxLength="50" />
+          <Property Name="Vendor" Type="varchar" MaxLength="50" />
+          <Property Name="WBS" Type="varchar" MaxLength="50" />
+          <Property Name="BaseUOM" Type="varchar" MaxLength="50" />
+          <Property Name="BookQTY" Type="varchar" MaxLength="50" />
+          <Property Name="CountedQTY" Type="varchar" MaxLength="50" />
+          <Property Name="ActualCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="PlanCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="SAPIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TempFileSKUError">
+          <Key>
+            <PropertyRef Name="URNO" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="LineItem" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreate" Type="varchar" MaxLength="50" />
+          <Property Name="CycleFullCount" Type="varchar" MaxLength="50" />
+          <Property Name="PIRefDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialDesc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="20" />
+          <Property Name="MCHLevel1Desc" Type="varchar" MaxLength="40" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="20" />
+          <Property Name="MCHLevel2Desc" Type="varchar" MaxLength="40" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="20" />
+          <Property Name="MCHLevel3Desc" Type="varchar" MaxLength="40" />
+          <Property Name="MaterialGroup" Type="varchar" MaxLength="20" />
+          <Property Name="MaterialGroupDesc" Type="varchar" MaxLength="40" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="40" />
+          <Property Name="WeightingValue" Type="varchar" MaxLength="50" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="BrandDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="PlantDesc" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="SpecialStock" Type="varchar" MaxLength="50" />
+          <Property Name="StockType" Type="varchar" MaxLength="50" />
+          <Property Name="Vendor" Type="varchar" MaxLength="50" />
+          <Property Name="WBS" Type="varchar" MaxLength="50" />
+          <Property Name="BaseUOM" Type="varchar" MaxLength="50" />
+          <Property Name="BookQTY" Type="varchar" MaxLength="50" />
+          <Property Name="CountedQTY" Type="varchar" MaxLength="50" />
+          <Property Name="ActualCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="PlanCountDate" Type="varchar" MaxLength="50" />
+          <Property Name="SAPIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="TempFileName" Type="varchar" MaxLength="50" />
+          <Property Name="Error" Type="varchar(max)" />
+          <Property Name="URNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempFileSKULineError">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LineString" Type="varchar(max)" />
+          <Property Name="ErrorDesc" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tmp_MasterMapping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Plant" Type="varchar" MaxLength="4" />
+          <Property Name="CountSheet" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="4" />
+          <Property Name="SectionCode" Type="varchar" MaxLength="50" />
+          <Property Name="SKUCode" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="InBarCode" Type="varchar" MaxLength="50" />
+          <Property Name="ExBarCode" Type="varchar" MaxLength="50" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentCode" Type="varchar" MaxLength="50" />
+          <Property Name="MKCode" Type="varchar" MaxLength="50" />
+          <Property Name="ProductType" Type="varchar" MaxLength="50" />
+          <Property Name="Location" Type="varchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="tmpHHTStocktaking">
           <Key>
@@ -407,6 +907,16 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateBy" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ImportDate" Type="datetime" Nullable="false" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="100" />
+          <Property Name="ConversionCounter" Type="varchar" MaxLength="10" />
+          <Property Name="StorageLocation" Type="varchar" MaxLength="50" />
+          <Property Name="StorageLocationDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" />
+          <Property Name="PIDoc" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel1" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel2" Type="varchar" MaxLength="50" />
+          <Property Name="MCHLevel3" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialGroup" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -456,20 +966,6 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
             </Principal>
             <Dependent Role="ConfigFileDetailAS400">
               <PropertyRef Name="FileID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Location_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Location" Type="Self.Location" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionCode" />
-              <PropertyRef Name="ScanMode" />
-            </Principal>
-            <Dependent Role="Location">
-              <PropertyRef Name="SectionCode" />
-              <PropertyRef Name="ScanMode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -577,7 +1073,10 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <EntitySet Name="ConfigBackupTable" EntityType="Self.ConfigBackupTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfigFileAS400" EntityType="Self.ConfigFileAS400" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfigFileDetailAS400" EntityType="Self.ConfigFileDetailAS400" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigFileFormat" EntityType="Self.ConfigFileFormat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigFileFormatDetail" EntityType="Self.ConfigFileFormatDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfigReport" EntityType="Self.ConfigReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigReport_bak" EntityType="Self.ConfigReport_bak" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfigUserGroup" EntityType="Self.ConfigUserGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfigUserGroupPermission" EntityType="Self.ConfigUserGroupPermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConfigUserGroupReport" EntityType="Self.ConfigUserGroupReport" Schema="dbo" store:Type="Tables" />
@@ -586,16 +1085,38 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <EntitySet Name="DownloadSKU" EntityType="Self.DownloadSKU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HHTStocktaking" EntityType="Self.HHTStocktaking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogError" EntityType="Self.LogError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogSystem" EntityType="Self.LogSystem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterBarcode" EntityType="Self.MasterBarcode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterBranch" EntityType="Self.MasterBranch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterBrand" EntityType="Self.MasterBrand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterPack" EntityType="Self.MasterPack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterPlant" EntityType="Self.MasterPlant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterReport" EntityType="Self.MasterReport" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MasterScanMode" EntityType="Self.MasterScanMode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterReport_bak" EntityType="Self.MasterReport_bak" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterScreen" EntityType="Self.MasterScreen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterSerialNumber" EntityType="Self.MasterSerialNumber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterStorageLocation" EntityType="Self.MasterStorageLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterUnit" EntityType="Self.MasterUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MastMCHLevel" EntityType="Self.MastMCHLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MastSAP_Barcode" EntityType="Self.MastSAP_Barcode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MastSAP_RegularPrice" EntityType="Self.MastSAP_RegularPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MastSAP_SKU" EntityType="Self.MastSAP_SKU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemSettings" EntityType="Self.SystemSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileAcknowledgeBarDetail" EntityType="Self.TempFileAcknowledgeBarDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileAcknowledgeSKUDetail" EntityType="Self.TempFileAcknowledgeSKUDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileBarcodeDetail" EntityType="Self.TempFileBarcodeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileBarcodeError" EntityType="Self.TempFileBarcodeError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileBarcodeLineError" EntityType="Self.TempFileBarcodeLineError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileExportDetail" EntityType="Self.TempFileExportDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileRegularPriceDetail" EntityType="Self.TempFileRegularPriceDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileRegularPriceError" EntityType="Self.TempFileRegularPriceError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileRegularPriceLineError" EntityType="Self.TempFileRegularPriceLineError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileSKUDetail" EntityType="Self.TempFileSKUDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileSKUError" EntityType="Self.TempFileSKUError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempFileSKULineError" EntityType="Self.TempFileSKULineError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tmp_MasterMapping" EntityType="Self.tmp_MasterMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tmpHHTStocktaking" EntityType="Self.tmpHHTStocktaking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
@@ -616,7 +1137,8 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
     [MasterSKU].[Vendor] AS [Vendor], 
     [MasterSKU].[MKCode] AS [MKCode], 
     [MasterSKU].[ProductType] AS [ProductType], 
-    [MasterSKU].[ScanMode] AS [ScanMode], 
+    [MasterSKU].[StorageLocation] AS [StorageLocation], 
+    [MasterSKU].[StorageLocationDesc] AS [StorageLocationDesc], 
     [MasterSKU].[CreateDate] AS [CreateDate], 
     [MasterSKU].[CreateBy] AS [CreateBy]
     FROM [dbo].[MasterSKU] AS [MasterSKU]</DefiningQuery>
@@ -628,10 +1150,6 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <AssociationSet Name="FK_ConfigFileDetailAS400_ConfigFileAS400" Association="Self.FK_ConfigFileDetailAS400_ConfigFileAS400">
             <End Role="ConfigFileAS400" EntitySet="ConfigFileAS400" />
             <End Role="ConfigFileDetailAS400" EntitySet="ConfigFileDetailAS400" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Location_Section" Association="Self.FK_Location_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="Location" EntitySet="Location" />
           </AssociationSet>
           <AssociationSet Name="FK_USERGROU_FK_USERGR_USERSCRE" Association="Self.FK_USERGROU_FK_USERGR_USERSCRE">
             <End Role="MasterScreen" EntitySet="MasterScreen" />
@@ -676,26 +1194,44 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <EntitySet Name="ConfigBackupTables" EntityType="Model.ConfigBackupTable" />
           <EntitySet Name="ConfigFileAS400" EntityType="Model.ConfigFileAS400" />
           <EntitySet Name="ConfigFileDetailAS400" EntityType="Model.ConfigFileDetailAS400" />
+          <EntitySet Name="ConfigFileFormats" EntityType="Model.ConfigFileFormat" />
+          <EntitySet Name="ConfigFileFormatDetails" EntityType="Model.ConfigFileFormatDetail" />
           <EntitySet Name="ConfigReports" EntityType="Model.ConfigReport" />
+          <EntitySet Name="ConfigReport_bak" EntityType="Model.ConfigReport_bak" />
           <EntitySet Name="ConfigUserGroups" EntityType="Model.ConfigUserGroup" />
           <EntitySet Name="ConfigUserGroupPermissions" EntityType="Model.ConfigUserGroupPermission" />
           <EntitySet Name="ConfigUserGroupReports" EntityType="Model.ConfigUserGroupReport" />
           <EntitySet Name="ConfigUserGroupScreens" EntityType="Model.ConfigUserGroupScreen" />
           <EntitySet Name="DownloadLocations" EntityType="Model.DownloadLocation" />
           <EntitySet Name="DownloadSKUs" EntityType="Model.DownloadSKU" />
-          <EntitySet Name="Locations" EntityType="Model.Location" />
+          <EntitySet Name="LogErrors" EntityType="Model.LogError" />
+          <EntitySet Name="MasterBarcodes" EntityType="Model.MasterBarcode" />
+          <EntitySet Name="MasterBranches" EntityType="Model.MasterBranch" />
           <EntitySet Name="MasterBrands" EntityType="Model.MasterBrand" />
           <EntitySet Name="MasterPacks" EntityType="Model.MasterPack" />
+          <EntitySet Name="MasterPlants" EntityType="Model.MasterPlant" />
           <EntitySet Name="MasterReports" EntityType="Model.MasterReport" />
-          <EntitySet Name="MasterScanModes" EntityType="Model.MasterScanMode" />
+          <EntitySet Name="MasterReport_bak" EntityType="Model.MasterReport_bak" />
           <EntitySet Name="MasterScreens" EntityType="Model.MasterScreen" />
+          <EntitySet Name="MasterStorageLocations" EntityType="Model.MasterStorageLocation" />
           <EntitySet Name="MasterUnits" EntityType="Model.MasterUnit" />
-          <EntitySet Name="Sections" EntityType="Model.Section" />
-          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
+          <EntitySet Name="MastMCHLevels" EntityType="Model.MastMCHLevel" />
+          <EntitySet Name="MastSAP_Barcode" EntityType="Model.MastSAP_Barcode" />
+          <EntitySet Name="MastSAP_RegularPrice" EntityType="Model.MastSAP_RegularPrice" />
           <EntitySet Name="SystemSettings" EntityType="Model.SystemSetting" />
+          <EntitySet Name="TempFileAcknowledgeBarDetails" EntityType="Model.TempFileAcknowledgeBarDetail" />
+          <EntitySet Name="TempFileAcknowledgeSKUDetails" EntityType="Model.TempFileAcknowledgeSKUDetail" />
+          <EntitySet Name="TempFileBarcodeDetails" EntityType="Model.TempFileBarcodeDetail" />
+          <EntitySet Name="TempFileBarcodeErrors" EntityType="Model.TempFileBarcodeError" />
+          <EntitySet Name="TempFileBarcodeLineErrors" EntityType="Model.TempFileBarcodeLineError" />
+          <EntitySet Name="TempFileRegularPriceDetails" EntityType="Model.TempFileRegularPriceDetail" />
+          <EntitySet Name="TempFileRegularPriceErrors" EntityType="Model.TempFileRegularPriceError" />
+          <EntitySet Name="TempFileRegularPriceLineErrors" EntityType="Model.TempFileRegularPriceLineError" />
+          <EntitySet Name="TempFileSKUDetails" EntityType="Model.TempFileSKUDetail" />
+          <EntitySet Name="TempFileSKUErrors" EntityType="Model.TempFileSKUError" />
+          <EntitySet Name="TempFileSKULineErrors" EntityType="Model.TempFileSKULineError" />
           <EntitySet Name="Users" EntityType="Model.User" />
           <EntitySet Name="UserGroups" EntityType="Model.UserGroup" />
-          <EntitySet Name="MasterSKUs" EntityType="Model.MasterSKU" />
           <AssociationSet Name="FK_BACKUPHI_REFERENCE_BACKUPHI" Association="Model.FK_BACKUPHI_REFERENCE_BACKUPHI">
             <End Role="BackupHistory" EntitySet="BackupHistories" />
             <End Role="BackupHistoryDetail" EntitySet="BackupHistoryDetails" />
@@ -736,13 +1272,16 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
             <End Role="UserGroup" EntitySet="UserGroups" />
             <End Role="ConfigUserGroupScreen" EntitySet="ConfigUserGroupScreens" />
           </AssociationSet>
-          <AssociationSet Name="FK_Location_Section" Association="Model.FK_Location_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="Location" EntitySet="Locations" />
-          </AssociationSet>
-          <EntitySet Name="tmpHHTStocktakings" EntityType="Model.tmpHHTStocktaking" />
-          <EntitySet Name="MasterBarcodes" EntityType="Model.MasterBarcode" />
+          <EntitySet Name="MastSAP_SKU" EntityType="Model.MastSAP_SKU" />
+          <EntitySet Name="TempFileExportDetails" EntityType="Model.TempFileExportDetail" />
+          <EntitySet Name="MasterSerialNumbers" EntityType="Model.MasterSerialNumber" />
           <EntitySet Name="HHTStocktakings" EntityType="Model.HHTStocktaking" />
+          <EntitySet Name="tmpHHTStocktakings" EntityType="Model.tmpHHTStocktaking" />
+          <EntitySet Name="LogSystems" EntityType="Model.LogSystem" />
+          <EntitySet Name="Locations" EntityType="Model.Location" />
+          <EntitySet Name="Sections" EntityType="Model.Section" />
+          <EntitySet Name="MasterSKUs" EntityType="Model.MasterSKU" />
+          <EntitySet Name="tmp_MasterMapping" EntityType="Model.tmp_MasterMapping" />
         </EntityContainer>
         <EntityType Name="BackupHistory">
           <Key>
@@ -817,6 +1356,42 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ConfigFileAS400" Relationship="Model.FK_ConfigFileDetailAS400_ConfigFileAS400" FromRole="ConfigFileDetailAS400" ToRole="ConfigFileAS400" />
         </EntityType>
+        <EntityType Name="ConfigFileFormat">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="FileCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TempTableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TempTableErrorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TempTableLineErrorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ConfigFileFormatDetail">
+          <Key>
+            <PropertyRef Name="FileDetailID" />
+          </Key>
+          <Property Name="FileDetailID" Type="Int32" Nullable="false" />
+          <Property Name="FileID" Type="Int32" />
+          <Property Name="ColumnNo" Type="Int32" />
+          <Property Name="PrimaryKey" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Field" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="Required" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Default" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AllFilePrimaryKey" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="ConfigReport">
           <Key>
             <PropertyRef Name="ReportCode" />
@@ -832,6 +1407,21 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MasterReport" Relationship="Model.FK_USERREPO_REFERENCE_USERREPO" FromRole="ConfigReport" ToRole="MasterReport" />
+        </EntityType>
+        <EntityType Name="ConfigReport_bak">
+          <Key>
+            <PropertyRef Name="ReportCode" />
+            <PropertyRef Name="ConditionName" />
+          </Key>
+          <Property Name="ReportCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ConditionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ConditionObject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DefaultValue" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AllowChange" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ConfigUserGroup">
           <Key>
@@ -907,9 +1497,8 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="DownloadLID" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="HHTName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="ScanMode" Type="Int32" Nullable="false" />
-          <Property Name="SectionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StorageCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="StorageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -933,18 +1522,38 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Location">
+        <EntityType Name="LogError">
           <Key>
-            <PropertyRef Name="LocationCode" />
+            <PropertyRef Name="LogId" />
           </Key>
-          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="ScanMode" Type="Int32" Nullable="false" />
-          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Exception" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="MasterBarcode">
+          <Key>
+            <PropertyRef Name="ExBarcode" />
+          </Key>
+          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Section" Relationship="Model.FK_Location_Section" FromRole="Location" ToRole="Section" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MasterBranch">
+          <Key>
+            <PropertyRef Name="BranchCode" />
+          </Key>
+          <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BranchEName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BranchTName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EffDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="MasterBrand">
           <Key>
@@ -952,7 +1561,7 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           </Key>
           <Property Name="BrandCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="BrandName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DepartmentCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -963,14 +1572,25 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
             <PropertyRef Name="Barcode" />
           </Key>
           <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="GroupCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="GroupCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ProductName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="UnitQTY" Type="Int32" />
           <Property Name="SKUCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MasterPlant">
+          <Key>
+            <PropertyRef Name="PlantCode" />
+          </Key>
+          <Property Name="PlantCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PlantDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="MasterReport">
           <Key>
@@ -986,16 +1606,17 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <NavigationProperty Name="ConfigReports" Relationship="Model.FK_USERREPO_REFERENCE_USERREPO" FromRole="MasterReport" ToRole="ConfigReport" />
           <NavigationProperty Name="ConfigUserGroupReports" Relationship="Model.FK_USERGROU_REFERENCE_USERREPO" FromRole="MasterReport" ToRole="ConfigUserGroupReport" />
         </EntityType>
-        <EntityType Name="MasterScanMode">
+        <EntityType Name="MasterReport_bak">
           <Key>
-            <PropertyRef Name="ScanModeID" />
+            <PropertyRef Name="ReportCode" />
           </Key>
-          <Property Name="ScanModeID" Type="Int32" Nullable="false" />
-          <Property Name="ScanModeName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ReportCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ReportName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ReportFile" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MasterScreen">
           <Key>
@@ -1010,6 +1631,17 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ConfigUserGroupScreens" Relationship="Model.FK_USERGROU_FK_USERGR_USERSCRE" FromRole="MasterScreen" ToRole="ConfigUserGroupScreen" />
         </EntityType>
+        <EntityType Name="MasterStorageLocation">
+          <Key>
+            <PropertyRef Name="StorageLocationCode" />
+          </Key>
+          <Property Name="StorageLocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="MasterUnit">
           <Key>
             <PropertyRef Name="UnitCode" />
@@ -1023,33 +1655,48 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Section">
+        <EntityType Name="MastMCHLevel">
           <Key>
-            <PropertyRef Name="SectionCode" />
-            <PropertyRef Name="ScanMode" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="SectionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ScanMode" Type="Int32" Nullable="false" />
-          <Property Name="LocationFrom" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="LocationTo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Locations" Relationship="Model.FK_Location_Section" FromRole="Section" ToRole="Location" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="MastSAP_Barcode">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AltUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MarerialDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EANCodeCat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionCounter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionDenominator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIdoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MastSAP_RegularPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UPC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SystemSetting">
           <Key>
@@ -1067,6 +1714,226 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileAcknowledgeBarDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Success" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SuccessTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileAcknowledgeSKUDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Success" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SuccessTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileBarcodeDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AltUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MarerialDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EANCodeCat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionCounter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionDenominator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIdoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileBarcodeError">
+          <Key>
+            <PropertyRef Name="URNO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PIDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AltUOM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MarerialDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BarCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EANCodeCat" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionCounter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionDenominator" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIdoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="URNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="TempFileBarcodeLineError">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="LineString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TempFileRegularPriceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UPC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileRegularPriceError">
+          <Key>
+            <PropertyRef Name="URNO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Plant" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SKU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UPC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="URNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="TempFileRegularPriceLineError">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="LineString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TempFileSKUDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LineItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CycleFullCount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIRefDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1Desc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2Desc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3Desc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroup" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroupDesc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="WeightingValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BrandDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlantDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialStock" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WBS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountedQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlanCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileSKUError">
+          <Key>
+            <PropertyRef Name="URNO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LineItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CycleFullCount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIRefDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1Desc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2Desc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3Desc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroup" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroupDesc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="WeightingValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BrandDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlantDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialStock" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WBS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountedQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlanCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="TempFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="URNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="TempFileSKULineError">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="LineString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1098,33 +1965,6 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <NavigationProperty Name="ConfigUserGroups" Relationship="Model.FK_USERGROUPMAP_USERGROUP" FromRole="UserGroup" ToRole="ConfigUserGroup" />
           <NavigationProperty Name="ConfigUserGroupReports" Relationship="Model.FK_USERGROU_REFERENCE_USERGROU" FromRole="UserGroup" ToRole="ConfigUserGroupReport" />
           <NavigationProperty Name="ConfigUserGroupScreens" Relationship="Model.FK_USERGROUP_SCREENMAP" FromRole="UserGroup" ToRole="ConfigUserGroupScreen" />
-        </EntityType>
-        <EntityType Name="MasterSKU">
-          <Key>
-            <PropertyRef Name="ExBarcode" />
-            <PropertyRef Name="InBarcode" />
-            <PropertyRef Name="SKUCode" />
-            <PropertyRef Name="Department" />
-            <PropertyRef Name="ScanMode" />
-          </Key>
-          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Name="InBarcode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="QTYOnHand" Type="Int32" />
-          <Property Name="StockOnHand" Type="Int32" />
-          <Property Name="QTYOnHandW" Type="Int32" />
-          <Property Name="StockOnHandW" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Department" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Vendor" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="MKCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="ProductType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ScanMode" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_BACKUPHI_REFERENCE_BACKUPHI">
           <End Type="Model.BackupHistory" Role="BackupHistory" Multiplicity="1" />
@@ -1248,20 +2088,146 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Location_Section">
-          <End Type="Model.Section" Role="Section" Multiplicity="1" />
-          <End Type="Model.Location" Role="Location" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionCode" />
-              <PropertyRef Name="ScanMode" />
-            </Principal>
-            <Dependent Role="Location">
-              <PropertyRef Name="SectionCode" />
-              <PropertyRef Name="ScanMode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="MastSAP_SKU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LineItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CycleFullCount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIRefDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroupDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubDepartment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubDepartmentDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WeightingValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BrandDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlantDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialStock" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WBS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountedQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlanCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TempFileExportDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LineItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CycleFullCount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIRefDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3Desc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroupDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WeightingValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BrandDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlantDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialStock" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WBS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BaseUOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountedQTY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PlanCountDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SAPIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MasterSerialNumber">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SKUCode" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createdate" Type="DateTime" Precision="3" />
+          <Property Name="createby" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="HHTStocktaking">
+          <Key>
+            <PropertyRef Name="StocktakingID" />
+          </Key>
+          <Property Name="StocktakingID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="NewQuantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="UnitCode" Type="Int32" Nullable="false" />
+          <Property Name="Flag" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ExBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SKUMode" Type="Boolean" Nullable="false" />
+          <Property Name="HHTName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CountDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MKCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProductType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FlagPrint" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionCounter" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComputerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="tmpHHTStocktaking">
           <Key>
             <PropertyRef Name="StocktakingID" />
@@ -1290,45 +2256,112 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ImportDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SerialNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ConversionCounter" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Plant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="MasterBarcode">
+        <EntityType Name="LogSystem">
           <Key>
-            <PropertyRef Name="ExBarcode" />
+            <PropertyRef Name="LogId" />
           </Key>
-          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Name="DepartmentCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="ScanMode" Type="Int32" Nullable="false" />
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="HHTStocktaking">
+        <EntityType Name="Location">
           <Key>
-            <PropertyRef Name="StocktakingID" />
+            <PropertyRef Name="LocationCode" />
+            <PropertyRef Name="SectionCode" />
+            <PropertyRef Name="StorageLocationCode" />
           </Key>
-          <Property Name="StocktakingID" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="ScanMode" Type="Int32" Nullable="false" />
           <Property Name="LocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Barcode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="NewQuantity" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="UnitCode" Type="Int32" Nullable="false" />
-          <Property Name="Flag" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SKUCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="ExBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="InBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="SKUMode" Type="Boolean" Nullable="false" />
-          <Property Name="HHTName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CountDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DepartmentCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="MKCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="ProductType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="FlagPrint" Type="Boolean" Nullable="false" />
+          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionCode" />
+            <PropertyRef Name="SectionName" />
+            <PropertyRef Name="StorageLocationCode" />
+            <PropertyRef Name="PlantCode" />
+            <PropertyRef Name="CountSheet" />
+          </Key>
+          <Property Name="SectionCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SectionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PlantCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CountSheet" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCHLevel4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationFrom" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MasterSKU">
+          <Key>
+            <PropertyRef Name="ExBarcode" />
+            <PropertyRef Name="InBarcode" />
+            <PropertyRef Name="SKUCode" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="StorageLocation" />
+          </Key>
+          <Property Name="ExBarcode" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="InBarcode" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="QTYOnHand" Type="Int32" />
+          <Property Name="StockOnHand" Type="Int32" />
+          <Property Name="QTYOnHandW" Type="Int32" />
+          <Property Name="StockOnHandW" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Vendor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MKCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProductType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocationDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tmp_MasterMapping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Plant" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="CountSheet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StorageLocation" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="SectionCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SKUCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="InBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExBarCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MKCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1409,9 +2442,62 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ConfigFileFormats">
+            <EntityTypeMapping TypeName="Model.ConfigFileFormat">
+              <MappingFragment StoreEntitySet="ConfigFileFormat">
+                <ScalarProperty Name="TempTableLineErrorName" ColumnName="TempTableLineErrorName" />
+                <ScalarProperty Name="TempTableErrorName" ColumnName="TempTableErrorName" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TempTableName" ColumnName="TempTableName" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileCode" ColumnName="FileCode" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigFileFormatDetails">
+            <EntityTypeMapping TypeName="Model.ConfigFileFormatDetail">
+              <MappingFragment StoreEntitySet="ConfigFileFormatDetail">
+                <ScalarProperty Name="AllFilePrimaryKey" ColumnName="AllFilePrimaryKey" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Default" ColumnName="Default" />
+                <ScalarProperty Name="Required" ColumnName="Required" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+                <ScalarProperty Name="ColumnNo" ColumnName="ColumnNo" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="FileDetailID" ColumnName="FileDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ConfigReports">
             <EntityTypeMapping TypeName="Model.ConfigReport">
               <MappingFragment StoreEntitySet="ConfigReport">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AllowChange" ColumnName="AllowChange" />
+                <ScalarProperty Name="DefaultValue" ColumnName="DefaultValue" />
+                <ScalarProperty Name="ConditionObject" ColumnName="ConditionObject" />
+                <ScalarProperty Name="ConditionName" ColumnName="ConditionName" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigReport_bak">
+            <EntityTypeMapping TypeName="Model.ConfigReport_bak">
+              <MappingFragment StoreEntitySet="ConfigReport_bak">
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
@@ -1488,9 +2574,8 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
-                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
-                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
-                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+                <ScalarProperty Name="StorageName" ColumnName="StorageName" />
+                <ScalarProperty Name="StorageCode" ColumnName="StorageCode" />
                 <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
                 <ScalarProperty Name="HHTName" ColumnName="HHTName" />
                 <ScalarProperty Name="DownloadLID" ColumnName="DownloadLID" />
@@ -1517,16 +2602,39 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="Model.Location">
-              <MappingFragment StoreEntitySet="Location">
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <EntitySetMapping Name="LogErrors">
+            <EntityTypeMapping TypeName="Model.LogError">
+              <MappingFragment StoreEntitySet="LogError">
+                <ScalarProperty Name="ErrorDate" ColumnName="ErrorDate" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="ErrorMethod" ColumnName="ErrorMethod" />
+                <ScalarProperty Name="ErrorClass" ColumnName="ErrorClass" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterBarcodes">
+            <EntityTypeMapping TypeName="Model.MasterBarcode">
+              <MappingFragment StoreEntitySet="MasterBarcode">
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
-                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
-                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterBranches">
+            <EntityTypeMapping TypeName="Model.MasterBranch">
+              <MappingFragment StoreEntitySet="MasterBranch">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ExpDate" ColumnName="ExpDate" />
+                <ScalarProperty Name="EffDate" ColumnName="EffDate" />
+                <ScalarProperty Name="BranchTName" ColumnName="BranchTName" />
+                <ScalarProperty Name="BranchEName" ColumnName="BranchEName" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1556,6 +2664,18 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MasterPlants">
+            <EntityTypeMapping TypeName="Model.MasterPlant">
+              <MappingFragment StoreEntitySet="MasterPlant">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="PlantDescription" ColumnName="PlantDescription" />
+                <ScalarProperty Name="PlantCode" ColumnName="PlantCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MasterReports">
             <EntityTypeMapping TypeName="Model.MasterReport">
               <MappingFragment StoreEntitySet="MasterReport">
@@ -1569,15 +2689,16 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MasterScanModes">
-            <EntityTypeMapping TypeName="Model.MasterScanMode">
-              <MappingFragment StoreEntitySet="MasterScanMode">
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <EntitySetMapping Name="MasterReport_bak">
+            <EntityTypeMapping TypeName="Model.MasterReport_bak">
+              <MappingFragment StoreEntitySet="MasterReport_bak">
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ScanModeName" ColumnName="ScanModeName" />
-                <ScalarProperty Name="ScanModeID" ColumnName="ScanModeID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ReportFile" ColumnName="ReportFile" />
+                <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1591,6 +2712,18 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
                 <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
                 <ScalarProperty Name="ScreenID" ColumnName="ScreenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterStorageLocations">
+            <EntityTypeMapping TypeName="Model.MasterStorageLocation">
+              <MappingFragment StoreEntitySet="MasterStorageLocation">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="StorageLocationName" ColumnName="StorageLocationName" />
+                <ScalarProperty Name="StorageLocationCode" ColumnName="StorageLocationCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1608,31 +2741,49 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sections">
-            <EntityTypeMapping TypeName="Model.Section">
-              <MappingFragment StoreEntitySet="Section">
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
-                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
-                <ScalarProperty Name="LocationTo" ColumnName="LocationTo" />
-                <ScalarProperty Name="LocationFrom" ColumnName="LocationFrom" />
-                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
-                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
-                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+          <EntitySetMapping Name="MastMCHLevels">
+            <EntityTypeMapping TypeName="Model.MastMCHLevel">
+              <MappingFragment StoreEntitySet="MastMCHLevel">
+                <ScalarProperty Name="MCHLevel4" ColumnName="MCHLevel4" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="MastSAP_Barcode">
+            <EntityTypeMapping TypeName="Model.MastSAP_Barcode">
+              <MappingFragment StoreEntitySet="MastSAP_Barcode">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIdoc" ColumnName="SAPIdoc" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="ConversionDenominator" ColumnName="ConversionDenominator" />
+                <ScalarProperty Name="ConversionCounter" ColumnName="ConversionCounter" />
+                <ScalarProperty Name="EANCodeCat" ColumnName="EANCodeCat" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="MarerialDesc" ColumnName="MarerialDesc" />
+                <ScalarProperty Name="AltUOM" ColumnName="AltUOM" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MastSAP_RegularPrice">
+            <EntityTypeMapping TypeName="Model.MastSAP_RegularPrice">
+              <MappingFragment StoreEntitySet="MastSAP_RegularPrice">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UPC" ColumnName="UPC" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1651,6 +2802,237 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
                 <ScalarProperty Name="ValueString" ColumnName="ValueString" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="SettingKey" ColumnName="SettingKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileAcknowledgeBarDetails">
+            <EntityTypeMapping TypeName="Model.TempFileAcknowledgeBarDetail">
+              <MappingFragment StoreEntitySet="TempFileAcknowledgeBarDetail">
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SuccessTime" ColumnName="SuccessTime" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileAcknowledgeSKUDetails">
+            <EntityTypeMapping TypeName="Model.TempFileAcknowledgeSKUDetail">
+              <MappingFragment StoreEntitySet="TempFileAcknowledgeSKUDetail">
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SuccessTime" ColumnName="SuccessTime" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileBarcodeDetails">
+            <EntityTypeMapping TypeName="Model.TempFileBarcodeDetail">
+              <MappingFragment StoreEntitySet="TempFileBarcodeDetail">
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIdoc" ColumnName="SAPIdoc" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="ConversionDenominator" ColumnName="ConversionDenominator" />
+                <ScalarProperty Name="ConversionCounter" ColumnName="ConversionCounter" />
+                <ScalarProperty Name="EANCodeCat" ColumnName="EANCodeCat" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="MarerialDesc" ColumnName="MarerialDesc" />
+                <ScalarProperty Name="AltUOM" ColumnName="AltUOM" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileBarcodeErrors">
+            <EntityTypeMapping TypeName="Model.TempFileBarcodeError">
+              <MappingFragment StoreEntitySet="TempFileBarcodeError">
+                <ScalarProperty Name="URNO" ColumnName="URNO" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIdoc" ColumnName="SAPIdoc" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="ConversionDenominator" ColumnName="ConversionDenominator" />
+                <ScalarProperty Name="ConversionCounter" ColumnName="ConversionCounter" />
+                <ScalarProperty Name="EANCodeCat" ColumnName="EANCodeCat" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="MarerialDesc" ColumnName="MarerialDesc" />
+                <ScalarProperty Name="AltUOM" ColumnName="AltUOM" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileBarcodeLineErrors">
+            <EntityTypeMapping TypeName="Model.TempFileBarcodeLineError">
+              <MappingFragment StoreEntitySet="TempFileBarcodeLineError">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ErrorDesc" ColumnName="ErrorDesc" />
+                <ScalarProperty Name="LineString" ColumnName="LineString" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileRegularPriceDetails">
+            <EntityTypeMapping TypeName="Model.TempFileRegularPriceDetail">
+              <MappingFragment StoreEntitySet="TempFileRegularPriceDetail">
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UPC" ColumnName="UPC" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileRegularPriceErrors">
+            <EntityTypeMapping TypeName="Model.TempFileRegularPriceError">
+              <MappingFragment StoreEntitySet="TempFileRegularPriceError">
+                <ScalarProperty Name="URNO" ColumnName="URNO" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UPC" ColumnName="UPC" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileRegularPriceLineErrors">
+            <EntityTypeMapping TypeName="Model.TempFileRegularPriceLineError">
+              <MappingFragment StoreEntitySet="TempFileRegularPriceLineError">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ErrorDesc" ColumnName="ErrorDesc" />
+                <ScalarProperty Name="LineString" ColumnName="LineString" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileSKUDetails">
+            <EntityTypeMapping TypeName="Model.TempFileSKUDetail">
+              <MappingFragment StoreEntitySet="TempFileSKUDetail">
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIDoc" ColumnName="SAPIDoc" />
+                <ScalarProperty Name="PlanCountDate" ColumnName="PlanCountDate" />
+                <ScalarProperty Name="ActualCountDate" ColumnName="ActualCountDate" />
+                <ScalarProperty Name="CountedQTY" ColumnName="CountedQTY" />
+                <ScalarProperty Name="BookQTY" ColumnName="BookQTY" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="WBS" ColumnName="WBS" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="StockType" ColumnName="StockType" />
+                <ScalarProperty Name="SpecialStock" ColumnName="SpecialStock" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="PlantDesc" ColumnName="PlantDesc" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="BrandDesc" ColumnName="BrandDesc" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="WeightingValue" ColumnName="WeightingValue" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="MaterialGroupDesc" ColumnName="MaterialGroupDesc" />
+                <ScalarProperty Name="MaterialGroup" ColumnName="MaterialGroup" />
+                <ScalarProperty Name="MCHLevel3Desc" ColumnName="MCHLevel3Desc" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2Desc" ColumnName="MCHLevel2Desc" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1Desc" ColumnName="MCHLevel1Desc" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="MaterialDesc" ColumnName="MaterialDesc" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="PIRefDoc" ColumnName="PIRefDoc" />
+                <ScalarProperty Name="CycleFullCount" ColumnName="CycleFullCount" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="LineItem" ColumnName="LineItem" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileSKUErrors">
+            <EntityTypeMapping TypeName="Model.TempFileSKUError">
+              <MappingFragment StoreEntitySet="TempFileSKUError">
+                <ScalarProperty Name="URNO" ColumnName="URNO" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="TempFileName" ColumnName="TempFileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIDoc" ColumnName="SAPIDoc" />
+                <ScalarProperty Name="PlanCountDate" ColumnName="PlanCountDate" />
+                <ScalarProperty Name="ActualCountDate" ColumnName="ActualCountDate" />
+                <ScalarProperty Name="CountedQTY" ColumnName="CountedQTY" />
+                <ScalarProperty Name="BookQTY" ColumnName="BookQTY" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="WBS" ColumnName="WBS" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="StockType" ColumnName="StockType" />
+                <ScalarProperty Name="SpecialStock" ColumnName="SpecialStock" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="PlantDesc" ColumnName="PlantDesc" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="BrandDesc" ColumnName="BrandDesc" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="WeightingValue" ColumnName="WeightingValue" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="MaterialGroupDesc" ColumnName="MaterialGroupDesc" />
+                <ScalarProperty Name="MaterialGroup" ColumnName="MaterialGroup" />
+                <ScalarProperty Name="MCHLevel3Desc" ColumnName="MCHLevel3Desc" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2Desc" ColumnName="MCHLevel2Desc" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1Desc" ColumnName="MCHLevel1Desc" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="MaterialDesc" ColumnName="MaterialDesc" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="PIRefDoc" ColumnName="PIRefDoc" />
+                <ScalarProperty Name="CycleFullCount" ColumnName="CycleFullCount" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="LineItem" ColumnName="LineItem" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileSKULineErrors">
+            <EntityTypeMapping TypeName="Model.TempFileSKULineError">
+              <MappingFragment StoreEntitySet="TempFileSKULineError">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ErrorDesc" ColumnName="ErrorDesc" />
+                <ScalarProperty Name="LineString" ColumnName="LineString" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1683,33 +3065,163 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MasterSKUs">
-            <EntityTypeMapping TypeName="Model.MasterSKU">
-              <MappingFragment StoreEntitySet="MasterSKU">
+          <EntitySetMapping Name="MastSAP_SKU">
+            <EntityTypeMapping TypeName="Model.MastSAP_SKU">
+              <MappingFragment StoreEntitySet="MastSAP_SKU">
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="MCHLevel3Desc" ColumnName="MCHLevel3Desc" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2Desc" ColumnName="MCHLevel2Desc" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1Desc" ColumnName="MCHLevel1Desc" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIDoc" ColumnName="SAPIDoc" />
+                <ScalarProperty Name="PlanCountDate" ColumnName="PlanCountDate" />
+                <ScalarProperty Name="ActualCountDate" ColumnName="ActualCountDate" />
+                <ScalarProperty Name="CountedQTY" ColumnName="CountedQTY" />
+                <ScalarProperty Name="BookQTY" ColumnName="BookQTY" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="WBS" ColumnName="WBS" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="StockType" ColumnName="StockType" />
+                <ScalarProperty Name="SpecialStock" ColumnName="SpecialStock" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="PlantDesc" ColumnName="PlantDesc" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="BrandDesc" ColumnName="BrandDesc" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="WeightingValue" ColumnName="WeightingValue" />
+                <ScalarProperty Name="SubDepartmentDesc" ColumnName="SubDepartmentDesc" />
+                <ScalarProperty Name="SubDepartment" ColumnName="SubDepartment" />
+                <ScalarProperty Name="MaterialGroupDesc" ColumnName="MaterialGroupDesc" />
+                <ScalarProperty Name="MaterialGroup" ColumnName="MaterialGroup" />
+                <ScalarProperty Name="MaterialDesc" ColumnName="MaterialDesc" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="PIRefDoc" ColumnName="PIRefDoc" />
+                <ScalarProperty Name="CycleFullCount" ColumnName="CycleFullCount" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="LineItem" ColumnName="LineItem" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempFileExportDetails">
+            <EntityTypeMapping TypeName="Model.TempFileExportDetail">
+              <MappingFragment StoreEntitySet="TempFileExportDetail">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SAPIDoc" ColumnName="SAPIDoc" />
+                <ScalarProperty Name="PlanCountDate" ColumnName="PlanCountDate" />
+                <ScalarProperty Name="ActualCountDate" ColumnName="ActualCountDate" />
+                <ScalarProperty Name="CountedQTY" ColumnName="CountedQTY" />
+                <ScalarProperty Name="BookQTY" ColumnName="BookQTY" />
+                <ScalarProperty Name="BaseUOM" ColumnName="BaseUOM" />
+                <ScalarProperty Name="WBS" ColumnName="WBS" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="StockType" ColumnName="StockType" />
+                <ScalarProperty Name="SpecialStock" ColumnName="SpecialStock" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="PlantDesc" ColumnName="PlantDesc" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="BrandDesc" ColumnName="BrandDesc" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="WeightingValue" ColumnName="WeightingValue" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="MaterialGroupDesc" ColumnName="MaterialGroupDesc" />
+                <ScalarProperty Name="MaterialGroup" ColumnName="MaterialGroup" />
+                <ScalarProperty Name="MCHLevel3Desc" ColumnName="MCHLevel3Desc" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2Desc" ColumnName="MCHLevel2Desc" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1Desc" ColumnName="MCHLevel1Desc" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="MaterialDesc" ColumnName="MaterialDesc" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="PIRefDoc" ColumnName="PIRefDoc" />
+                <ScalarProperty Name="CycleFullCount" ColumnName="CycleFullCount" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+                <ScalarProperty Name="LineItem" ColumnName="LineItem" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterSerialNumbers">
+            <EntityTypeMapping TypeName="Model.MasterSerialNumber">
+              <MappingFragment StoreEntitySet="MasterSerialNumber">
+                <ScalarProperty Name="createby" ColumnName="createby" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HHTStocktakings">
+            <EntityTypeMapping TypeName="Model.HHTStocktaking">
+              <MappingFragment StoreEntitySet="HHTStocktaking">
+                <ScalarProperty Name="ComputerName" ColumnName="ComputerName" />
+                <ScalarProperty Name="MaterialGroup" ColumnName="MaterialGroup" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="ConversionCounter" ColumnName="ConversionCounter" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="FlagPrint" ColumnName="FlagPrint" />
                 <ScalarProperty Name="ProductType" ColumnName="ProductType" />
                 <ScalarProperty Name="MKCode" ColumnName="MKCode" />
-                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
+                <ScalarProperty Name="CountDate" ColumnName="CountDate" />
+                <ScalarProperty Name="HHTName" ColumnName="HHTName" />
+                <ScalarProperty Name="SKUMode" ColumnName="SKUMode" />
+                <ScalarProperty Name="InBarCode" ColumnName="InBarCode" />
+                <ScalarProperty Name="ExBarCode" ColumnName="ExBarCode" />
                 <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="StockOnHandW" ColumnName="StockOnHandW" />
-                <ScalarProperty Name="QTYOnHandW" ColumnName="QTYOnHandW" />
-                <ScalarProperty Name="StockOnHand" ColumnName="StockOnHand" />
-                <ScalarProperty Name="QTYOnHand" ColumnName="QTYOnHand" />
-                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
-                <ScalarProperty Name="InBarcode" ColumnName="InBarcode" />
-                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="NewQuantity" ColumnName="NewQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
+                <ScalarProperty Name="StocktakingID" ColumnName="StocktakingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tmpHHTStocktakings">
             <EntityTypeMapping TypeName="Model.tmpHHTStocktaking">
               <MappingFragment StoreEntitySet="tmpHHTStocktaking">
+                <ScalarProperty Name="MaterialGroup" ColumnName="MaterialGroup" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="PIDoc" ColumnName="PIDoc" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="ConversionCounter" ColumnName="ConversionCounter" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="ImportDate" ColumnName="ImportDate" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
@@ -1737,44 +3249,94 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MasterBarcodes">
-            <EntityTypeMapping TypeName="Model.MasterBarcode">
-              <MappingFragment StoreEntitySet="MasterBarcode">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+          <EntitySetMapping Name="LogSystems">
+            <EntityTypeMapping TypeName="Model.LogSystem">
+              <MappingFragment StoreEntitySet="LogSystem">
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
-                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
-                <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
-                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HHTStocktakings">
-            <EntityTypeMapping TypeName="Model.HHTStocktaking">
-              <MappingFragment StoreEntitySet="HHTStocktaking">
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="Model.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="StorageLocationCode" ColumnName="StorageLocationCode" />
+                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="Model.Section">
+              <MappingFragment StoreEntitySet="Section">
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="FlagPrint" ColumnName="FlagPrint" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+                <ScalarProperty Name="LocationTo" ColumnName="LocationTo" />
+                <ScalarProperty Name="LocationFrom" ColumnName="LocationFrom" />
+                <ScalarProperty Name="MCHLevel4" ColumnName="MCHLevel4" />
+                <ScalarProperty Name="MCHLevel3" ColumnName="MCHLevel3" />
+                <ScalarProperty Name="MCHLevel2" ColumnName="MCHLevel2" />
+                <ScalarProperty Name="MCHLevel1" ColumnName="MCHLevel1" />
+                <ScalarProperty Name="CountSheet" ColumnName="CountSheet" />
+                <ScalarProperty Name="PlantCode" ColumnName="PlantCode" />
+                <ScalarProperty Name="StorageLocationCode" ColumnName="StorageLocationCode" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterSKUs">
+            <EntityTypeMapping TypeName="Model.MasterSKU">
+              <MappingFragment StoreEntitySet="MasterSKU">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="StorageLocationDesc" ColumnName="StorageLocationDesc" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="MKCode" ColumnName="MKCode" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="StockOnHandW" ColumnName="StockOnHandW" />
+                <ScalarProperty Name="QTYOnHandW" ColumnName="QTYOnHandW" />
+                <ScalarProperty Name="StockOnHand" ColumnName="StockOnHand" />
+                <ScalarProperty Name="QTYOnHand" ColumnName="QTYOnHand" />
+                <ScalarProperty Name="BrandCode" ColumnName="BrandCode" />
+                <ScalarProperty Name="InBarcode" ColumnName="InBarcode" />
+                <ScalarProperty Name="ExBarcode" ColumnName="ExBarcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tmp_MasterMapping">
+            <EntityTypeMapping TypeName="Model.tmp_MasterMapping">
+              <MappingFragment StoreEntitySet="tmp_MasterMapping">
+                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="ProductType" ColumnName="ProductType" />
                 <ScalarProperty Name="MKCode" ColumnName="MKCode" />
                 <ScalarProperty Name="DepartmentCode" ColumnName="DepartmentCode" />
-                <ScalarProperty Name="CountDate" ColumnName="CountDate" />
-                <ScalarProperty Name="HHTName" ColumnName="HHTName" />
-                <ScalarProperty Name="SKUMode" ColumnName="SKUMode" />
-                <ScalarProperty Name="InBarCode" ColumnName="InBarCode" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="ExBarCode" ColumnName="ExBarCode" />
-                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="InBarCode" ColumnName="InBarCode" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Flag" ColumnName="Flag" />
-                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
-                <ScalarProperty Name="NewQuantity" ColumnName="NewQuantity" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
-                <ScalarProperty Name="ScanMode" ColumnName="ScanMode" />
-                <ScalarProperty Name="StocktakingID" ColumnName="StocktakingID" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+                <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+                <ScalarProperty Name="CountSheet" ColumnName="CountSheet" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1791,8 +3353,8 @@ warning 6002: The table/view 'STOCKTAKING_APP.dbo.MasterSKU' does not have a pri
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

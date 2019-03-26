@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using FSBT_HHT_DAL;
 using FSBT_HHT_Model;
+using System.Reflection;
 
 namespace FSBT_HHT_DAL.DAO
 {
     public class AuthenticationDAO
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorDAO logBll = new LogErrorDAO();
         public UserStatus getLoginUser(string username, string password)
         {
             Entities dbContext = new Entities();
@@ -85,11 +86,9 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return userStatus;
             }
-
-
         }
 
         public int MaxLenPassword()
@@ -105,7 +104,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return maxLenPassword;
             }
         }
@@ -123,7 +122,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return minLenPassword;
             }
         }
@@ -141,7 +140,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return maxLenUsername;
             }
         }
@@ -159,7 +158,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return minLenUsername;
             }
         }

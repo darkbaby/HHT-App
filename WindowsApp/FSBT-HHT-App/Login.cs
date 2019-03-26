@@ -9,18 +9,20 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
-    public partial class Login : FSBT.HHT.App.Layout
+    public partial class Login : FSBT.HHT.App.Layout 
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll();  
         AuthenticationBll authen = new AuthenticationBll();
         SystemSettingBll settingBll = new SystemSettingBll();
         private int passwordMaxLen;
         private int passwordMinLen;
         private int usernameMaxLen;
         private int usernameMinLen;
+
         public Login()
         {
             InitializeComponent();
@@ -41,18 +43,17 @@ namespace FSBT.HHT.App.UI
             textUsername.MaxLength = usernameMaxLen;
             textPassword.MaxLength = passwordMaxLen;
 
+            //textUsername.Text = "noonnee";
+            //textPassword.Text = "1234";
             rdNoneRealtime.Checked = true;
         }
 
         private void DoLogin()
         {
             try
-            {
-                string username = textUsername.Text;
-                string password = textPassword.Text;
-
-
-
+            {           
+                string username = textUsername.Text.Trim();
+                string password = textPassword.Text.Trim();
 
                 if (username.Length == 0 || password.Length == 0)
                 {
@@ -60,7 +61,6 @@ namespace FSBT.HHT.App.UI
                 }
                 else
                 {
-
                     if (username.Length < usernameMinLen || password.Length < passwordMinLen)
                     {
                         MessageBox.Show(MessageConstants.UsernamePasswordmustatleast4letters, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -89,26 +89,7 @@ namespace FSBT.HHT.App.UI
 
                             Process proc = new Process();
 
-                            if (!(settingBll.GetRealTimeMode()))
-                            {
-                                try
-                                {
-                                    string pathBatch = ConfigurationManager.AppSettings["pathBatchMoveFileHHT"];
-                                    ProcessStartInfo startInfo = new ProcessStartInfo();
-                                    startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                                    startInfo.FileName = @AppDomain.CurrentDomain.BaseDirectory + pathBatch;
-
-                                    log.Info(String.Format("Call Batch : {0}", @AppDomain.CurrentDomain.BaseDirectory + pathBatch));
-
-                                    proc = Process.Start(startInfo);
-                                }
-                                catch (Exception ex)
-                                {
-                                    proc = new Process();
-                                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                                }
-                            }
-                            else
+                            if (settingBll.GetRealTimeMode()) // Real time Mode
                             {
                                 try
                                 {
@@ -118,15 +99,38 @@ namespace FSBT.HHT.App.UI
                                     processInfo.FileName = @AppDomain.CurrentDomain.BaseDirectory + pathServices;
                                     processInfo.Verb = "runas";
 
-                                    log.Info(String.Format("Call Services : {0}", @AppDomain.CurrentDomain.BaseDirectory + pathServices));
+                                    string s = String.Format("Call Services : {0}", @AppDomain.CurrentDomain.BaseDirectory + pathServices);
+
+                                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, s, DateTime.Now);
 
                                     proc = Process.Start(processInfo);
                                 }
                                 catch (Exception ex)
                                 {
                                     proc = new Process();
-                                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                                    //logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                                 }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    string pathBatch = ConfigurationManager.AppSettings["pathBatchMoveFileHHT"];
+                                    ProcessStartInfo startInfo = new ProcessStartInfo();
+                                    startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                                    startInfo.FileName = @AppDomain.CurrentDomain.BaseDirectory + pathBatch;
+
+                                    string s = String.Format("Call Batch : {0}", @AppDomain.CurrentDomain.BaseDirectory + pathBatch);
+                                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, s, DateTime.Now);
+
+                                    proc = Process.Start(startInfo);
+                                }
+                                catch (Exception ex)
+                                {
+                                    proc = new Process();
+                                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                                } 
                             }
 
                             LayoutWmenu baseScreen = new LayoutWmenu(username, proc);
@@ -137,16 +141,13 @@ namespace FSBT.HHT.App.UI
                         {
                             textPassword.Text = string.Empty;
                             MessageBox.Show(checkLoginResult, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                         }
-
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -165,7 +166,5 @@ namespace FSBT.HHT.App.UI
                 DoLogin();
             }
         }
-
-
     }
 }

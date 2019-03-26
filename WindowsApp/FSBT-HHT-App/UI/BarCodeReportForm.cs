@@ -11,12 +11,14 @@ using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using FSBT_HHT_Model;
 using System.IO;
+using FSBT_HHT_BLL;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
     public partial class BarCodeReportForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
 
         public BarCodeReportForm()
         {     
@@ -41,7 +43,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         } 

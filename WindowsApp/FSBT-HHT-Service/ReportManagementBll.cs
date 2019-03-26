@@ -18,13 +18,14 @@ namespace FSBT_HHT_BLL
         private ReportManagementDAO reportDAO = new ReportManagementDAO();
         private LocationManagementDAO locationDAO = new LocationManagementDAO();
         private DownloadMasterDAO masterDAO = new DownloadMasterDAO();
+        private DbHelper dbHelper = new DbHelper();
 
         public DataTable LoadUserReportDataTableByUser(string username)
         {
             DataTable dtReportList = new DataTable();
             List<MasterReport> reportList = new List<MasterReport>();
             reportList = reportDAO.LoadReportByUser(username);
-            dtReportList = DbHelper.ToDataTable(reportList);
+            dtReportList = dbHelper.ToDataTable(reportList);
             return dtReportList;
         }
 
@@ -45,7 +46,19 @@ namespace FSBT_HHT_BLL
 
         public List<LocationBarcode> GetSearchSection(LocationManagementModel searchSection)
         {
-            List<LocationManagementModel> searchSectionList = locationDAO.GetSectionOptionalKey(searchSection.SectionCode, searchSection.SectionName, searchSection.LocationFrom, searchSection.LocationTo, searchSection.SectionType, searchSection.DepartmentCode);
+            List<LocationManagementModel> searchSectionList = locationDAO.GetSectionOptionalKey(searchSection.SectionCode, 
+                                                                                                searchSection.SectionName, 
+                                                                                                searchSection.LocationFrom, 
+                                                                                                searchSection.LocationTo,
+                                                                                                searchSection.CountSheet,
+                                                                                                searchSection.MCHLevel1,
+                                                                                                searchSection.MCHLevel2,
+                                                                                                searchSection.MCHLevel3,
+                                                                                                searchSection.MCHLevel4,
+                                                                                                searchSection.StorageLocationCode,
+                                                                                                searchSection.PlantCode
+                                                                                                );
+
             if (searchSectionList.Count() == 0)
             {
                 return null;
@@ -67,15 +80,6 @@ namespace FSBT_HHT_BLL
             List<ConfigReport> reportConfig = new List<ConfigReport>();
             reportConfig = reportDAO.LoadReportConfig();
             return reportConfig;
-        }
-
-        public List<string> GetDepartmentCodeList()
-        {
-            List<string> departmentList = new List<string>();
-
-            departmentList = reportDAO.GetDepartmentCodeList();
-
-            return departmentList;
         }
 
         public List<string> GetSectionCodeList()
@@ -230,123 +234,127 @@ namespace FSBT_HHT_BLL
             return locationBarcode;
         }
 
-        public DataTable GetReport_SumStockOnHand(string allBrandCode, DateTime countDate, string allDepartmentCode)
+        public DataTable GetReport_SumStockOnHand(DateTime countDate, ReportParameter reportParam)
         {
-            DataTable resultTable = reportDAO.GetReport_SumStockOnHand(allBrandCode, countDate, allDepartmentCode);
+            DataTable resultTable = reportDAO.GetReport_SumStockOnHand(countDate, reportParam);
+            return resultTable;
+        }
+        public DataTable GetReport_SumStockOnHandFreshFood(DateTime countDate, ReportParameter reportParam)
+        {
+            DataTable resultTable = reportDAO.GetReport_SumStockOnHandFreshFood(countDate, reportParam);
+            return resultTable;
+        }
+        public DataTable GetReport_SumStockOnHandWarehouse(DateTime countDate, ReportParameter reportParam)
+        {
+            DataTable resultTable = reportDAO.GetReport_SumStockOnHandWarehouse(countDate, reportParam);
             return resultTable;
         }
 
-        public DataTable GetReport_SumStockOnHandWarehouse(string allBrandCode, DateTime countDate, string allDepartmentCode)
+        public DataTable LoadReport_SectionLocationByBrandGroup(DateTime countDate, ReportParameter reportParam)
         {
-            DataTable resultTable = reportDAO.GetReport_SumStockOnHandWarehouse(allBrandCode, countDate, allDepartmentCode);
+            return reportDAO.GetReport_SectionLocationByBrandGroup(countDate, reportParam);
+        }
+
+        public DataTable LoadReport_StocktakingAuditCheckWithUnit(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_StocktakingAuditCheckWithUnit(countDate, reportParam);
+        }
+
+        public DataTable LoadReport_StocktakingAuditCheck(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_StocktakingAuditCheck(countDate, reportParam);
+        }
+
+        public DataTable LoadReport_DeleteRecordReportByLocation(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_DeleteRecordReportByLocation(countDate, reportParam);
+        }
+
+        public DataTable LoadReport_DeleteRecordReportBySection(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_DeleteRecordReportBySection(countDate, reportParam);
+        }
+
+        public DataTable LoadReport_StocktakingAuditAdjustWithUnit(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_StocktakingAuditAdjustWithUnit(countDate, reportParam);
+        }
+
+        public DataTable LoadReport_StocktakingAudiAdjust(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_StocktakingAudiAdjust(countDate, reportParam);
+        }
+
+        public DataTable GetReport_ControlSheet(DateTime countDate, ReportParameter reportParam)
+        {
+            DataTable resultTable = reportDAO.GetReport_ControlSheet(countDate, reportParam);
             return resultTable;
         }
 
-        public DataTable GetReport_SumStockOnHandFreshFood(string allBrandCode, DateTime countDate,string allDepartmentCode)
+        public DataTable GetReport_UncountedLocation(DateTime countDate, ReportParameter reportParam)
         {
-            DataTable resultTable = reportDAO.GetReport_SumStockOnHandFreshFood(allBrandCode, countDate, allDepartmentCode);
+            DataTable resultTable = reportDAO.GetReport_UncountedLocation(countDate, reportParam);
             return resultTable;
         }
 
-        public DataTable LoadReport_SectionLocationByBrandGroup(string SectionCode, string StoreType, string allDepartmentCode, string allLocationCode, string allBrandCode)
+        public DataTable LoadReport_UnidentifiedStockItem(DateTime countDate, ReportParameter reportParam)
         {
-            return reportDAO.GetReport_SectionLocationByBrandGroup(SectionCode, StoreType, allDepartmentCode, allLocationCode, allBrandCode);
+            return reportDAO.GetReport_UnidentifiedStockItem(countDate, reportParam);
         }
 
-        public DataTable LoadReport_StocktakingAuditCheckWithUnit(string LocationCode, string StoreType, DateTime countDate,string allDepartmentCode, string allSectionCode, string allBrandCode)
+        public DataTable LoadReport_InventoryControlBySection(DateTime countDate, ReportParameter reportParam)
         {
-            return reportDAO.GetReport_StocktakingAuditCheckWithUnit(LocationCode, StoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode);
+            return reportDAO.GetReport_InventoryControlBySection(countDate, reportParam);
         }
 
-        public DataTable LoadReport_StocktakingAuditCheck(string LocationCode, string StoreType, DateTime countDate, string allDepartmentCode, string allSectionCode, string allBrandCode)
+        public DataTable LoadReport_InventoryControlByLocation(DateTime countDate, ReportParameter reportParam)
         {
-            return reportDAO.GetReport_StocktakingAuditCheck(LocationCode, StoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode);
+            return reportDAO.GetReport_InventoryControlByLocation(countDate, reportParam);
         }
 
-        public DataTable LoadReport_DeleteRecordReportByLocation(DateTime countDate, string allDepartmentCode, string allSectionCode, string allLocationCode, string allBrandCode, string allStoreType)
+        public DataTable LoadReport_InventoryControlByBarcode(DateTime countDate, ReportParameter reportParam, string allDifftype, string allUnit)
         {
-            return reportDAO.GetReport_DeleteRecordReportByLocation(countDate, allDepartmentCode, allSectionCode, allLocationCode, allBrandCode, allStoreType);
+            return reportDAO.GetReport_InventoryControlByBarcode(countDate, reportParam, allDifftype, allUnit);
         }
 
-        public DataTable LoadReport_DeleteRecordReportBySection(DateTime countDate,string allDepartmentCode, string allSectionCode, string allLocationCode, string allBrandCode, string allStoreType)
+        public DataTable LoadReport_InventoryControlByBarcodeFreshFood(DateTime countDate, ReportParameter reportParam, string allDifftype)
         {
-            return reportDAO.GetReport_DeleteRecordReportBySection(countDate, allDepartmentCode, allSectionCode, allLocationCode, allBrandCode, allStoreType);
+            return reportDAO.GetReport_InventoryControlByBarcodeFreshFood(countDate, reportParam, allDifftype);
+        }
+        
+
+        public DataSet GetReport_ItemPhysicalCountBySection(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_ItemPhysicalCountBySection(countDate, reportParam);
         }
 
-        public DataTable LoadReport_StocktakingAuditAdjustWithUnit(string LocationCode, string StoreType, DateTime countDate, string allDepartmentCode, string allSectionCode, string allBrandCode, string Correction)
+        public DataTable GetReport_ItemPhysicalCountByBarcode(DateTime countDate, ReportParameter reportParam)
         {
-            return reportDAO.GetReport_StocktakingAuditAdjustWithUnit(LocationCode, StoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode, Correction);
+            return reportDAO.GetReport_ItemPhysicalCountByBarcode(countDate, reportParam);
         }
 
-        public DataTable LoadReport_StocktakingAudiAdjust(string LocationCode, string StoreType, string Correction, DateTime countDate, string allDepartmentCode, string allSectionCode, string allBrandCode, string allSectionName)
+        public DataTable loadReport_GroupSummaryReportByFrontBack(DateTime countDate, ReportParameter reportParam)
         {
-            return reportDAO.GetReport_StocktakingAudiAdjust(LocationCode, StoreType, Correction, countDate, allDepartmentCode, allSectionCode, allBrandCode,allSectionName);
+            return reportDAO.GetReport_GroupSummaryReportByFrontBack(countDate, reportParam);
         }
 
-        public DataTable GetReport_ControlSheet(string allSectionCode, string allStoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode,string allSectionName)
+        public DataTable loadReport_GroupSummaryReportByFreshFoodWarehouse(DateTime countDate, ReportParameter reportParam)
         {
-            DataTable resultTable = reportDAO.GetReport_ControlSheet(allSectionCode, allStoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode, allSectionName);
-            return resultTable;
+            return reportDAO.GetReport_GroupSummaryReportByFreshFoodWarehouse(countDate, reportParam);
+        }
+        public DataTable LoadReport_CountedLocationsReport(DateTime countDate, ReportParameter reportParam)
+        {
+            return reportDAO.GetReport_CountedLocationsReport(countDate, reportParam);
         }
 
-        public DataTable GetReport_UncountedLocation(string allSectionCode, string allStoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
+        public DataTable LoadReport_NoticeOfStocktakingSatisfactionByFrontBack(DateTime countDate, ReportParameter reportParam)
         {
-            DataTable resultTable = reportDAO.GetReport_UncountedLocation(allSectionCode, allStoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
-            return resultTable;
+            return reportDAO.GetReport_NoticeOfStocktakingSatisfactionByFrontBack(countDate, reportParam);
         }
 
-        public DataTable LoadReport_UnidentifiedStockItem(string LocationCode, string StoreType, DateTime countDate, string allDepartmentCode, string allSectionCode, string allBrandCode)
+        public DataTable LoadReport_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse(DateTime countDate, ReportParameter reportParam)
         {
-            return reportDAO.GetReport_UnidentifiedStockItem(LocationCode, StoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode);
-        }
-
-        public DataTable LoadReport_InventoryControlBySection(DateTime countDate,string allDeprtmentCode, string allSectionCode,string allLocationCode,string allBrandCode, string allStoreType, string allDifftype, string allUnit,string storeMode, string unit)
-        {
-            return reportDAO.GetReport_InventoryControlBySection(countDate, allDeprtmentCode, allSectionCode, allLocationCode, allBrandCode, allStoreType, allDifftype, allUnit, storeMode,unit);
-        }
-
-        public DataTable LoadReport_InventoryControlByLocation(DateTime countDate, string allDepartmentCode, string allSectionCode, string allLocationCode, string allBrandCode, string allStoreType, string allDifftype, string allUnit, string storeMode, string unit)
-        {
-            return reportDAO.GetReport_InventoryControlByLocation(countDate, allDepartmentCode, allSectionCode, allLocationCode, allBrandCode, allStoreType, allDifftype, allUnit, storeMode, unit);
-        }
-
-        public DataTable LoadReport_InventoryControlByBarcode(DateTime countDate, string allDepartmentCode, string allSectionCode, string allLocationCode, string allBrandCode, string allStoreType, string allDifftype, string allUnit, string Barcode, string storeMode,string unit)
-        {
-            return reportDAO.GetReport_InventoryControlByBarcode(countDate, allDepartmentCode, allSectionCode, allLocationCode, allBrandCode, allStoreType, allDifftype, allUnit, Barcode, storeMode, unit);
-        }
-
-        public DataSet GetReport_ItemPhysicalCountBySection(string allSectionCode, string allStoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_ItemPhysicalCountBySection(allSectionCode, allStoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
-        }
-
-        public DataSet GetReport_ItemPhysicalCountByBarcode(string allBarcode, string allStoreType, DateTime countDate, string allDepartmentCode,string allSectionCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_ItemPhysicalCountByBarcode(allBarcode, allStoreType, countDate, allDepartmentCode, allSectionCode, allLocationCode, allBrandCode);
-        }
-
-        public DataTable loadReport_GroupSummaryReportByFrontBack(string SectionCode, string StoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_GroupSummaryReportByFrontBack(SectionCode, StoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
-        }
-
-        public DataTable loadReport_GroupSummaryReportByFreshFoodWarehouse(string SectionCode, string StoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_GroupSummaryReportByFreshFoodWarehouse(SectionCode, StoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
-        }
-        public DataTable LoadReport_CountedLocationsReport(string SectionCode, string StoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_CountedLocationsReport(SectionCode, StoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
-        }
-
-        public DataTable LoadReport_NoticeOfStocktakingSatisfactionByFrontBack(string SectionCode, string StoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_NoticeOfStocktakingSatisfactionByFrontBack(SectionCode, StoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
-        }
-
-        public Hashtable LoadReport_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse(string SectionCode, string StoreType, DateTime countDate, string allDepartmentCode, string allLocationCode, string allBrandCode)
-        {
-            return reportDAO.GetReport_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse(SectionCode, StoreType, countDate, allDepartmentCode, allLocationCode, allBrandCode);
+            return reportDAO.GetReport_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse(countDate, reportParam);
         }
     }
 }

@@ -42,9 +42,9 @@
             this.lblMessage.Image = global::FSBT.HHT.App.Properties.Resources.preloader;
             this.lblMessage.Location = new System.Drawing.Point(0, 0);
             this.lblMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblMessage.MinimumSize = new System.Drawing.Size(449, 153);
+            this.lblMessage.MinimumSize = new System.Drawing.Size(399, 123);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(449, 153);
+            this.lblMessage.Size = new System.Drawing.Size(399, 123);
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "Loading";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -52,13 +52,13 @@
             // 
             // Loading_Screen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(450, 154);
+            this.ClientSize = new System.Drawing.Size(400, 123);
             this.Controls.Add(this.lblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Loading_Screen";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

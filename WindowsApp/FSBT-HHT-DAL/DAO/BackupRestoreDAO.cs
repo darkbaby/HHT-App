@@ -8,13 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using FSBT_HHT_Model;
 using FSBT_HHT_DAL.Helper;
+using System.Reflection;
 
 namespace FSBT_HHT_DAL.DAO
 {
     public class BackupRestoreDAO
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorDAO logBll = new LogErrorDAO(); 
         private Entities dbContext = new Entities();
+        private DbHelper dbHelper = new DbHelper();
 
         public List<ViewBackupHistoryModel> LoadBackupHistory(string userName)
         {
@@ -38,7 +40,7 @@ namespace FSBT_HHT_DAL.DAO
             catch (Exception ex)
             {
 
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return lstHist;
 
             }
@@ -57,7 +59,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return lstBckTable;
             }
         }
@@ -75,7 +77,7 @@ namespace FSBT_HHT_DAL.DAO
             catch (Exception ex)
             {
 
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return path;
             }
         }
@@ -85,13 +87,13 @@ namespace FSBT_HHT_DAL.DAO
             DataTable dt = new DataTable();
             try
             {
-                dt = DbHelper.GetDataToDataTableByTableName(dbContext.Database.Connection.ConnectionString, tableName);
+                dt = dbHelper.GetDataToDataTableByTableName(dbContext.Database.Connection.ConnectionString, tableName);
                 return dt;
             }
             catch (Exception ex)
             {
 
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return null;
             }
         }
@@ -112,13 +114,13 @@ namespace FSBT_HHT_DAL.DAO
                 }
                 catch (Exception ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -142,16 +144,15 @@ namespace FSBT_HHT_DAL.DAO
                 }
                 catch (Exception ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 }
                 return backupID;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return backupID;
             }
-
         }
 
         public bool CreateBackupTable(string sourceTableName, string destinationTableName)
@@ -168,7 +169,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -185,13 +186,13 @@ namespace FSBT_HHT_DAL.DAO
                 }
                 catch (Exception ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -210,7 +211,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return lstBckHistDetail;
             }
         }
@@ -228,7 +229,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -246,7 +247,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -268,7 +269,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -279,12 +280,12 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 connString = dbContext.Database.Connection.ConnectionString;
-                DbHelper.InsertDataTableToDatabase(connString, dtImport, tableName);
+                dbHelper.InsertDataTableToDatabase(connString, dtImport, tableName);
                 return true;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }

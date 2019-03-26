@@ -15,6 +15,7 @@ using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
 using System.IO;
 using System.Windows.Forms;
+using FSBT_HHT_DAL;
 
 namespace FSBT_HHT_BLL
 {
@@ -28,7 +29,7 @@ namespace FSBT_HHT_BLL
         private string fileBarcodeName = "UPCR01P (POSFLIB) - Table file more than one Barcode (SP)";
         private string filePackName = "TABBOXSP (POSFLIB) - Table file of barcode (box) -S/P";
         private string fileBrandName = "PCS0006-Brand/Group Description for The Mall";
-
+        public string errorMessage = "";
         public DownloadMasterDataBll()
         {
 
@@ -231,41 +232,6 @@ namespace FSBT_HHT_BLL
             }
         }
 
-        //private DataTable ConvertSKUStock(List<string> file)
-        //{
-        //    DataTable tbl = new DataTable();
-        //    int numberOfColumns = 13;
-
-        //    for (int col = 0; col < numberOfColumns; col++)
-        //    {
-        //        tbl.Columns.Add(new DataColumn("Column" + (col + 1).ToString()));
-        //    }
-
-        //    foreach (string line in file)
-        //    {
-        //        DataRow dr = tbl.NewRow();
-
-        //        dr[0] = line.Substring(0, 2).Trim();
-        //        dr[1] = line.Substring(2, 8).Trim();
-        //        dr[2] = line.Substring(10, 41).Trim();
-        //        dr[3] = line.Substring(51, 13).Trim();
-        //        dr[4] = line.Substring(64, 2).Trim();
-        //        dr[5] = line.Substring(66, 8).Trim();
-        //        dr[6] = line.Substring(74, 11).Trim();
-        //        dr[7] = line.Substring(85, 13).Trim();
-        //        dr[8] = line.Substring(99, 13).Trim();
-        //        dr[9] = line.Substring(112, 10).Trim();
-        //        dr[10] = line.Substring(122).Trim();
-        //        //dr[11] = flg;
-        //        dr[11] = DateTime.Now;
-        //        dr[12] = "Admin";
-
-        //        tbl.Rows.Add(dr);
-        //    }
-
-        //    return tbl;
-        //}
-
         private DataTable ConvertSKUFreshFood(List<string> file, string catagoryFlg)
         {
             try
@@ -464,9 +430,9 @@ namespace FSBT_HHT_BLL
             }
         }
 
-        public DataTable GetSummary(int flg)
+        public DataTable GetSummarySubDepartment(int flg)
         {
-            return downloadMasterDAO.GetMasterSummary(flg);
+            return downloadMasterDAO.GetMasterSummarySubDepartment(flg);
         }
 
         public DataTable GetSummaryByBrand(int flg)
@@ -477,10 +443,30 @@ namespace FSBT_HHT_BLL
         {
             return downloadMasterDAO.GetMasterDownload(flg, dataType);
         }
-
+        public DataTable GetSummaryMaterialGroup(int flg)
+        {
+            return downloadMasterDAO.GetMasterSummaryMaterialGroup(flg);
+        }
+        public DataTable GetSummaryStorageLocation(int flg)
+        {
+            return downloadMasterDAO.GetMasterSummaryStorageLocation(flg);
+        }
         public bool ClearDataTable()
         {
             string result = downloadMasterDAO.DeleteAllMaster();
+            if (result == "success")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ClearMasterSAPDataTable()
+        {
+            string result = downloadMasterDAO.DeleteMasterSAP();
             if (result == "success")
             {
                 return true;
@@ -871,5 +857,175 @@ namespace FSBT_HHT_BLL
             }
 
         }
+
+        //public int CheckNewCountsheet(string Type, DataTable dtTemp)
+        //{
+
+        //    int newCountsheet = 0;
+        //    DataTable dt = new DataTable();
+        //    try
+        //    {
+        //        List<string> param = new List<string>();
+        //        TempDataTableDAO tb = new TempDataTableDAO();
+        //        param.Add(Type);
+
+        //        dt = tb.ExecStoredProcedure("SCR01_SP_CheckCountSheet", param);
+
+        //        string countsheet = "";
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            countsheet = dr["CountSheet"].ToString();
+        //        }
+
+        //        if (countsheet == "")
+        //            newCountsheet = 2;
+        //        else
+        //        {
+        //            string tempCountsheet = dtTemp.Rows[0]["PIDoc"].ToString();
+        //            if (tempCountsheet != countsheet) newCountsheet = 1;
+        //            else newCountsheet = 0;
+        //        }
+
+        //        //newCountsheet   : 1= New countsheet , 0 = Old countsheet , 
+
+
+        //        // TempDataTableDAO 
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        errorMessage = ex.Message;
+        //    }
+
+        //    return newCountsheet;
+        //}
+
+        public List<string> GetCountsheet(string Type)
+        {
+            List<string> countsheets = new List<string>();
+            DataTable dt = new DataTable();
+            try
+            {
+                List<string> param = new List<string>();
+                TempDataTableDAO tb = new TempDataTableDAO();
+                param.Add(Type);
+
+                dt = tb.ExecStoredProcedure("SCR01_SP_GetCountSheetFromMaster", param);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    countsheets.Add(dr["CountSheet"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+
+            return countsheets;
+        }
+
+        public List<string> GetFileNameFromMaster(string Type)
+        {
+            List<string> filename = new List<string>();
+            DataTable dt = new DataTable();
+            try
+            {
+                List<string> param = new List<string>();
+                TempDataTableDAO tb = new TempDataTableDAO();
+                param.Add(Type);
+
+                dt = tb.ExecStoredProcedure("SCR01_SP_GetFileNameFromMaster", param);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    filename.Add(dr["FileName"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+
+            return filename;
+        }
+
+        public string CheckFileExistsRegularPrice(string filename)
+        {
+            string result = "";
+            DataTable dt = new DataTable();
+            try
+            {
+                List<string> param = new List<string>();
+                TempDataTableDAO tb = new TempDataTableDAO();
+                param.Add(filename);
+
+                dt = tb.ExecStoredProcedure("SCR01_SP_CheckIsExistsFileRegularPrice", param);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    result = dr[0].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public int ConvertMasterFromTempToReal(string Type)
+        {
+            DataTable dt = new DataTable();
+            int result = 0;
+            try
+            {
+                List<string> param = new List<string>();
+                TempDataTableDAO tb = new TempDataTableDAO();
+                param.Add(Type);
+                dt = tb.ExecStoredProcedure("SCR01_SP_DownloadMaster", param);
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        result = Convert.ToInt32(dr["complete"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return result;
+        }
+
+        public DataTable GetSerialAfterDownload()
+        {
+            return downloadMasterDAO.GetSerialAfterDownload();
+        }
+
+        public DataTable DownloadMCHLevelFromMasterSAP(ref string errorMessage)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                TempDataTableDAO tb = new TempDataTableDAO();
+                List<string> param = new List<string>();
+                dt = tb.ExecStoredProcedure("SCR01_SP_DownloadMCHLevel", param);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+
+            return dt;
+        }
+
+        public List<LogError> GetLogAll()
+        {
+            return downloadMasterDAO.GetLogAll();
+        }
+
     }
 }

@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FSBT.HHT.App.UI;
 using System.Diagnostics;
+using FSBT_HHT_DAL;
+using System.Data.SqlClient;
+using System.IO;
+using FSBT_HHT_BLL;
+using System.Globalization;
+using System.Threading;
 
 namespace FSBT.HHT.App
 {
@@ -16,40 +22,44 @@ namespace FSBT.HHT.App
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Layout());            
-            //Application.Run(new LayoutWmenu());
-            //Application.Run(new DownloadMaster());
-            //Application.Run(new Location());
-            //Application.Run(new Barcode());
-            //Application.Run(new QuantityByLocation());
-            //Application.Run(new QuantityBySection1());
-            //Application.Run(new TextFile());
+            CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            newCulture.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";
+            newCulture.DateTimeFormat.LongDatePattern = "yyyy/MM/dd HH:mm:ss";
+            newCulture.DateTimeFormat.DateSeparator = "/";
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            
             if (CheckRunProgramResult())
             {
                 MessageBox.Show(Resources.MessageConstants.CannotOpenProgram, Resources.MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                CloseTaskBatch();
-                Application.Run(new Login());
+                if (CheckConnection())
+                {
+                    CloseTaskBatch();
+                    if (!Directory.Exists(LocalParameter.programPath))
+                    {
+                        Directory.CreateDirectory(LocalParameter.programPath);
+                    }
 
+                    Application.Run(new Login());
+                }
+                else
+                {
+                    MessageBox.Show(Resources.MessageConstants.Cannotconnecttodatabase, Resources.MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            //Application.Run(new ReportPrintForm());
-            //Application.Run(new UserManagementForm());
-            //Application.Run(new PrintBarCodeForm());
-            //Application.Run(new SystemSettingsForm());
-            //Application.Run(new DownloadMasterForm());
         }
+
         public static Boolean CheckRunProgramResult()
         {
             Boolean chkRunProgramResult = false;
 
-            //Process[] programName = Process.GetProcessesByName("FSBT-HHT-Batch");
-            Process[] programName = Process.GetProcessesByName("FSBT-HHT-App");
+            Process[] programName = Process.GetProcessesByName("The Mall Stocktaking");
+
+            String thisprocessname = Process.GetCurrentProcess().ProcessName;
             var statusbatchRunning = new List<string>();
-            if (programName.Length > 1)
+            if (Process.GetProcesses().Count(p => p.ProcessName == thisprocessname) > 1)
             {
                 chkRunProgramResult = true;
             }
@@ -58,14 +68,17 @@ namespace FSBT.HHT.App
                 chkRunProgramResult = false;
             }
             return chkRunProgramResult;
+
+            //return false;
         }
+
         private static void CloseTaskBatch()
         {
             Process[] pname = Process.GetProcessesByName("FSBT-HHT-Batch");
             if (pname.Length != 0)
             {
                 foreach (var process in Process.GetProcessesByName("FSBT-HHT-Batch"))
-                    process.Kill();
+                process.Kill();
             }
             //Cho ADD//
             Process[] pname2 = Process.GetProcessesByName("FSBT-HHT-Services");
@@ -74,6 +87,21 @@ namespace FSBT.HHT.App
                 foreach (var process in Process.GetProcessesByName("FSBT-HHT-Services"))
                     process.Kill();
             }
+        }
+
+        public static bool CheckConnection()
+        {
+            Entities dbContext = new Entities();
+            try
+            {
+                dbContext.Database.Connection.Open();
+                dbContext.Database.Connection.Close();
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

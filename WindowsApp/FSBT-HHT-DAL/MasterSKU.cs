@@ -29,7 +29,8 @@ namespace FSBT_HHT_DAL
         public string Vendor { get; set; }
         public string MKCode { get; set; }
         public string ProductType { get; set; }
-        public int ScanMode { get; set; }
+        public string StorageLocation { get; set; }
+        public string StorageLocationDesc { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
     }

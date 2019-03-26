@@ -1,4 +1,5 @@
-﻿namespace FSBT.HHT.App
+﻿using System.Reflection;
+namespace FSBT.HHT.App
 {
     partial class Layout
     {
@@ -32,11 +33,12 @@
             // 
             // Layout
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 730);
+            this.ClientSize = new System.Drawing.Size(1344, 898);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Layout";
-            this.Text = "Stocktaking V 1.0.0";
+            this.Text = "Stocktaking V " + Assembly.GetExecutingAssembly().GetName().Version.ToString(); 
             this.ResumeLayout(false);
 
         }

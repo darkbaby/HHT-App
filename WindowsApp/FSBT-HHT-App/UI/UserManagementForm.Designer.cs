@@ -428,7 +428,7 @@
             this.groupComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.groupComboBox.FormattingEnabled = true;
-            this.groupComboBox.Location = new System.Drawing.Point(100, 109);
+            this.groupComboBox.Location = new System.Drawing.Point(100, 112);
             this.groupComboBox.Name = "groupComboBox";
             this.groupComboBox.Size = new System.Drawing.Size(144, 26);
             this.groupComboBox.TabIndex = 13;

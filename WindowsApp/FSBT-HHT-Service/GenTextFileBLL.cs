@@ -13,10 +13,10 @@ namespace FSBT_HHT_BLL
     public class GenTextFileBll
     {
         private GenTextFileDAO genTextFileDAO = new GenTextFileDAO();
-        public List<GenTextFileModel> searchHHT(String hhtname, String sectioncode, String sectionname, String locationfrom, String locationto, String deptCode, int sectionType)
+        public List<GenTextFileModel> searchHHT(String hhtname, String sectioncode, String sectionname, String locationfrom, String locationto)
         {
             Console.WriteLine("GENTEXTFILEBLL ACCESS");
-            return genTextFileDAO.searchHHT(hhtname, sectioncode, sectionname, locationfrom, locationto, deptCode, sectionType);
+            return genTextFileDAO.searchHHT(hhtname, sectioncode, sectionname, locationfrom, locationto);
         }
 
         public DataTable getHHTStocktakingFrontByCountDate()
@@ -69,9 +69,9 @@ namespace FSBT_HHT_BLL
             return genTextFileDAO.GetFileConfigDetailByFileCode(fileCode);
         }
 
-        public DataTable getSearchUploadFile(String DeptCode, String FileCode)
+        public DataTable getSearchUploadFile(Request searchCondition)
         {
-            return genTextFileDAO.getSearchUploadFile(DeptCode, FileCode);
+            return genTextFileDAO.getSearchUploadFile(searchCondition);
         }
 
         public DataTable getUploadFilePCS0009(String DeptCode)
@@ -112,6 +112,84 @@ namespace FSBT_HHT_BLL
         public DataTable getSumExportFile(String DeptCode, String FileCode)
         {
             return genTextFileDAO.getSumExportFile(DeptCode,FileCode);
+        }
+
+        public int ProcessExportData(DataTable countsheet)
+        {
+            return genTextFileDAO.ProcessExportData(countsheet);
+        }
+
+
+        public DataSet getTextFileData(Request search)
+        {
+
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
+
+            //DataTable SKU = new DataTable("MastSAP_SKU");
+            //SKU = genTextFileDAO.getTextFileData(search, "MastSAP_SKU");
+
+            //DataTable Barcode = new DataTable("MastSAP_Barcode");
+            //Barcode = genTextFileDAO.getTextFileData(search, "MastSAP_Barcode");
+
+            //DataTable RegularPrice = new DataTable("MastSAP_RegularPrice");
+            //RegularPrice = genTextFileDAO.getTextFileData(search, "MastSAP_RegularPrice");
+
+            DataTable HHTStocktaking = new DataTable("HHTStocktaking");
+            HHTStocktaking = genTextFileDAO.getTextFileData(search, "HHTStocktaking");
+
+            //DataTable Section = new DataTable("Section");
+            //Section = genTextFileDAO.getTextFileData(search, "Section");
+
+            //DataTable Location = new DataTable("Location");
+            //Location = genTextFileDAO.getTextFileData(search, "Location");
+
+            //if (SKU.Rows.Count > 0)
+            //    ds.Tables.Add(SKU);
+
+            //if (Barcode.Rows.Count > 0)
+            //    ds.Tables.Add(Barcode);
+
+            //if (RegularPrice.Rows.Count > 0)
+            //    ds.Tables.Add(RegularPrice);
+
+            if (HHTStocktaking.Rows.Count > 0)
+                ds.Tables.Add(HHTStocktaking);
+
+            //if (Section.Rows.Count > 0)
+            //    ds.Tables.Add(Section);
+
+            //if (Location.Rows.Count > 0)
+            //    ds.Tables.Add(Location);
+
+            return ds;
+        }
+
+        public List<string> getColumnsName(string tablename)
+        {
+            return genTextFileDAO.getColumnsName(tablename);
+        }
+
+        public bool TruncateTempTextFileData()
+        {
+            bool returnValue = genTextFileDAO.TruncateTempTextFileData() ;
+            return returnValue;
+        }
+
+        public DataTable InsertDataTextFile()
+        {
+            return genTextFileDAO.InsertDataTextFile();
+        }
+
+        public DataTable GetExportCountsheet()
+        {
+            return genTextFileDAO.getAllCountsheet();
+        }
+
+
+        public List<string> GetExportListCountsheet()
+        {
+            return genTextFileDAO.getListAllCountsheet();
         }
     }
 }

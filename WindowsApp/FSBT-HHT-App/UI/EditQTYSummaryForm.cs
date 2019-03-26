@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +15,7 @@ namespace FSBT.HHT.App.UI
 {
     public partial class EditQTYSummaryForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         public EditQTYSummaryForm()
         {
             InitializeComponent();
@@ -24,119 +25,91 @@ namespace FSBT.HHT.App.UI
 
         }
 
-        public void SummaryEditQty(List<EditQtyModel.ResponseSummary> listSummaryData, List<EditQtyModel.MasterUnit> listUnit)
+        public void SummaryEditQty(DataTable listSummaryData)
         {
             try
             {
-                foreach (EditQtyModel.ResponseSummary result in listSummaryData)
+
+                dataGridView1.DataSource = listSummaryData;
+
+                //var numberOfColumn = listSummaryData.Columns.Count;
+                //string[] columnname = new string[numberOfColumn];
+
+                //int i = 0;
+
+                //foreach (DataColumn column in listSummaryData.Columns)
+                //{
+                //    columnname[i] = column.ColumnName;
+                //    i++;
+                //}
+
+                this.dataGridView1.Columns["LocationCode"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                this.dataGridView1.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                this.dataGridView1.Columns["NewQuantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                this.dataGridView1.Columns["UnitName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+                //this.dataGridView1.Columns["LocationCode"].Width = 100;
+                //this.dataGridView1.Columns["Quantity"].Width = 100;           
+                //this.dataGridView1.Columns["NewQuantity"].Width = 100;
+                //this.dataGridView1.Columns["UnitName"].Width = 100;
+
+                //for (int j = 3; j < (numberOfColumn); j++)
+                //{
+                //    this.dataGridView1.Columns[columnname[j]].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                //}
+
+                var totalPCS = "";
+                var totalKG = "";
+                var totalNewPCS = "";
+                var totalNewKG = "";
+
+
+                for (int k = dataGridView1.Rows.Count - 2; k <= dataGridView1.Rows.Count - 1; k++)
                 {
-                    string locationCode = result.LocationCode;
-                    string unitName = result.UnitName;
-                    string Qty = string.Empty;
-                    string NewQty = string.Empty;
+                    var total = dataGridView1.Rows[k].Cells[0].Value == null ? "" : dataGridView1.Rows[k].Cells[0].Value.ToString().Trim();
 
-                    var quantity = result.Quantity;
-                    var newQuantity = result.NewQuantity;
-                    bool isIntQty = quantity == (int)result.Quantity;
-                    bool isIntNewQty = newQuantity == (int)result.NewQuantity;
-                    if(unitName == "KG")
+                    if (total.Length >= 5)
                     {
-                        Qty = String.Format("{0:#,0.000}", (decimal)quantity);
-                       
-                        if (newQuantity.ToString() == "0.000")
+                        total = total.Substring(0, 5);
+
+                        if (total.ToUpper() == "TOTAL" && !string.IsNullOrEmpty(totalPCS))
                         {
-                            NewQty = null;
+                            totalKG = dataGridView1.Rows[k].Cells[1].Value == null ? "" : dataGridView1.Rows[k].Cells[1].Value.ToString().Trim();
+                            totalNewKG = dataGridView1.Rows[k].Cells[2].Value == null ? "" : dataGridView1.Rows[k].Cells[2].Value.ToString().Trim();
                         }
-                        else
+                        else if (total.ToUpper() == "TOTAL")
                         {
-                            NewQty = String.Format("{0:#,0.000}", (decimal)newQuantity);
+                            totalPCS = dataGridView1.Rows[k].Cells[1].Value == null ? "" : dataGridView1.Rows[k].Cells[1].Value.ToString().Trim();
+                            totalNewPCS = dataGridView1.Rows[k].Cells[2].Value == null ? "" : dataGridView1.Rows[k].Cells[2].Value.ToString().Trim();
                         }
                     }
-                    else
-                    {
-                        Qty = String.Format("{0:#,0}", (decimal)quantity);
-                        if (newQuantity.ToString() == "0.000")
-                        {
-                            NewQty = null;
-                        }
-                        else
-                        {
-                            NewQty = String.Format("{0:#,0}", (decimal)newQuantity);
-                        }
-                    }
-
-
-                    //if (quantity.ToString() == "0.000")
-                    //{
-                    //    Qty = null;
-                    //}
-                    //else
-                    //{
-                    //    if (isIntQty)
-                    //    {
-                    //        Qty = String.Format("{0:#,0}", (decimal)quantity);
-                    //    }
-                    //    else
-                    //    {
-                    //        Qty = String.Format("{0:#,0.000}", (decimal)quantity);
-                    //    }
-                    //}
-
-                    //if (newQuantity.ToString() == "0.000")
-                    //{
-                    //    NewQty = null;
-                    //}
-                    //else
-                    //{
-                    //    if (isIntNewQty)
-                    //    {
-                    //        NewQty = String.Format("{0:#,0}", (decimal)newQuantity);
-                    //    }
-                    //    else
-                    //    {
-                    //        NewQty = String.Format("{0:#,0.000}", (decimal)newQuantity);
-                    //    }
-                    //}
-                    dataGridView1.Rows.Add(locationCode,Qty,NewQty,unitName);
                 }
 
-                //double totalQuantity = dataGridView1.Rows.Cast<DataGridViewRow>()
-                //.Sum(t => Convert.ToDouble(t.Cells[1].Value));
-                //double totalNewQuantity = dataGridView1.Rows.Cast<DataGridViewRow>()
-                //    .Sum(t => Convert.ToDouble(t.Cells[2].Value));
+                txtQuantity.Text = totalPCS;
+                txtNewQuantity.Text = totalNewPCS;
 
-                decimal totalQuantity = listSummaryData.Sum(item => item.Quantity);
-                decimal totalNewQuantity = listSummaryData.Sum(item => item.NewQuantity);
-
-                //txtQuantity.Text = String.Format("{0:#,0.00}", (decimal)totalQuantity);
-                //txtNewQuantity.Text = String.Format("{0:#,0.00}", (decimal)totalNewQuantity);
-
-                bool isIntQtyTotal = totalQuantity == (int)totalQuantity;
-                bool isIntNewQtyTotal = totalNewQuantity == (int)totalNewQuantity;
-
-                if (isIntQtyTotal)
+                if (!string.IsNullOrEmpty(totalKG))
                 {
-                    txtQuantity.Text = String.Format("{0:#,0}", (decimal)totalQuantity);
+                    txtQuantityKG.Visible = true;
+                    txtNewQuantityKG.Visible = true;
+                    txtQuantityKG.Text = totalKG;
+                    txtNewQuantityKG.Text = totalNewKG;
+                    label_TotalKG.Visible = true;
                 }
                 else
                 {
-                    txtQuantity.Text = String.Format("{0:#,0.000}", (decimal)totalQuantity);
-                }
-                if (isIntNewQtyTotal)
-                {
-
-                    txtNewQuantity.Text = String.Format("{0:#,0}", (decimal)totalNewQuantity);
-                }
-                else
-                {
-                    txtNewQuantity.Text = String.Format("{0:#,0.000}", (decimal)totalNewQuantity);
+                    txtQuantityKG.Visible = false;
+                    txtNewQuantityKG.Visible = false;
+                    label_TotalKG.Visible = false;
                 }
 
-
+                //dataGridView1.AutoResizeColumns();
+                //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;               
+                            
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
     }

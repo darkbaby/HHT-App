@@ -5,15 +5,92 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FSBT_HHT_DAL.DAO
 {
     public class GenTextFileDAO
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
-        public List<GenTextFileModel> searchHHT(String hhtName, String sectionCode, String sectionName, String locationFrom, String locationTo, String deptCode, int sectionType)
+        private LogErrorDAO logBll = new LogErrorDAO();
+        public List<string> getColumnsName(string tablename)
+        {
+            Entities dbContext = new Entities();
+            List<string> listacolumnas = new List<string>();
+            using (SqlConnection connection = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                command.CommandText = "select c.name from sys.columns c inner join sys.tables t on t.object_id = c.object_id and t.name = '" + tablename + "' and t.type = 'U'";
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listacolumnas.Add(reader.GetString(0));
+                    }
+                }
+            }
+            return listacolumnas.ToList();
+        }
+
+
+        public DataTable getAllCountsheet()
+        {
+            List<string> listCountSheet = new List<string>();
+            Entities dbContext = new Entities();
+            DataTable CountSheetTable = new DataTable();
+            try
+            {
+                listCountSheet = (from m in dbContext.MastSAP_SKU
+                                  select m.PIDoc).Distinct().ToList();
+
+                CountSheetTable.Columns.Add("IsChecked", typeof(int));
+                CountSheetTable.Columns.Add("countsheet", typeof(string));
+
+                if (listCountSheet.Count > 0)
+                {
+                    foreach (var l in listCountSheet)
+                    {
+                        DataRow row = CountSheetTable.NewRow();
+                        row["IsChecked"] = 1;
+                        row["countsheet"] = l;
+                        CountSheetTable.Rows.Add(row);
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                CountSheetTable = null;
+            }
+
+            return CountSheetTable;
+        }
+
+        public List<string> getListAllCountsheet()
+        {
+            List<string> listCountSheet = new List<string>();
+            Entities dbContext = new Entities();
+            try
+            {
+                listCountSheet = (from m in dbContext.MastSAP_SKU
+                                  select m.PIDoc).Distinct().ToList();
+            }
+
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                listCountSheet = null;
+            }
+
+            return listCountSheet;
+        }
+
+
+        public List<GenTextFileModel> searchHHT(String hhtName, String sectionCode, String sectionName, String locationFrom, String locationTo)
         {
             Entities dbContext = new Entities();
             List<GenTextFileModel> genTextFile = new List<GenTextFileModel>();
@@ -21,8 +98,7 @@ namespace FSBT_HHT_DAL.DAO
 
             try
             {
-                var tmpHHT = dbContext.HHTStocktakings.Where(x => x.ScanMode.Equals(sectionType))
-                                                        .GroupBy(n => new { n.HHTName, n.LocationCode })
+                var tmpHHT = dbContext.HHTStocktakings.GroupBy(n => new { n.HHTName, n.LocationCode })
                                                         .Select(z => new
                                                         {
                                                             LocationCode = z.Key.LocationCode,
@@ -33,8 +109,8 @@ namespace FSBT_HHT_DAL.DAO
                 genTextFile = (from hht in tmpHHT
                                join l in dbContext.Locations on hht.LocationCode equals l.LocationCode
                                join s in dbContext.Sections
-                               on new { SectionCode = l.SectionCode, ScanMode = l.ScanMode }
-                               equals new { SectionCode = s.SectionCode, ScanMode = s.ScanMode }
+                               on new { SectionCode = l.SectionCode, StorageLocationCode = l.StorageLocationCode }
+                               equals new { SectionCode = s.SectionCode, StorageLocationCode = s.StorageLocationCode }
                                select new GenTextFileModel
                                {
                                    HHTName = hht.HHTName,
@@ -42,8 +118,7 @@ namespace FSBT_HHT_DAL.DAO
                                    SectionName = s.SectionName,
                                    LocationCode = l.LocationCode,
                                    RecordAmount = hht.Count,
-                                   ScanMode = s.ScanMode,
-                                   DepartmentCode = s.DepartmentCode
+                                   StorageLocationCode = s.StorageLocationCode
                                }).ToList();
 
                 if (!(string.IsNullOrWhiteSpace(hhtName)))
@@ -57,18 +132,17 @@ namespace FSBT_HHT_DAL.DAO
                                        SectionName = sl.SectionName,
                                        LocationCode = sl.LocationCode,
                                        RecordAmount = sl.RecordAmount,
-                                       ScanMode = sl.ScanMode,
-                                       DepartmentCode = sl.DepartmentCode
+                                       StorageLocationCode = sl.StorageLocationCode
                                    }).ToList();
                 }
 
                 if (!(string.IsNullOrWhiteSpace(sectionCode)))
                 {
                     genTextFile = (from sl in genTextFile
-                                       //join s in dbContext.Sections
-                                       //on new { SectionCode = sl.SectionCode, ScanMode = sl.ScanMode }
-                                       //equals new { SectionCode = s.SectionCode, ScanMode = s.ScanMode }
-                                       //join m in dbContext.MasterScanModes on s.ScanMode equals m.ScanModeID
+                                   //join s in dbContext.Sections
+                                   //on new { SectionCode = sl.SectionCode, ScanMode = sl.ScanMode }
+                                   //equals new { SectionCode = s.SectionCode, ScanMode = s.ScanMode }
+                                   //join m in dbContext.MasterScanModes on s.ScanMode equals m.ScanModeID
                                    where sl.SectionCode.Contains(sectionCode)
                                    select new GenTextFileModel
                                    {
@@ -77,8 +151,7 @@ namespace FSBT_HHT_DAL.DAO
                                        SectionName = sl.SectionName,
                                        LocationCode = sl.LocationCode,
                                        RecordAmount = sl.RecordAmount,
-                                       ScanMode = sl.ScanMode,
-                                       DepartmentCode = sl.DepartmentCode
+                                       StorageLocationCode = sl.StorageLocationCode
                                    }).ToList();
                 }
 
@@ -93,8 +166,7 @@ namespace FSBT_HHT_DAL.DAO
                                        SectionName = sl.SectionName,
                                        LocationCode = sl.LocationCode,
                                        RecordAmount = sl.RecordAmount,
-                                       ScanMode = sl.ScanMode,
-                                       DepartmentCode = sl.DepartmentCode
+                                       StorageLocationCode = sl.StorageLocationCode
                                    }).ToList();
                 }
 
@@ -111,8 +183,7 @@ namespace FSBT_HHT_DAL.DAO
                                            SectionName = sl.SectionName,
                                            LocationCode = sl.LocationCode,
                                            RecordAmount = sl.RecordAmount,
-                                           ScanMode = sl.ScanMode,
-                                           DepartmentCode = sl.DepartmentCode
+                                           StorageLocationCode = sl.StorageLocationCode
                                        }).ToList();
                     }
                     else
@@ -126,8 +197,7 @@ namespace FSBT_HHT_DAL.DAO
                                            SectionName = sl.SectionName,
                                            LocationCode = sl.LocationCode,
                                            RecordAmount = sl.RecordAmount,
-                                           ScanMode = sl.ScanMode,
-                                           DepartmentCode = sl.DepartmentCode
+                                           StorageLocationCode = sl.StorageLocationCode
                                        }).ToList();
                     }
                 }
@@ -145,8 +215,7 @@ namespace FSBT_HHT_DAL.DAO
                                            SectionName = sl.SectionName,
                                            LocationCode = sl.LocationCode,
                                            RecordAmount = sl.RecordAmount,
-                                           ScanMode = sl.ScanMode,
-                                           DepartmentCode = sl.DepartmentCode
+                                           StorageLocationCode = sl.StorageLocationCode
                                        }).ToList();
                     }
                     else
@@ -160,32 +229,15 @@ namespace FSBT_HHT_DAL.DAO
                                            SectionName = sl.SectionName,
                                            LocationCode = sl.LocationCode,
                                            RecordAmount = sl.RecordAmount,
-                                           ScanMode = sl.ScanMode,
-                                           DepartmentCode = sl.DepartmentCode
+                                           StorageLocationCode = sl.StorageLocationCode
                                        }).ToList();
                     }
-                }
-
-                if (!(string.IsNullOrWhiteSpace(deptCode)))
-                {
-                    genTextFile = (from sl in genTextFile
-                                   where sl.DepartmentCode.Equals(deptCode)
-                                   select new GenTextFileModel
-                                   {
-                                       HHTName = sl.HHTName,
-                                       SectionCode = sl.SectionCode,
-                                       SectionName = sl.SectionName,
-                                       LocationCode = sl.LocationCode,
-                                       RecordAmount = sl.RecordAmount,
-                                       ScanMode = sl.ScanMode,
-                                       DepartmentCode = sl.DepartmentCode
-                                   }).ToList();
                 }
 
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 genTextFile = new List<GenTextFileModel>();
             }
 
@@ -205,12 +257,10 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 var queryHHT = (from h in dbContext.HHTStocktakings
-                                join m in dbContext.MasterScanModes on h.ScanMode equals m.ScanModeID
-                                where h.CountDate.Equals(countDateSetting) && m.ScanModeName.ToLower().Equals("fresh food")
+                                where h.CountDate.Equals(countDateSetting)
                                 select new
                                 {
                                     StocktakingID = h.StocktakingID,
-                                    ScanMode = h.ScanMode,
                                     LocationCode = h.LocationCode,
                                     Barcode = h.Barcode,
                                     Quantity = h.Quantity,
@@ -227,7 +277,6 @@ namespace FSBT_HHT_DAL.DAO
                                 });
 
                 dtFreshFood.Columns.Add("StocktakingID");
-                dtFreshFood.Columns.Add("ScanMode");
                 dtFreshFood.Columns.Add("LocationCode");
                 dtFreshFood.Columns.Add("Barcode");
                 dtFreshFood.Columns.Add("Quantity");
@@ -247,7 +296,6 @@ namespace FSBT_HHT_DAL.DAO
                 {
                     var row = dtFreshFood.NewRow();
                     row["StocktakingID"] = element.StocktakingID;
-                    row["ScanMode"] = element.ScanMode;
                     row["LocationCode"] = element.LocationCode;
                     row["Barcode"] = element.Barcode;
                     row["Quantity"] = element.Quantity;
@@ -267,7 +315,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 dtFreshFood = new DataTable();
             }
 
@@ -287,12 +335,10 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 var queryHHT = (from h in dbContext.HHTStocktakings
-                                join m in dbContext.MasterScanModes on h.ScanMode equals m.ScanModeID
-                                where h.CountDate.Equals(countDateSetting) && m.ScanModeName.ToLower().Equals("front")
+                                where h.CountDate.Equals(countDateSetting)
                                 select new
                                 {
                                     StocktakingID = h.StocktakingID,
-                                    ScanMode = h.ScanMode,
                                     LocationCode = h.LocationCode,
                                     Barcode = h.Barcode,
                                     Quantity = h.Quantity,
@@ -300,7 +346,6 @@ namespace FSBT_HHT_DAL.DAO
                                 });
 
                 dtFront.Columns.Add("StocktakingID");
-                dtFront.Columns.Add("ScanMode");
                 dtFront.Columns.Add("LocationCode");
                 dtFront.Columns.Add("Barcode");
                 dtFront.Columns.Add("Quantity");
@@ -310,7 +355,6 @@ namespace FSBT_HHT_DAL.DAO
                 {
                     var row = dtFront.NewRow();
                     row["StocktakingID"] = element.StocktakingID;
-                    row["ScanMode"] = element.ScanMode;
                     row["LocationCode"] = element.LocationCode;
                     row["Barcode"] = element.Barcode;
                     row["Quantity"] = element.Quantity;
@@ -321,7 +365,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 dtFront = new DataTable();
             }
 
@@ -341,19 +385,16 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 var queryHHT = (from h in dbContext.HHTStocktakings
-                                join m in dbContext.MasterScanModes on h.ScanMode equals m.ScanModeID
-                                where h.CountDate.Equals(countDateSetting) && m.ScanModeName.ToLower().Equals("back")
+                                where h.CountDate.Equals(countDateSetting)
                                 select new
                                 {
                                     StocktakingID = h.StocktakingID,
-                                    ScanMode = h.ScanMode,
                                     LocationCode = h.LocationCode,
                                     Barcode = h.Barcode,
                                     Quantity = h.Quantity
                                 });
 
                 dtBack.Columns.Add("StocktakingID");
-                dtBack.Columns.Add("ScanMode");
                 dtBack.Columns.Add("LocationCode");
                 dtBack.Columns.Add("Barcode");
                 dtBack.Columns.Add("Quantity");
@@ -362,7 +403,6 @@ namespace FSBT_HHT_DAL.DAO
                 {
                     var row = dtBack.NewRow();
                     row["StocktakingID"] = element.StocktakingID;
-                    row["ScanMode"] = element.ScanMode;
                     row["LocationCode"] = element.LocationCode;
                     row["Barcode"] = element.Barcode;
                     row["Quantity"] = element.Quantity;
@@ -372,7 +412,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 dtBack = new DataTable();
             }
 
@@ -392,18 +432,15 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 var queryHHT = (from h in dbContext.HHTStocktakings
-                                join m in dbContext.MasterScanModes on h.ScanMode equals m.ScanModeID
-                                where h.CountDate.Equals(countDateSetting) && m.ScanModeName.ToLower().Equals("warehouse")
+                                where h.CountDate.Equals(countDateSetting)
                                 select new
                                 {
                                     StocktakingID = h.StocktakingID,
-                                    ScanMode = h.ScanMode,
                                     Barcode = h.Barcode,
                                     Quantity = h.Quantity
                                 });
 
                 dtStock.Columns.Add("StocktakingID");
-                dtStock.Columns.Add("ScanMode");
                 dtStock.Columns.Add("Barcode");
                 dtStock.Columns.Add("Quantity");
 
@@ -411,7 +448,6 @@ namespace FSBT_HHT_DAL.DAO
                 {
                     var row = dtStock.NewRow();
                     row["StocktakingID"] = element.StocktakingID;
-                    row["ScanMode"] = element.ScanMode;
                     row["Barcode"] = element.Barcode;
                     row["Quantity"] = element.Quantity;
                     dtStock.Rows.Add(row);
@@ -420,7 +456,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 dtStock = new DataTable();
             }
 
@@ -444,7 +480,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 fileNameUpload = new List<FileModel>();
             }
 
@@ -468,7 +504,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 fileNameDownload = new List<FileModel>();
             }
 
@@ -566,7 +602,7 @@ namespace FSBT_HHT_DAL.DAO
 
         }
 
-        public DataTable getSearchUploadFile(String DeptCode, String FileCode)
+        public DataTable getSearchUploadFile(Request searchCondition)
         {
             Entities dbContext = new Entities();
             DataTable dt = new DataTable();
@@ -576,11 +612,20 @@ namespace FSBT_HHT_DAL.DAO
                 {
                     //SqlDataAdapter da = new SqlDataAdapter();
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_SEARECHUPLOADFILE", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_SEARECHUPLOADFILE", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
-                    cmd.Parameters.Add("@FileCode", SqlDbType.VarChar).Value = FileCode;
+
+                    cmd.Parameters.Add("@PlantCode", SqlDbType.VarChar).Value = searchCondition.PlantCode;
+                    cmd.Parameters.Add("@CountSheet", SqlDbType.VarChar).Value = searchCondition.CountSheet;
+                    cmd.Parameters.Add("@MCHLevel1", SqlDbType.VarChar).Value = searchCondition.MCHLevel1;
+                    cmd.Parameters.Add("@MCHLevel2", SqlDbType.VarChar).Value = searchCondition.MCHLevel2;
+                    cmd.Parameters.Add("@MCHLevel3", SqlDbType.VarChar).Value = searchCondition.MCHLevel3;
+                    cmd.Parameters.Add("@MCHLevel4", SqlDbType.VarChar).Value = searchCondition.MCHLevel4;
+                    cmd.Parameters.Add("@StorageLocationCode", SqlDbType.VarChar).Value = searchCondition.StorageLocationCode;
+                    cmd.Parameters.Add("@LocationFrom", SqlDbType.VarChar).Value = searchCondition.LocationFrom;
+                    cmd.Parameters.Add("@LocationTo", SqlDbType.VarChar).Value = searchCondition.LocationTo;
+
                     cmd.CommandTimeout = 900;
                     dtAdapter.SelectCommand = cmd;
                     dtAdapter.Fill(dt);
@@ -596,7 +641,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -612,7 +657,7 @@ namespace FSBT_HHT_DAL.DAO
                 using (SqlConnection con = new SqlConnection(dbContext.Database.Connection.ConnectionString))
                 {
                     SqlDataAdapter da = new SqlDataAdapter();
-                    string cmd = "EXEC [dbo].[SP_GETUPLOADFILEPCS0009] @DeptCode ='" + DeptCode + "'";
+                    string cmd = "EXEC [dbo].[SCR04_SP_GETUPLOADFILEPCS0009] @DeptCode ='" + DeptCode + "'";
 
                     da = new SqlDataAdapter(cmd, con);
                     da.Fill(dt);
@@ -620,7 +665,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -642,7 +687,7 @@ namespace FSBT_HHT_DAL.DAO
                     //da.Fill(dt);
 
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_GETUPLOADFILEPCS0011", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_GETUPLOADFILEPCS0011", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
@@ -655,7 +700,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -677,7 +722,7 @@ namespace FSBT_HHT_DAL.DAO
                     //da.Fill(dt);
 
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_GETUPLOADFILEPCS0007", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_GETUPLOADFILEPCS0007", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
@@ -690,7 +735,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -712,7 +757,7 @@ namespace FSBT_HHT_DAL.DAO
                     //da.Fill(dt);
 
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_GETUPLOADFILEPCS0012", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_GETUPLOADFILEPCS0012", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
@@ -725,7 +770,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -747,7 +792,7 @@ namespace FSBT_HHT_DAL.DAO
                     //da.Fill(dt);
 
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_GETUPLOADFILEPCS0004", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_GETUPLOADFILEPCS0004", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
@@ -760,7 +805,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -782,7 +827,7 @@ namespace FSBT_HHT_DAL.DAO
                     //da.Fill(dt);
 
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_GETUPLOADFILEPCS0010", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_GETUPLOADFILEPCS0010", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
@@ -795,7 +840,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
@@ -816,7 +861,7 @@ namespace FSBT_HHT_DAL.DAO
                     //da = new SqlDataAdapter(cmd, con);
                     //da.Fill(dt);
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_SUMEXPORTFILE", con);
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_SUMEXPORTFILE", con);
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@DeptCode", SqlDbType.VarChar).Value = DeptCode;
@@ -830,11 +875,247 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
 
             return dt;
         }
+
+        public DataTable getTextFileData(Request search, string type)
+        {
+            Entities dbContext = new Entities();
+            DataTable dt = new DataTable(type);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_GenDataTextFile", con);
+                    SqlDataAdapter dtAdapter = new SqlDataAdapter();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PlantCode", SqlDbType.VarChar).Value = search.PlantCode;
+                    cmd.Parameters.Add("@CountSheet", SqlDbType.VarChar).Value = search.CountSheet;
+                    cmd.Parameters.Add("@MCHLevel1", SqlDbType.VarChar).Value = search.MCHLevel1;
+                    cmd.Parameters.Add("@MCHLevel2", SqlDbType.VarChar).Value = search.MCHLevel2;
+                    cmd.Parameters.Add("@MCHLevel3", SqlDbType.VarChar).Value = search.MCHLevel3;
+                    cmd.Parameters.Add("@MCHLevel4", SqlDbType.VarChar).Value = search.MCHLevel4;
+                    cmd.Parameters.Add("@StorageLocationCode", SqlDbType.VarChar).Value = search.StorageLocationCode;
+                    cmd.Parameters.Add("@LocationFrom", SqlDbType.VarChar).Value = search.LocationFrom;
+                    cmd.Parameters.Add("@LocationTo", SqlDbType.VarChar).Value = search.LocationTo;
+                    cmd.Parameters.Add("@DataType", SqlDbType.VarChar).Value = type.Replace("MastSAP_",""); ;
+                    cmd.CommandTimeout = 900;
+                    dtAdapter.SelectCommand = cmd;
+                    dtAdapter.Fill(dt);
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                return new DataTable();
+            }
+            return dt;
+        }
+
+        public bool TruncateTempTextFileData()
+        {
+            bool result = false;
+            Entities dbContext = new Entities();
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_TruncateDataTempTextFile", con);
+                    SqlDataAdapter dtAdapter = new SqlDataAdapter();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 900;
+                    dtAdapter.SelectCommand = cmd;
+                    dtAdapter.Fill(dt);
+                    con.Close();
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            }
+            return result;
+        }
+
+        public DataTable InsertDataTextFile()
+        {
+            Entities dbContext = new Entities();
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_InsertDataTextFile", con);
+                    SqlDataAdapter dtAdapter = new SqlDataAdapter();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 900;
+                    dtAdapter.SelectCommand = cmd;
+                    dtAdapter.Fill(dt);
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                dt = null;
+            }
+            return dt;
+        }
+
+        public int ProcessExportData(DataTable countsheet)
+        {
+            Entities dbContext = new Entities();
+            DataTable dt = new DataTable();
+            int returnValue = 0;
+
+            DeleteTempData("TempCountSheet");
+            InsertDataTableToDatabase(countsheet, "TempCountSheet");
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SCR04_SP_ExportFile", conn);
+                    SqlDataAdapter dtAdapter = new SqlDataAdapter();
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 900;
+
+                    dtAdapter.SelectCommand = cmd;
+                    dtAdapter.Fill(dt);
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        returnValue = dr["result"] != null ? Convert.ToInt32(dr["result"]) : 0;
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                returnValue = 0;
+
+            }
+            return returnValue;
+
+        }
+
+        public bool DeleteTempData(string tableName)
+        {
+            bool result = false;
+            try
+            {
+                using (var dbContext = new Entities())
+                {
+                    dbContext.Database.ExecuteSqlCommand("Delete from dbo." + tableName);
+                }
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            }
+            return result;
+        }
+
+
+        public bool InsertDataTableToDatabase(DataTable dtImport, string targetTable)
+        {
+            bool result = false;
+
+            try
+            {
+                var dbContext = new Entities();
+                var connString = dbContext.Database.Connection.ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    conn.Open();
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
+                    {
+                        try
+                        {
+                            bulkCopy.BulkCopyTimeout = 3600;
+                            bulkCopy.DestinationTableName = "[dbo].[" + targetTable + "]";
+                            bulkCopy.WriteToServer(dtImport);
+                            bulkCopy.Close();
+                        }
+                        catch (SqlException ex)
+                        {
+                            if (ex.Message.Contains("Received an invalid column length from the bcp client for colid"))
+                            {
+                                string pattern = @"\d+";
+                                Match match = Regex.Match(ex.Message.ToString(), pattern);
+                                var index = Convert.ToInt32(match.Value) - 1;
+
+                                FieldInfo fi = typeof(SqlBulkCopy).GetField("_sortedColumnMappings", BindingFlags.NonPublic | BindingFlags.Instance);
+                                var sortedColumns = fi.GetValue(bulkCopy);
+                                var items = (Object[])sortedColumns.GetType().GetField("_items", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(sortedColumns);
+
+                                FieldInfo itemdata = items[index].GetType().GetField("_metadata", BindingFlags.NonPublic | BindingFlags.Instance);
+                                var metadata = itemdata.GetValue(items[index]);
+
+                                var column = metadata.GetType().GetField("column", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(metadata);
+                                var length = metadata.GetType().GetField("length", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(metadata);
+                                string s = (String.Format("Column: {0} contains data with a length greater than: {1}", column, length));
+                                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, s, DateTime.Now);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                        }
+                    }
+                    conn.Close();
+                    conn.Dispose();
+                }
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            }
+            return result;
+        }
+
+
+        //public int ProcessExportData(List<string> countsheet)
+        //{
+
+        //    DataTable dt = new DataTable();
+        //    int returnValue = 0;
+
+        //    try
+        //    {
+        //        List<string> param = new List<string>();
+        //        TempDataTableDAO tb = new TempDataTableDAO();
+        //        param = countsheet;
+
+        //        dt = tb.ExecStoredProcedure("SCR04_SP_ExportFile ", param);
+
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            returnValue = dr["result"] != null ? Convert.ToInt32(dr["result"]) : 0;
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        returnValue = 0;
+        //    }
+
+        //    return returnValue;
+        //}
     }
 }

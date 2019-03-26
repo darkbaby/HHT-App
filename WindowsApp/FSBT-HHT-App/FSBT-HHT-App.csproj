@@ -8,10 +8,25 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FSBT.HHT.App</RootNamespace>
-    <AssemblyName>FSBT-HHT-App</AssemblyName>
+    <AssemblyName>TheMallStockTaking</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,36 +47,33 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>stocktaking_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\CrystalDecisions.CrystalReports.Design.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.CrystalReports.Design.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\CrystalDecisions.ReportSource.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.ReportSource.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\CrystalDecisions.Shared.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Shared.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\CrystalDecisions.Web.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Web.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\CrystalDecisions.Windows.Forms.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\CrystalDecisions.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,14 +86,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FlashControlV71.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="OpenNETCF.Desktop.Communication">
-      <HintPath>Resources\OpenNETCF.Desktop.Communication.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -98,6 +103,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
@@ -120,13 +126,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BarCodeDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="ReportTemplate\BarcodeReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BarcodeReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ReportTemplate\ControlSheetDataset.cs">
       <DependentUpon>ControlSheetDataset.xsd</DependentUpon>
@@ -151,258 +150,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryControlDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ReportTemplate\MasterReport_3.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MasterReport_3.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_GroupSummaryReportByFreshFoodWarehouse.cs">
-      <DependentUpon>RPT_GroupSummaryReportByFreshFoodWarehouse.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFreshFood.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByBarcodeFreshFood.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFront.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByBarcodeFront.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeBack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByBarcodeBack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeWarehousePack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByBarcodeWarehousePack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeWarehouse.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByBarcodeWarehouse.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationWarehousePack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByLocationWarehousePack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationWarehouse.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByLocationWarehouse.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationFreshFood.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByLocationFreshFood.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationFrontBack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByLocationFrontBack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionWarehousePack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceBySectionWarehousePack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionWarehouse.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceBySectionWarehouse.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionFreshFood.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceBySectionFreshFood.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse.cs">
-      <DependentUpon>RPT_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_StocktakingAuditAdjustWithUnit.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_StocktakingAuditAdjustWithUnit.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SumStockOnHandByBrandGroupStock.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_SumStockOnHandByBrandGroupStock.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SumStockOnHandStock.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_SumStockOnHandStock.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\_RPT_InventoryControlDifferenceBySection.cs">
-      <DependentUpon>_RPT_InventoryControlDifferenceBySection.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SumStockOnHand.cs">
-      <DependentUpon>RPT_SumStockOnHand.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SumStockOnHandFreshFood.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_SumStockOnHandFreshFood.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SumStockOnHandByBrandGroup.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_SumStockOnHandByBrandGroup.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SumStockOnHandByBrandGroupFreshFood.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_SumStockOnHandByBrandGroupFreshFood.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\P_RPT_InventoryControlDifferenceBySection.cs">
-      <DependentUpon>P_RPT_InventoryControlDifferenceBySection.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\P_RPT_InventoryControlDifferenceByBarcode.cs">
-      <DependentUpon>P_RPT_InventoryControlDifferenceByBarcode.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_NoticeOfStocktakingSatisfactionByFrontBack.cs">
-      <DependentUpon>RPT_NoticeOfStocktakingSatisfactionByFrontBack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_CountedLocationsReport.cs">
-      <DependentUpon>RPT_CountedLocationsReport.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_StocktakingAuditCheckWithUnit.cs">
-      <DependentUpon>RPT_StocktakingAuditCheckWithUnit.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_StocktakingAuditCheck.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_StocktakingAuditCheck.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_StocktakingAuditAdjust.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_StocktakingAuditAdjust.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_UnidentifiedStockItems.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_UnidentifiedStockItems.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFrontBack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceByBarcodeFrontBack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionFrontBack.cs">
-      <DependentUpon>RPT_InventoryControlDifferenceBySectionFrontBack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_DeleteRecordReportBySection.cs">
-      <DependentUpon>RPT_DeleteRecordReportBySection.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_DeleteRecordReportByLocation.cs">
-      <DependentUpon>RPT_DeleteRecordReportByLocation.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\MasterReport_12.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MasterReport_12.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="ReportTemplate\MasterReportDataSet.cs">
       <DependentUpon>MasterReportDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -411,62 +158,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MasterReportDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="ReportTemplate\MasterReport_4.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MasterReport_4.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_SectionLocationByBrandGroup.cs">
-      <DependentUpon>RPT_SectionLocationByBrandGroup.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\DeleteQtyReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DeleteQtyReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_GroupSummaryReportByFrontBack.cs">
-      <DependentUpon>RPT_GroupSummaryReportByFrontBack.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_ControlSheet.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_ControlSheet.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_UncountedLocation.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_UncountedLocation.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_ItemPhysicalCountByBarcode.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_ItemPhysicalCountByBarcode.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="ReportTemplate\RPT_ItemPhysicalCountBySection.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPT_ItemPhysicalCountBySection.rpt</DependentUpon>
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ReportTemplate\SectionLocationDataSet.cs">
       <DependentUpon>SectionLocationDataSet.xsd</DependentUpon>
@@ -488,6 +179,12 @@
     </Compile>
     <Compile Include="Resources\MessageConstants.cs" />
     <Compile Include="TextAndIconColumn.cs" />
+    <Compile Include="UI\ConfirmPasswordSFTPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ConfirmPasswordSFTPForm.Designer.cs">
+      <DependentUpon>ConfirmPasswordSFTPForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\CustomDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -500,17 +197,35 @@
     <Compile Include="UI\DownloadMasterSummaryByBrandForm.Designer.cs">
       <DependentUpon>DownloadMasterSummaryByBrandForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\DownloadMasterSummaryForm.cs">
+    <Compile Include="UI\DownloadMasterSummaryMaterialGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\DownloadMasterSummaryForm.Designer.cs">
-      <DependentUpon>DownloadMasterSummaryForm.cs</DependentUpon>
+    <Compile Include="UI\DownloadMasterSummaryMaterialGroupForm.Designer.cs">
+      <DependentUpon>DownloadMasterSummaryMaterialGroupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DownloadMasterSummaryStorageLocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DownloadMasterSummaryStorageLocationForm.Designer.cs">
+      <DependentUpon>DownloadMasterSummaryStorageLocationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DownloadMasterSummarySubDepartmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DownloadMasterSummarySubDepartmentForm.Designer.cs">
+      <DependentUpon>DownloadMasterSummarySubDepartmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\EditQTYSummaryMKcodeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\EditQTYSummaryMKcodeForm.Designer.cs">
       <DependentUpon>EditQTYSummaryMKcodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\GenTextFileSummaryForm.cs">
       <SubType>Form</SubType>
@@ -577,6 +292,12 @@
     </Compile>
     <Compile Include="UI\MessageBoxAutoHHTSyncForm.Designer.cs">
       <DependentUpon>MessageBoxAutoHHTSyncForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SerialNumberReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SerialNumberReportForm.designer.cs">
+      <DependentUpon>SerialNumberReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SyncHhtForm.cs">
       <SubType>Form</SubType>
@@ -699,231 +420,56 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LayoutWmenu.resx">
       <DependentUpon>LayoutWmenu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\BarcodeReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>BarcodeReport.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\MasterReport_3.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>MasterReport_3.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_GroupSummaryReportByFreshFoodWarehouse.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_GroupSummaryReportByFreshFoodWarehouse.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFreshFood.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByBarcodeFreshFood.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFront.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByBarcodeFront.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeBack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByBarcodeBack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeWarehousePack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByBarcodeWarehousePack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeWarehouse.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByBarcodeWarehouse.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationWarehousePack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByLocationWarehousePack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationWarehouse.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByLocationWarehouse.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationFreshFood.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByLocationFreshFood.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationFrontBack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByLocationFrontBack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionWarehousePack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceBySectionWarehousePack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionWarehouse.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceBySectionWarehouse.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionFreshFood.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceBySectionFreshFood.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_StocktakingAuditAdjustWithUnit.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_StocktakingAuditAdjustWithUnit.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SumStockOnHandByBrandGroupStock.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SumStockOnHandByBrandGroupStock.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SumStockOnHandStock.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SumStockOnHandStock.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\_RPT_InventoryControlDifferenceBySection.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>_RPT_InventoryControlDifferenceBySection.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SumStockOnHand.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SumStockOnHand.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SumStockOnHandFreshFood.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SumStockOnHandFreshFood.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SumStockOnHandByBrandGroup.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SumStockOnHandByBrandGroup.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SumStockOnHandByBrandGroupFreshFood.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SumStockOnHandByBrandGroupFreshFood.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\P_RPT_InventoryControlDifferenceBySection.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>P_RPT_InventoryControlDifferenceBySection.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\P_RPT_InventoryControlDifferenceByBarcode.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>P_RPT_InventoryControlDifferenceByBarcode.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_NoticeOfStocktakingSatisfactionByFrontBack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_NoticeOfStocktakingSatisfactionByFrontBack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_CountedLocationsReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_CountedLocationsReport.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_StocktakingAuditCheckWithUnit.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_StocktakingAuditCheckWithUnit.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_StocktakingAuditCheck.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_StocktakingAuditCheck.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_StocktakingAuditAdjust.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_StocktakingAuditAdjust.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_UnidentifiedStockItems.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_UnidentifiedStockItems.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFrontBack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceByBarcodeFrontBack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionFrontBack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_InventoryControlDifferenceBySectionFrontBack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_DeleteRecordReportBySection.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_DeleteRecordReportBySection.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_DeleteRecordReportByLocation.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_DeleteRecordReportByLocation.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\MasterReport_12.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>MasterReport_12.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\MasterReport_4.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>MasterReport_4.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_SectionLocationByBrandGroup.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_SectionLocationByBrandGroup.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\DeleteQtyReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>DeleteQtyReport.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_GroupSummaryReportByFrontBack.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_GroupSummaryReportByFrontBack.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_ControlSheet.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_ControlSheet.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_UncountedLocation.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_UncountedLocation.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_ItemPhysicalCountByBarcode.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_ItemPhysicalCountByBarcode.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ReportTemplate\RPT_ItemPhysicalCountBySection.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>RPT_ItemPhysicalCountBySection.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="ReportTemplate\BarcodeReport.rpt" />
+    <Content Include="ReportTemplate\MasterReport_3.rpt" />
+    <Content Include="ReportTemplate\RPT_GroupSummaryReportByFreshFoodWarehouse.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFreshFood.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFront.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeBack.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeWarehousePack.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeWarehouse.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationWarehousePack.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationWarehouse.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationFreshFood.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByLocationFrontBack.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionWarehousePack.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionWarehouse.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionFreshFood.rpt" />
+    <Content Include="ReportTemplate\RPT_NoticeOfStocktakingSatisfactionByFreshFoodWarehouse.rpt" />
+    <Content Include="ReportTemplate\RPT_StocktakingAuditAdjustWithUnit.rpt" />
+    <Content Include="ReportTemplate\RPT_SumStockOnHandByBrandGroupStock.rpt" />
+    <Content Include="ReportTemplate\_RPT_InventoryControlDifferenceBySection.rpt" />
+    <Content Include="ReportTemplate\RPT_SumStockOnHand.rpt" />
+    <Content Include="ReportTemplate\RPT_SumStockOnHandByBrandGroup.rpt" />
+    <Content Include="ReportTemplate\RPT_SumStockOnHandByBrandGroupFreshFood.rpt" />
+    <Content Include="ReportTemplate\P_RPT_InventoryControlDifferenceBySection.rpt" />
+    <Content Include="ReportTemplate\P_RPT_InventoryControlDifferenceByBarcode.rpt" />
+    <Content Include="ReportTemplate\RPT_NoticeOfStocktakingSatisfactionByFrontBack.rpt" />
+    <Content Include="ReportTemplate\RPT_CountedLocationsReport.rpt" />
+    <Content Include="ReportTemplate\RPT_StocktakingAuditCheckWithUnit.rpt" />
+    <Content Include="ReportTemplate\RPT_StocktakingAuditCheck.rpt" />
+    <Content Include="ReportTemplate\RPT_StocktakingAuditAdjust.rpt" />
+    <Content Include="ReportTemplate\RPT_UnidentifiedStockItems.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcodeFrontBack.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceBySectionFrontBack.rpt" />
+    <Content Include="ReportTemplate\RPT_DeleteRecordReportBySection.rpt" />
+    <Content Include="ReportTemplate\RPT_DeleteRecordReportByLocation.rpt" />
+    <Content Include="ReportTemplate\MasterReport_12.rpt" />
+    <Content Include="ReportTemplate\MasterReport_4.rpt" />
+    <Content Include="ReportTemplate\RPT_SectionLocationByBrandGroup.rpt" />
+    <Content Include="ReportTemplate\DeleteQtyReport.rpt" />
+    <Content Include="ReportTemplate\RPT_GroupSummaryReportByFrontBack.rpt" />
+    <Content Include="ReportTemplate\RPT_ControlSheet.rpt" />
+    <Content Include="ReportTemplate\RPT_UncountedLocation.rpt" />
+    <Content Include="ReportTemplate\RPT_ItemPhysicalCountByBarcode.rpt" />
+    <Content Include="ReportTemplate\RPT_ItemPhysicalCountBySection.rpt" />
+    <Content Include="ReportTemplate\RPT_InventoryControlDifferenceByBarcode.rpt" />
+    <Content Include="ReportTemplate\RPT_SumStockOnHandStock.rpt" />
+    <Content Include="ReportTemplate\RPT_SumStockOnHandFreshFood.rpt" />
+    <EmbeddedResource Include="UI\ConfirmPasswordSFTPForm.resx">
+      <DependentUpon>ConfirmPasswordSFTPForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomDialog.resx">
       <DependentUpon>CustomDialog.cs</DependentUpon>
@@ -931,11 +477,20 @@
     <EmbeddedResource Include="UI\DownloadMasterSummaryByBrandForm.resx">
       <DependentUpon>DownloadMasterSummaryByBrandForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\DownloadMasterSummaryForm.resx">
-      <DependentUpon>DownloadMasterSummaryForm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\DownloadMasterSummaryMaterialGroupForm.resx">
+      <DependentUpon>DownloadMasterSummaryMaterialGroupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DownloadMasterSummaryStorageLocationForm.resx">
+      <DependentUpon>DownloadMasterSummaryStorageLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DownloadMasterSummarySubDepartmentForm.resx">
+      <DependentUpon>DownloadMasterSummarySubDepartmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\EditQTYSummaryMKcodeForm.resx">
       <DependentUpon>EditQTYSummaryMKcodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\GenTextFileSummaryForm.resx">
       <DependentUpon>GenTextFileSummaryForm.cs</DependentUpon>
@@ -969,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MessageBoxAutoHHTSyncForm.resx">
       <DependentUpon>MessageBoxAutoHHTSyncForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SerialNumberReportForm.resx">
+      <DependentUpon>SerialNumberReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SyncHhtForm.resx">
       <DependentUpon>SyncHhtForm.cs</DependentUpon>
@@ -1034,6 +592,7 @@
     <EmbeddedResource Include="UI_design\TextFile.resx">
       <DependentUpon>TextFile.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1098,6 +657,7 @@
     <None Include="ReportTemplate\MasterReportDataSet.xss">
       <DependentUpon>MasterReportDataSet.xsd</DependentUpon>
     </None>
+    <Content Include="ReportTemplate\RPT_SerialNumberReport.rpt" />
     <None Include="ReportTemplate\SectionLocationDataSet.xsc">
       <DependentUpon>SectionLocationDataSet.xsd</DependentUpon>
     </None>
@@ -1116,20 +676,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FSBT-HHT-DAL\FSBT-HHT-DAL.csproj">
-      <Project>{e5fa8fc1-3f03-48b5-9711-63c69deb587c}</Project>
-      <Name>FSBT-HHT-DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSBT-HHT-Model\FSBT-HHT-Model.csproj">
-      <Project>{2eccaa4d-0299-42cd-a0b5-129a50c5dd31}</Project>
-      <Name>FSBT-HHT-Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSBT-HHT-Service\FSBT-HHT-BLL.csproj">
-      <Project>{87f0910f-a79f-4dc8-a29d-8b64014ad1f8}</Project>
-      <Name>FSBT-HHT-BLL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="FSBT-Version Control.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1139,11 +685,13 @@
     <Content Include="Image\processing.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Image\refresh.png" />
     <Content Include="Image\Stock-Management-with-Handheld-Devices_icon_resize.png" />
     <Content Include="Image\stocktaking_icon.ico" />
     <Content Include="Image\success.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="stocktaking_icon.ico" />
     <None Include="Resources\rsz_fujitsu-logosvg.png" />
     <None Include="ReportTemplate\StocktakingAuditDataSet.xsc">
       <DependentUpon>StocktakingAuditDataSet.xsd</DependentUpon>
@@ -1161,7 +709,53 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AbstractLib\AbstractLib.csproj">
+      <Project>{d066e08c-8f6a-40d4-86c9-1af2ba6cbd39}</Project>
+      <Name>AbstractLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AcknowlegeUploader\AcknowledgeUploader.csproj">
+      <Project>{874317c2-ee08-4eaf-8169-d3b614c83e6c}</Project>
+      <Name>AcknowledgeUploader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DownloadFile\DownloadFile.csproj">
+      <Project>{a8adebd4-9b46-4108-93e1-a6d499c233e4}</Project>
+      <Name>DownloadFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FSBT-HHT-DAL\FSBT-HHT-DAL.csproj">
+      <Project>{e5fa8fc1-3f03-48b5-9711-63c69deb587c}</Project>
+      <Name>FSBT-HHT-DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FSBT-HHT-Model\FSBT-HHT-Model.csproj">
+      <Project>{2eccaa4d-0299-42cd-a0b5-129a50c5dd31}</Project>
+      <Name>FSBT-HHT-Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FSBT-HHT-Service\FSBT-HHT-BLL.csproj">
+      <Project>{87f0910f-a79f-4dc8-a29d-8b64014ad1f8}</Project>
+      <Name>FSBT-HHT-BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFTP\SFTP.csproj">
+      <Project>{dea12f57-50f6-4548-a004-11f7c1917248}</Project>
+      <Name>SFTP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UploaderUtilities\ExportFileUploader.csproj">
+      <Project>{7810dd7f-200d-489d-9d26-0f3380d297c2}</Project>
+      <Name>ExportFileUploader</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

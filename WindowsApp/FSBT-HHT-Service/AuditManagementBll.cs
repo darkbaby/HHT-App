@@ -11,45 +11,63 @@ using FSBT_HHT_Model;
 using BarCode;
 
 namespace FSBT_HHT_BLL
-{
+{ 
     public class AuditManagementBll
     {
         private AuditManagementDAO auditDAO = new AuditManagementDAO();
 
         public List<EditQtyModel.Response> GetAuditHHTToPC(EditQtyModel.Request searchSection)
         {
-            List<EditQtyModel.Response> auditList = auditDAO.GetAuditHHTToPC(searchSection.DepartmentCode,searchSection.SectionCode, searchSection.SectionName, searchSection.LocationFrom, searchSection.LocationTo, searchSection.Barcode, searchSection.SectionType, searchSection.SKUCode);
+            List<EditQtyModel.Response> auditList = auditDAO.GetAuditHHTToPC(searchSection);
+
             return auditList;
         }
-        public List<EditQtyModel.ResponseSummary> GetAuditHHTToPCSummary(EditQtyModel.Request searchSection)
+
+        public DataTable GetAuditHHTToPCSummary(EditQtyModel.Request searchSection)
         {
-            List<EditQtyModel.ResponseSummary> auditList = auditDAO.GetAuditHHTToPCSummary(searchSection.DepartmentCode, searchSection.SectionCode, searchSection.SectionName, searchSection.LocationFrom, searchSection.LocationTo, searchSection.Barcode, searchSection.SectionType, searchSection.SKUCode);
-            return auditList;
+            return auditDAO.GetAuditHHTToPCSummary(searchSection);
+
         }
         public List<EditQtyModel.ResponseSummaryMKCode> GetAuditHHTToPCSummaryMKCode(EditQtyModel.Request searchSection)
         {
-            List<EditQtyModel.ResponseSummaryMKCode> auditList = auditDAO.GetAuditHHTToPCSummaryMKCode(searchSection.DepartmentCode, searchSection.SectionCode, searchSection.SectionName, searchSection.LocationFrom, searchSection.LocationTo, searchSection.Barcode, searchSection.SectionType, searchSection.SKUCode);
+            List<EditQtyModel.ResponseSummaryMKCode> auditList = auditDAO.GetAuditHHTToPCSummaryMKCode(searchSection);
             return auditList;
         }
-        public List<EditQtyModel.ResponseDeleteReport> GetAuditHHTToPCDelete(EditQtyModel.Request searchSection)
+        //public List<EditQtyModel.ResponseDeleteReport> GetAuditHHTToPCDelete(EditQtyModel.Request searchSection)
+        //{
+        //    List<EditQtyModel.ResponseDeleteReport> auditList = auditDAO.GetAuditHHTToPCDelete(searchSection);
+
+        //    return auditList;
+        //}
+
+        public DataTable GetAuditHHTToPCDelete(EditQtyModel.Request searchSection)
         {
-            List<EditQtyModel.ResponseDeleteReport> auditList = auditDAO.GetAuditHHTToPCDelete(searchSection.DepartmentCode, searchSection.SectionCode, searchSection.SectionName, searchSection.LocationFrom, searchSection.LocationTo, searchSection.Barcode);
+            DataTable auditList = auditDAO.GetAuditHHTToPCDelete(searchSection);
+
             return auditList;
         }
-        public List<EditQtyModel.MasterScanMode> GetMasterScanMode()
+
+        public List<EditQtyModel.ResponseSerialNumberReport> GetSerialNumberData(EditQtyModel.Request searchSection)
         {
-            List<EditQtyModel.MasterScanMode> scanModeList = auditDAO.GetMasterScanMode();
+            List<EditQtyModel.ResponseSerialNumberReport> auditList = auditDAO.GetSerialNumberData(searchSection);
+
+            return auditList;
+        }
+        public List<MasterStorageLocation> GetMasterScanMode()
+        {
+            List<MasterStorageLocation> scanModeList = auditDAO.GetMasterScanMode();
             return scanModeList;
         }
+
         public List<EditQtyModel.MasterUnit> GetMasterUnit()
         {
             List<EditQtyModel.MasterUnit> unitList = auditDAO.GetMasterUnit();
             return unitList;
         }
 
-        public string CheckIsExistLocation(string LocationCode,int scanMode)
+        public string CheckIsExistLocation(string LocationCode,string StorageLocationCode)
         {
-            string isExistlocation = auditDAO.CheckIsExistLocation(LocationCode ,scanMode);
+            string isExistlocation = auditDAO.CheckIsExistLocation(LocationCode, StorageLocationCode);
             return isExistlocation;
         }
         public bool SaveAuditHHTToPC(List<EditQtyModel.Response> insertList, List<EditQtyModel.Response> updateList, List<EditQtyModel.Response> updateSKUModeList, List<EditQtyModel.Response> deleteList, string username)
@@ -57,13 +75,36 @@ namespace FSBT_HHT_BLL
             return auditDAO.SaveAuditHHTToPC(insertList, updateList, updateSKUModeList, deleteList, username);
         }
 
-        public EditQtyModel.MasterSKU GetDescriptionInMasterSKU(string barcode, string location, string stocktakingID, DateTime countDate,int scanMode,int unitCode)
+        public EditQtyModel.MasterSKU GetDescriptionInMasterSKU(string barcode, string location, string stocktakingID, DateTime countDate,  int unitCode,string flag, string serialnumber)
         {
-            return auditDAO.GetDescriptionInMasterSKU(barcode, location, stocktakingID, countDate, scanMode, unitCode);
+            return auditDAO.GetDescriptionInMasterSKU(barcode, location, stocktakingID, countDate,  unitCode, flag, serialnumber);
         }
+        
         public bool IsExistLocationBarcodeInCountDate(string barcode, string location, DateTime countDate)
         {
             return auditDAO.IsExistLocationBarcodeInCountDate(barcode, location, countDate);
+        }
+
+        public bool IsExistSerialNumberInCountDate(string serialNumber, DateTime countDate, string stocktakingID)
+        {
+            return auditDAO.IsExistSerialNumberInCountDate(serialNumber, countDate, stocktakingID);
+        }
+
+        //public List<EditQtyModel.ResponseSerialNumberReport> GetSerialNumberData(EditQtyModel.Request searchSection)
+        //{
+        //    List<EditQtyModel.ResponseSerialNumberReport> auditList = auditDAO.GetSerialNumberData(searchSection);
+
+        //    return auditList;
+        //}
+
+        public int UpdateMasterForAddData()
+        {
+            return auditDAO.UpdateMasterForAddData();
+        }
+
+        public void GetMasterForMappingData()
+        {
+            auditDAO.GetMasterForMappingData();
         }
 
     }

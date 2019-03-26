@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Globalization;
+using System.Reflection;
 
 namespace FSBT_HHT_BLL
 {
     public class FilesUtilBll
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
-        public static double ConvertUnit(long fileSizeByte, string unit)
+        private LogErrorBll logBll = new LogErrorBll(); 
+        public  double ConvertUnit(long fileSizeByte, string unit)
         {
             double output = fileSizeByte;
             string[] sizes = { "B", "KB", "MB", "GB" };
@@ -29,7 +30,7 @@ namespace FSBT_HHT_BLL
         /// <param name="destinationFile">path zip file to create.</param>
         /// <param name="overwrite"></param>
         /// <returns>Create zip file successful.</returns>
-        public static bool CreateZipFile(List<string> fileList, string destinationFile, bool overwrite)
+        public  bool CreateZipFile(List<string> fileList, string destinationFile, bool overwrite)
         {
             try
             {
@@ -53,12 +54,12 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
 
         }
-        public static List<string> ExtractZip(string sourceFile, string destinationFolder, bool overwrite)
+        public  List<string> ExtractZip(string sourceFile, string destinationFolder, bool overwrite)
         {
             List<string> fileList = new List<string>();
             try
@@ -80,18 +81,18 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return null;
             }
         }
-        public static long GetFileSize(string path)
+        public  long GetFileSize(string path)
         {
             FileInfo info = new FileInfo(path);
             long fileSize = info.Length;
             return fileSize;
         }
 
-        public static bool IsFileOverLimit(string path, long limitSize)
+        public  bool IsFileOverLimit(string path, long limitSize)
         {
             bool output = false;
             FileInfo info = new FileInfo(path);
@@ -100,7 +101,7 @@ namespace FSBT_HHT_BLL
             return output;
         }
 
-        public static bool CopyFileFromFile(string sourceFile, string targetFile)
+        public  bool CopyFileFromFile(string sourceFile, string targetFile)
         {
             bool msg = false;
             // To move a file or folder to a new location:
@@ -111,14 +112,14 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 Console.WriteLine(ex.Message);
                 msg = false;
             }
             return msg;
         }
 
-        public static bool DeleteFile(string pathFIle)
+        public  bool DeleteFile(string pathFIle)
         {
             bool msg = false;
             if (System.IO.File.Exists(pathFIle))
@@ -130,7 +131,7 @@ namespace FSBT_HHT_BLL
                 }
                 catch (Exception ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     Console.WriteLine(ex.Message);
                     msg = false;
                 }
@@ -146,7 +147,7 @@ namespace FSBT_HHT_BLL
         /// </summary>
         /// <param name="path">path to create directory.</param>
         /// <returns>create directory successful.</returns>
-        public static bool CreateDirectory(string path)
+        public  bool CreateDirectory(string path)
         {
             try
             {
@@ -158,7 +159,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -168,7 +169,7 @@ namespace FSBT_HHT_BLL
         /// </summary>
         /// <param name="path">path directory to delete.</param>
         /// <returns>Delete directory successful.</returns>
-        public static bool DeleteDirectory(string path)
+        public  bool DeleteDirectory(string path)
         {
             try
             {
@@ -184,7 +185,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -198,7 +199,7 @@ namespace FSBT_HHT_BLL
         /// <param name="isHeader">First row is Header column.</param>
         /// <param name="isDoubleQuote"> add DoubleQuote each column data.</param>
         /// <returns>Export Text File successful.</returns>
-        public static bool ExportTextFileFromDataTable(string Fullpath, DataTable data, string delimiter, bool isHeader, bool isDoubleQuote)
+        public  bool ExportTextFileFromDataTable(string Fullpath, DataTable data, string delimiter, bool isHeader, bool isDoubleQuote)
         {
             FileStream FileOut = null;
             string path = Path.GetDirectoryName(Fullpath) + "//";
@@ -269,7 +270,7 @@ namespace FSBT_HHT_BLL
         /// <param name="isHeader">First row in text is header.</param>
         /// <param name="isDoubleQuote">Each column has DoubleQuote.</param>
         /// <returns>DataTable of data from Text File.</returns>
-        public static DataTable GetDataTableFromTextFile(string Fullpath, string delimiter, bool isHeader, bool isDoubleQuote)
+        public  DataTable GetDataTableFromTextFile(string Fullpath, string delimiter, bool isHeader, bool isDoubleQuote)
         {
             StreamReader steamReader = new StreamReader(Fullpath);
             try
@@ -366,7 +367,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 steamReader.Close();
                 steamReader.Dispose();
                 return null;
@@ -382,7 +383,7 @@ namespace FSBT_HHT_BLL
         /// <param name="isHeader">First row in text is header.</param>
         /// <param name="isDoubleQuote">Each column has DoubleQuote.</param>
         /// <returns>DataTable of data from Text File.</returns>
-        public static DataTable GetDataTableFromTextFile(DataTable dtSource, string Fullpath, string delimiter, bool isHeader, bool isDoubleQuote)
+        public  DataTable GetDataTableFromTextFile(DataTable dtSource, string Fullpath, string delimiter, bool isHeader, bool isDoubleQuote)
         {
             StreamReader steamReader = new StreamReader(Fullpath);
             try
@@ -459,7 +460,7 @@ namespace FSBT_HHT_BLL
                                             }
                                             else
                                             {
-                                                dataRow[i] = doubleValue;
+                                                dataRow[i] = DBNull.Value;
                                             }
                                         }
                                         else
@@ -516,7 +517,7 @@ namespace FSBT_HHT_BLL
                                             }
                                             else
                                             {
-                                                dataRow[i] = doubleValue;
+                                                dataRow[i] = DBNull.Value;
                                             }
                                         }
                                         else
@@ -541,7 +542,7 @@ namespace FSBT_HHT_BLL
             }
             catch (FileNotFoundException ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 Console.WriteLine(ex.Message);
 
                 steamReader.Close();
@@ -550,7 +551,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 steamReader.Close();
                 steamReader.Dispose();
                 return null;

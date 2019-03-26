@@ -13,7 +13,8 @@ namespace FSBT_HHT_DAL.DAO
 {
     public class DownloadMasterDAO
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorDAO logBll = new LogErrorDAO(); 
+        
         public DownloadMasterDAO()
         {
 
@@ -31,13 +32,13 @@ namespace FSBT_HHT_DAL.DAO
                 masterSKUParam.SqlDbType = SqlDbType.Structured;
                 masterSKUParam.TypeName = "dbo.MasterSKU_FrontTable";
                 masterSKUParam.SqlValue = masterData;
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_ADD_MASTERSKU_Front] @SKUValue ", masterSKUParam);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_ADD_MASTERSKU_Front] @SKUValue ", masterSKUParam);
 
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -59,7 +60,7 @@ namespace FSBT_HHT_DAL.DAO
         //    }
         //    catch (Exception ex)
         //    {
-        //        log.Error(String.Format("Exception : {0}", ex.StackTrace));
+        //        logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
         //        result = "error";
         //    }
         //    return result;
@@ -76,12 +77,12 @@ namespace FSBT_HHT_DAL.DAO
                 masterSKUParam.SqlDbType = SqlDbType.Structured;
                 masterSKUParam.TypeName = "dbo.MasterSKU_FrontTable";
                 masterSKUParam.SqlValue = masterData;
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_ADD_MASTERSKU_Stock] @SKUValue", masterSKUParam);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_ADD_MASTERSKU_Stock] @SKUValue", masterSKUParam);
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -98,12 +99,12 @@ namespace FSBT_HHT_DAL.DAO
                 masterSKUParam.SqlDbType = SqlDbType.Structured;
                 masterSKUParam.TypeName = "dbo.MasterSKU_FreshFoodTable";
                 masterSKUParam.SqlValue = masterData;
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_ADD_MASTERSKU_FreshFood] @SKUValue", masterSKUParam);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_ADD_MASTERSKU_FreshFood] @SKUValue", masterSKUParam);
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -120,12 +121,12 @@ namespace FSBT_HHT_DAL.DAO
                 masterBarcodeParam.SqlDbType = SqlDbType.Structured;
                 masterBarcodeParam.TypeName = "dbo.MasterBarcodeTable";
                 masterBarcodeParam.SqlValue = masterData;
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_ADD_MASTERBARCODE] @BarcodeValue", masterBarcodeParam);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_ADD_MASTERBARCODE] @BarcodeValue", masterBarcodeParam);
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -142,12 +143,12 @@ namespace FSBT_HHT_DAL.DAO
                 masterBarcodeParam.SqlDbType = SqlDbType.Structured;
                 masterBarcodeParam.TypeName = "dbo.MasterPackTable";
                 masterBarcodeParam.SqlValue = masterData;
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_ADD_MASTERPACK] @PackValue", masterBarcodeParam);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_ADD_MASTERPACK] @PackValue", masterBarcodeParam);
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -164,12 +165,12 @@ namespace FSBT_HHT_DAL.DAO
                 masterBarcodeParam.SqlDbType = SqlDbType.Structured;
                 masterBarcodeParam.TypeName = "dbo.MasterBrandTable";
                 masterBarcodeParam.SqlValue = masterData;
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_ADD_MASTERBRAND] @BrandValue", masterBarcodeParam);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_ADD_MASTERBRAND] @BrandValue", masterBarcodeParam);
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -181,12 +182,12 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 Entities dbContext = new Entities();
-                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SP_DELETE_MASTER_WITH_FLG] " + dataType + "," + flg);
+                dbContext.Database.ExecuteSqlCommand("EXEC [dbo].[SCR01_SP_DELETE_MASTER_WITH_FLG] " + dataType + "," + flg);
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
@@ -198,22 +199,80 @@ namespace FSBT_HHT_DAL.DAO
             try
             {
                 Entities dbContext = new Entities();
+                // Clear Master of SAP + Share Drive
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MastSAP_Barcode");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MastSAP_RegularPrice");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MastSAP_SKU");
+                
+                // Clear Master
                 dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterSKU");
                 dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterBarcode");
                 dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterPack");
                 dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterBrand");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterStorageLocation");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM Location");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM Section");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterPlant");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterSKUReport");
+
+                // Clear Log
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM LogError");
+
+                // Clear Data from HandHeld
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM tmpHHTStocktaking");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM HHTStocktaking");
+
+                SystemSettingDAO settingDAO = new SystemSettingDAO();
+                settingDAO.UpdateSettingData("StorageLocationType", "string", "SECTION");
+                settingDAO.UpdateSettingData("ScanMode", "string", "P");
 
                 result = "success";
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
             return result;
         }
 
-        public DataTable GetMasterSummary(int flg)
+        public string DeleteMasterSAP()
+        {
+            string result = "";
+            try
+            {
+                Entities dbContext = new Entities();
+                // Clear Master of SAP + Share Drive
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MastSAP_Barcode");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MastSAP_RegularPrice");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MastSAP_SKU");
+
+                // Clear Master
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterSKU");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterBarcode");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterPack");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterBrand");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterStorageLocation");
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM MasterSKUReport");
+
+                // Clear Log
+                dbContext.Database.ExecuteSqlCommand("DELETE FROM LogError");
+                
+                SystemSettingDAO settingDAO = new SystemSettingDAO();
+                settingDAO.UpdateSettingData("StorageLocationType", "string", "SECTION");
+                settingDAO.UpdateSettingData("ScanMode", "string", "P");
+
+                result = "success";
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                result = "error";
+            }
+            return result;
+        }
+
+        public DataTable GetMasterSummarySubDepartment(int flg)
         {
             DataTable resultTable = new DataTable();
             StringBuilder sqlQuery = new StringBuilder();
@@ -223,7 +282,7 @@ namespace FSBT_HHT_DAL.DAO
                 using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
                 {
                     SqlDataAdapter da = new SqlDataAdapter();
-                    string cmd = "EXEC [dbo].[SP_GET_MASTERSUMMARY] '" + flg + "'";
+                    string cmd = "EXEC [dbo].[SCR01_SP_GET_MASTERSUMMARY_SUB_DEPARTMENT] '" + flg + "'";
 
                     da = new SqlDataAdapter(cmd, conn);
                     da.Fill(resultTable);
@@ -233,7 +292,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
         }
@@ -248,7 +307,7 @@ namespace FSBT_HHT_DAL.DAO
                 using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
                 {
                     SqlDataAdapter da = new SqlDataAdapter();
-                    string cmd = "EXEC [dbo].[SP_GET_MASTERSUMMARY_BY_BRAND] '" + flg + "'";
+                    string cmd = "EXEC [dbo].[SCR01_SP_GET_MASTERSUMMARY_BY_BRAND] '" + flg + "'";
 
                     da = new SqlDataAdapter(cmd, conn);
                     da.Fill(resultTable);
@@ -258,7 +317,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
             }
         }
@@ -283,7 +342,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return null;
             }
         }
@@ -307,7 +366,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return null;
             }
         }
@@ -322,11 +381,11 @@ namespace FSBT_HHT_DAL.DAO
                 switch (tableType)
                 {
                     case "SKU":
-                        List<MasterSKU> querySKU = dbContext.MasterSKUs.Where(x => x.ScanMode.Equals(flg)).ToList();
+                        List<MasterSKU> querySKU = dbContext.MasterSKUs.Where(x => x.StorageLocation.Equals(flg)).ToList();
                         resultTable = ToDataTable<MasterSKU>(querySKU);
                         break;
                     case "Barcode":
-                        List<MasterBarcode> queryBarcode = dbContext.MasterBarcodes.Where(x => x.ScanMode.Equals(flg)).ToList();
+                        List<MasterBarcode> queryBarcode = dbContext.MasterBarcodes.ToList();
                         resultTable = ToDataTable<MasterBarcode>(queryBarcode);
                         break;
                 }
@@ -341,12 +400,12 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return null;
             }
         }
 
-        private static DataTable ToDataTable<T>(List<T> items)
+        private DataTable ToDataTable<T>(List<T> items)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);
 
@@ -372,12 +431,11 @@ namespace FSBT_HHT_DAL.DAO
             return dataTable;
         }
 
-        private static DataTable ToDataTableForExcel<T>(List<T> items)
+        private DataTable ToDataTableForExcel<T>(List<T> items)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);
             try
             {
-
                 //Get all the properties
                 PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
                 foreach (PropertyInfo prop in Props)
@@ -401,14 +459,14 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 dataTable = new DataTable(typeof(T).Name);
             }
             //put a breakpoint here and check datatable
             return dataTable;
         }
 
-        private static void AddRowNameForTable(DataTable dataTable, PropertyInfo[] Props)
+        private void AddRowNameForTable(DataTable dataTable, PropertyInfo[] Props)
         {
             try
             {
@@ -424,7 +482,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -438,7 +496,31 @@ namespace FSBT_HHT_DAL.DAO
                 using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
                 {
                     SqlDataAdapter da = new SqlDataAdapter();
-                    string cmd = "EXEC [dbo].[SP_GET_MASTERDOWNLOAD] '" + flg + "','" + dataType + "'";
+                    string cmd = "EXEC [dbo].[SCR01_SP_GET_MASTERDOWNLOAD] '" + flg + "','" + dataType + "'";
+
+                    da = new SqlDataAdapter(cmd, conn);
+                    da.Fill(resultTable);
+                }
+                return resultTable;
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                return new DataTable();
+            }
+        }
+
+        public DataTable GetMasterSummaryMaterialGroup(int flg)
+        {
+            DataTable resultTable = new DataTable();
+            StringBuilder sqlQuery = new StringBuilder();
+            Entities dbContext = new Entities();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    string cmd = "EXEC [dbo].[SCR01_SP_GET_MASTERSUMMARY_MATERIAL_GROUP] '" + flg + "'";
 
                     da = new SqlDataAdapter(cmd, conn);
                     da.Fill(resultTable);
@@ -448,8 +530,77 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new DataTable();
+            }
+        }
+
+        public DataTable GetMasterSummaryStorageLocation(int flg)
+        {
+            DataTable resultTable = new DataTable();
+            StringBuilder sqlQuery = new StringBuilder();
+            Entities dbContext = new Entities();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    string cmd = "EXEC [dbo].[SCR01_SP_GET_MASTERSUMMARY_STORAGE_LOCATION] '" + flg + "'";
+
+                    da = new SqlDataAdapter(cmd, conn);
+                    da.Fill(resultTable);
+                }
+                return resultTable;
+
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                return new DataTable();
+            }
+        }
+
+        public DataTable GetSerialAfterDownload()
+        {
+            DataTable resultTable = new DataTable();
+            StringBuilder sqlQuery = new StringBuilder();
+            Entities dbContext = new Entities();
+            try
+            {
+                List<TempFileSKUDetail> querySKU = (from skuDetail in dbContext.TempFileSKUDetails
+                                                    where skuDetail.SerialNumber != ""
+                                                    select skuDetail).ToList();
+
+                resultTable = ToDataTable<TempFileSKUDetail>(querySKU);
+
+                return resultTable;
+
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                return null;
+            }
+        }
+
+        public List<LogError> GetLogAll()
+        {
+            StringBuilder sqlQuery = new StringBuilder();
+            Entities dbContext = new Entities();
+            try
+            {
+                List<LogError> queryLog = (from log in dbContext.LogErrors
+                                                    select log).ToList();
+
+                //resultTable = ToDataTable<LogError>(queryLog);
+
+                return queryLog;
+
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                return null;
             }
         }
     }

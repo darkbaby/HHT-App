@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +19,7 @@ namespace FSBT.HHT.App.UI
 {
     public partial class ReportManagementForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+private LogErrorBll logBll = new LogErrorBll(); 
         private ReportManagementBll bll = new ReportManagementBll();
 
         public ReportManagementForm()
@@ -46,7 +47,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -60,8 +62,8 @@ namespace FSBT.HHT.App.UI
                 string parentPath = new DirectoryInfo(startFilePath).Parent.Parent.FullName;
                 string reportFile = bll.GetReportFileFromReportCode(reportCode).Trim();
                 //string filePath = parentPath + "\\ReportTemplate\\" + reportFile;
-
-                if (reportCode == "R15")
+                /*
+                if (reportCode == "R15") 
                 {
                     var unitName = paramFields[6].CurrentValues[0].Description;
                     if (unitName == "2")
@@ -77,7 +79,8 @@ namespace FSBT.HHT.App.UI
                         reportFile = "RPT_InventoryControlDifferenceByLocationWarehousePack.rpt";
                     }
                 }
-                else if (reportCode == "R18")
+                */
+                if (reportCode == "R13")
                 {
                     var scanMode = paramFields[1].CurrentValues[0].Description;
                     if (scanMode == "Front")
@@ -89,7 +92,8 @@ namespace FSBT.HHT.App.UI
                         reportFile = "RPT_InventoryControlDifferenceByBarcodeFront.rpt";
                     }
                 }
-                else if (reportCode == "R19")
+                /*
+                else if (reportCode == "R19") //14 Inventory Control Difference Report By Barcode (Warehouse)
                 {
                     var unitName = paramFields[6].CurrentValues[0].Description;
                     if (unitName == "2")
@@ -97,6 +101,7 @@ namespace FSBT.HHT.App.UI
                         reportFile = "RPT_InventoryControlDifferenceByBarcodeWarehousePack.rpt";
                     }
                 }
+                */
 
                 string filePath = Path.GetFullPath("./ReportTemplate/" + reportFile);
                 docReport.Load(filePath);
@@ -110,7 +115,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -137,7 +143,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -153,6 +160,7 @@ namespace FSBT.HHT.App.UI
                 //string filePath = parentPath + "\\ReportTemplate\\" + reportFile;
                 if (unitCode == "2")
                 {
+                    /*
                     if (reportCode == "R15")
                     {
                         reportFile = "RPT_InventoryControlDifferenceBySectionWarehousePack.rpt";
@@ -161,7 +169,9 @@ namespace FSBT.HHT.App.UI
                     {
                         reportFile = "RPT_InventoryControlDifferenceByLocationWarehousePack.rpt";
                     }
-                    else if (reportCode == "R19")
+                    else 
+                    */
+                    if (reportCode == "R14")
                     {
                         reportFile = "RPT_InventoryControlDifferenceByBarcodeWarehousePack.rpt";
                     }
@@ -179,7 +189,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -216,7 +227,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }

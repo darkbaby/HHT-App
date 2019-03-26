@@ -43,10 +43,12 @@
   <ItemGroup>
     <Compile Include="BackupDataModel.cs" />
     <Compile Include="ComboboxItem.cs" />
+    <Compile Include="DownloadFileModel.cs" />
     <Compile Include="GenTextFileModel.cs" />
     <Compile Include="HHTSyncModel.cs" />
     <Compile Include="LocationBarcode.cs" />
     <Compile Include="EditQtyModel.cs" />
+    <Compile Include="MasterPlantModel.cs" />
     <Compile Include="SystemSettingModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="PermissionModel.cs" />

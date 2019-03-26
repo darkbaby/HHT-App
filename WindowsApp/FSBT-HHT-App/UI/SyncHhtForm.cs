@@ -22,19 +22,22 @@ using FSBT_HHT_DAL;
 using System.Globalization;
 using FSBT.HHT.App.Resources;
 using CrystalDecisions.Shared;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
     public partial class SyncHhtForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
-        string sleepTime = ConfigurationManager.AppSettings["sleepTime"];
-        public string UserName { get; set; }
+        private LogErrorBll logBll = new LogErrorBll();
+        private string sleepTime = ConfigurationManager.AppSettings["sleepTime"];
+        private string HHTDBPath = ConfigurationManager.AppSettings["HHTDBPath"];
+        private string HHTTempPath = ConfigurationManager.AppSettings["HHTTempPath"];
+        private string UserName { get; set; }
         //public LayoutWmenu layoutForm { get; set; }               
         private WqlEventQuery queryInsert;
         private WqlEventQuery queryRemove;
-        private ManagementEventWatcher watcherInsert;
-        private ManagementEventWatcher watcherRemove;
+        //private ManagementEventWatcher watcherInsert;
+        //private ManagementEventWatcher watcherRemove;
         private HHTSyncBll hhtBll = new HHTSyncBll();
         private bool connectedWiFiDownload = false;
         private bool connectedWiFiUpload = false;
@@ -77,7 +80,6 @@ namespace FSBT.HHT.App.UI
                         dataGridViewAutoUp.Rows[rowStart].Cells[7] = new TextAndIconCell();
                         dataGridViewAutoUp.Rows[rowStart].Cells[7].Value = "Finished";
                         ((TextAndIconCell)dataGridViewAutoUp.Rows[rowStart].Cells[7]).Image = imgFinish;
-
                     });
                 }
                 else
@@ -86,7 +88,6 @@ namespace FSBT.HHT.App.UI
                     dataGridViewAutoUp.Rows[rowStart].Cells[7].Value = "Finished";
                     ((TextAndIconCell)dataGridViewAutoUp.Rows[rowStart].Cells[7]).Image = imgFinish;
                 }
-
             }
             else
             {
@@ -104,7 +105,6 @@ namespace FSBT.HHT.App.UI
                         MessageBoxAutoHHTSyncForm messageBox = new MessageBoxAutoHHTSyncForm(msg);
                         messageBox.Show();
                         //MessageBox.Show("Location " + location + "has been uploaded by Hand-held's ID : " + insertResult.hhtID + ". Hand-held's name : " + insertResult.hhtName + ". Stocktaker : " + insertResult.stocktaker + ".");
-
                     });
                 }
                 else
@@ -118,9 +118,7 @@ namespace FSBT.HHT.App.UI
                     messageBox.Show();
                     // MessageBox.Show("Location " + location + "has been uploaded by Hand-held's ID : " + insertResult.hhtID + ". Hand-held's name : " + insertResult.hhtName + ". Stocktaker : " + insertResult.stocktaker + ".");
                 }
-
             }
-
         }
         public void SetAutoUploadGrid()
         {
@@ -139,7 +137,6 @@ namespace FSBT.HHT.App.UI
                     {
                         int rowStart = 0;
                         List<AuditStocktakingModel> auditListTempGroupLocation = auditListFromTemp.GroupBy(x => new { x.HHTID, x.HHTName, x.CreateBy, x.FileName, x.LocationCode, x.ImportDate }).Select(g => g.First()).ToList();
-
 
                         foreach (AuditStocktakingModel data in auditListTempGroupLocation)
                         {
@@ -168,7 +165,6 @@ namespace FSBT.HHT.App.UI
                             }
                             else
                             {
-                               
                                 var row1 = new string[] { data.HHTID, data.HHTName, data.CreateBy, data.FileName, data.LocationCode, Convert.ToString(countLocation), Convert.ToString(QTY), "Not Start", "Waiting", (data.ImportDate).ToString("yyyy-MM-dd HH:mm:ss.fff") };
                                 dataGridViewAutoUp.Rows.Insert(0, row1);
                                 //this.dataGridViewAutoUp.Rows.Add(0, data.HHTID, data.HHTName, data.CreateBy, data.FileName, data.LocationCode, Convert.ToString(countLocation), Convert.ToString(QTY), "Not Start", "Waiting", (data.ImportDate).ToString("yyyy-MM-dd HH:mm:ss.fff"));
@@ -201,7 +197,6 @@ namespace FSBT.HHT.App.UI
                                     dataGridViewAutoUp.Rows[rowStart].Cells[7] = new TextAndIconCell();
                                     dataGridViewAutoUp.Rows[rowStart].Cells[7].Value = "Processing...";
                                     ((TextAndIconCell)dataGridViewAutoUp.Rows[rowStart].Cells[7]).Image = imgProcess;
-
                                 });
                             }
                             else
@@ -221,7 +216,7 @@ namespace FSBT.HHT.App.UI
                                                                                     where a.HHTID == hhtID && a.HHTName == hhtName && a.CreateBy == stocktaker && a.FileName == fileName && a.LocationCode == location && a.ImportDate == Convert.ToDateTime(importDate)
                                                                                     orderby a.ImportDate
                                                                                     select a).ToList();
-                            if (auditListTempOneLocation[0].FlagLoation == "E")
+                            if (auditListTempOneLocation[0].FlagLocation == "E")
                             {
                                 if (this.dataGridViewAutoUp.InvokeRequired)
                                 {
@@ -231,7 +226,6 @@ namespace FSBT.HHT.App.UI
                                         dataGridViewAutoUp.Rows[rowStart].Cells[7].Value = "Error";
                                         ((TextAndIconCell)dataGridViewAutoUp.Rows[rowStart].Cells[7]).Image = imgError;
                                         dataGridViewAutoUp.Rows[rowStart].Cells[10].Value = "Location doesn't exist.";
-
                                     });
                                 }
                                 else
@@ -251,14 +245,13 @@ namespace FSBT.HHT.App.UI
                             rowStart--;
                         }
                     }
-
                     catch (Exception ex)
                     {
-                        log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                        //log.Error(String.Format("Exception : {0} {1}", ex.Message, ex.StackTrace));
+                        logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     }
                     Thread.Sleep(5000);
                 }
-
             }
         }
 
@@ -341,8 +334,9 @@ namespace FSBT.HHT.App.UI
                                 string allDepartmentCode = string.Empty;
                                 string allSectionCode = string.Empty;
                                 string allBrandCode = string.Empty;
-                                string reportName = bllReportManagement.GetReportNameByReportCode("R06");
-                                DataTable dt = hhtBll.LoadReport_StocktakingAuditCheckWithUnit_AutoPrint(allLocationCode, allStoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode);
+                                string reportName = bllReportManagement.GetReportNameByReportCode("R08");
+                                //DataTable dt = hhtBll.LoadReport_StocktakingAuditCheckWithUnit_AutoPrint(allLocationCode, allStoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode);
+                                DataTable dt = hhtBll.LoadReport_StocktakingAuditCheckWithUnit_AutoPrint(allLocationCode, countDate);
                                 ParameterFields paramFields = new ParameterFields();
                                 ParameterField paramField1 = new ParameterField();
                                 ParameterField paramField2 = new ParameterField();
@@ -365,6 +359,7 @@ namespace FSBT.HHT.App.UI
                                 paramFields.Add(paramField1);
                                 paramFields.Add(paramField2);
                                 paramFields.Add(paramField3);
+
                                 if (dt.Rows.Count > 0)
                                 {
                                     if (this.dataGridViewAutoUp.InvokeRequired)
@@ -391,7 +386,7 @@ namespace FSBT.HHT.App.UI
 
                                     //dtToPrint = dtToPrint.AsEnumerable().GroupBy(x => x.Field<string>("Barcode")).Select(g => g.First()).CopyToDataTable();
 
-                                    bool isPrintReportSuccess = reportForm.PrintReport(dtToPrint, "R06", paramFields);
+                                    bool isPrintReportSuccess = reportForm.PrintReport(dtToPrint, "R08", paramFields);
                                     //log.Info("print success status : " + isPrintReportSuccess);
                                     hhtBll.UpdatePrintFlag(dt);
                                     if (isPrintReportSuccess)
@@ -480,7 +475,6 @@ namespace FSBT.HHT.App.UI
                                     ((TextAndIconCell)dataGridViewAutoUp.Rows[printingRow].Cells[8]).Image = imgError;
                                     printingRow--;
                                 }
-
                             }
                             else
                             {
@@ -492,14 +486,12 @@ namespace FSBT.HHT.App.UI
                         }
                     }
                     Thread.Sleep(10000);
-
                 }
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
-
         }
 
         #region Prepare
@@ -514,7 +506,6 @@ namespace FSBT.HHT.App.UI
             this.ControlBox = false;
             UserName = username;
             dataGridViewAutoUp.Columns[10].DefaultCellStyle.ForeColor = Color.Red;
-
         }
 
         public void CallThread()
@@ -524,7 +515,7 @@ namespace FSBT.HHT.App.UI
             {
                 importThread = new Thread(new ThreadStart(SetAutoUploadGrid));
                 importThread.Start();
-                log.Info("importThread start");
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "importThread start", DateTime.Now);
 
                 if (settingModel.RealTimeMode)
                 {
@@ -535,12 +526,13 @@ namespace FSBT.HHT.App.UI
                     //Thread.Sleep(5000);
                     printThread = new Thread(new ThreadStart(AutoPrint));
                     printThread.Start();
-                    log.Info("printThread start");
+                    //log.Info("printThread start");
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "printThread start", DateTime.Now);
                 }
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
 
 
@@ -550,26 +542,25 @@ namespace FSBT.HHT.App.UI
         {
             try
             {
-
                 if (settingModel.RealTimeMode)
                 {
                     importThread.Abort();
-                    log.Info("importThread stop");
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "importThread stop", DateTime.Now);
                 }
                 else
                 {
                     importThread.Abort();
                     printThread.Abort();
-                    log.Info("importThread stop");
-                    log.Info("printThread stop");
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "importThread stop", DateTime.Now);
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "printThread stop", DateTime.Now);
+                    //log.Info("importThread stop");
+                    //log.Info("printThread stop");
                 }
-
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
-
         }
 
         private void SetScanModeComboBox()
@@ -600,22 +591,19 @@ namespace FSBT.HHT.App.UI
             ManagementScope scope = new ManagementScope("root\\CIMV2");
             scope.Options.EnablePrivileges = true;
 
-            watcherInsert = new ManagementEventWatcher(scope, queryInsert);
-            watcherInsert.EventArrived += new EventArrivedEventHandler(USBInsertionEvent);
+            //watcherInsert = new ManagementEventWatcher(scope, queryInsert);
+            //watcherInsert.EventArrived += new EventArrivedEventHandler(USBInsertionEvent);
 
-
-
-            watcherRemove = new ManagementEventWatcher(scope, queryRemove);
-            watcherRemove.EventArrived += new EventArrivedEventHandler(USBRemoveEvent);
-
+            //watcherRemove = new ManagementEventWatcher(scope, queryRemove);
+            //watcherRemove.EventArrived += new EventArrivedEventHandler(USBRemoveEvent);
 
             SetScanModeComboBox();
 
             originalbtnWifiDEnable = btnWifiDownload.Enabled;
             originalbtnWifiUEnable = btnWifiUpload.Enabled;
             connectedCable = CheckPermission();
-            watcherInsert.Start();
-            watcherRemove.Start();
+            //watcherInsert.Start();
+            //watcherRemove.Start();
         }
 
         private void radioLocation_CheckedChanged(object sender, EventArgs e)
@@ -632,7 +620,6 @@ namespace FSBT.HHT.App.UI
                 textBoxLoFrom.Enabled = true;
                 textBoxLoTo.Enabled = true;
             }
-
         }
 
         private void radioBtnSKU_CheckedChanged(object sender, EventArgs e)
@@ -666,13 +653,13 @@ namespace FSBT.HHT.App.UI
                         btnWifiUpload.Enabled = originalbtnWifiUEnable;
 
                         this.dataGridView1.Rows.Clear();
-                        radioLocation.Checked = true;
-                        radioBtnSKU.Checked = true;
+                        //radioLocation.Checked = true;
+                        //radioBtnSKU.Checked = true;
                         textBoxLoFrom.Text = "";
                         textBoxLoTo.Text = "";
                         this.dataGridViewLo.Rows.Clear();
                         this.dataGridView3.Rows.Clear();
-                        comboBoxSKU.SelectedIndex = 0;
+                        //comboBoxSKU.SelectedIndex = 0;
 
                     });
                 }
@@ -688,13 +675,13 @@ namespace FSBT.HHT.App.UI
                     btnWifiUpload.Enabled = originalbtnWifiUEnable;
 
                     this.dataGridView1.Rows.Clear();
-                    radioLocation.Checked = true;
-                    radioBtnSKU.Checked = true;
+                    //radioLocation.Checked = true;
+                    //radioBtnSKU.Checked = true;
                     textBoxLoFrom.Text = "";
                     textBoxLoTo.Text = "";
                     this.dataGridViewLo.Rows.Clear();
                     this.dataGridView3.Rows.Clear();
-                    comboBoxSKU.SelectedIndex = 0;
+                    //comboBoxSKU.SelectedIndex = 0;
                 }
                 //BeginInvoke((MethodInvoker)delegate
                 //{
@@ -720,10 +707,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
-
-
         }
 
         private void USBInsertionEvent(object sender, EventArrivedEventArgs e)
@@ -734,42 +719,42 @@ namespace FSBT.HHT.App.UI
                 {
                     Invoke((MethodInvoker)delegate
                     {
-                        Loading_Screen.ShowSplashScreen();
+                        //Loading_Screen.ShowSplashScreen();
                         comnameTxtBox1.Text = "";
                         hhtnameTxtBox1.Text = "";
                         comnameTxtBox2.Text = "";
                         hhtnameTxtBox2.Text = "";
                         textBoxIP1.Text = "";
                         textBoxIP2.Text = "";
-                        radioLocation.Checked = true;
-                        radioBtnSKU.Checked = true;
+                        //radioLocation.Checked = true;
+                        //radioBtnSKU.Checked = true;
                         textBoxLoFrom.Text = "";
                         textBoxLoTo.Text = "";
                         dataGridView1.Rows.Clear();
                         dataGridViewLo.Rows.Clear();
                         dataGridView3.Rows.Clear();
-                        comboBoxSKU.SelectedIndex = 0;
+                        //comboBoxSKU.SelectedIndex = 0;
                         tabControl1.Enabled = false;
 
                     });
                 }
                 else
                 {
-                    Loading_Screen.ShowSplashScreen();
+                    //Loading_Screen.ShowSplashScreen();
                     comnameTxtBox1.Text = "";
                     hhtnameTxtBox1.Text = "";
                     comnameTxtBox2.Text = "";
                     hhtnameTxtBox2.Text = "";
                     textBoxIP1.Text = "";
                     textBoxIP2.Text = "";
-                    radioLocation.Checked = true;
-                    radioBtnSKU.Checked = true;
+                    //radioLocation.Checked = true;
+                    //radioBtnSKU.Checked = true;
                     textBoxLoFrom.Text = "";
                     textBoxLoTo.Text = "";
                     dataGridView1.Rows.Clear();
                     dataGridViewLo.Rows.Clear();
                     dataGridView3.Rows.Clear();
-                    comboBoxSKU.SelectedIndex = 0;
+                    //comboBoxSKU.SelectedIndex = 0;
                     tabControl1.Enabled = false;
                 }
 
@@ -778,10 +763,8 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
-
-
         }
 
         private bool CheckPermission()
@@ -790,15 +773,16 @@ namespace FSBT.HHT.App.UI
             {
                 hhtBll.D_ConnectDevice();
                 string deviceName = hhtBll.D_GetDeviceName();
-                string myComputerName = hhtBll.GetComputerName();
+                string myComputerName = hhtBll.GetComputerName().ToUpper();
                 //get database
                 bool checkValidateDeviceMode = true;
-                bool transferComplete = hhtBll.D_HHTTransferFileToPC(checkValidateDeviceMode);
+                bool transferComplete = hhtBll.D_HHTTransferFileToPC(checkValidateDeviceMode, HHTDBPath);
                 if (transferComplete)
                 {
                     ////check permission
                     List<string> coumputerList = hhtBll.GetComputerList();
                     bool validComputer = coumputerList.Any(s => myComputerName.Contains(s));
+
                     if (validComputer)
                     {
                         if (this.comnameTxtBox1.InvokeRequired)
@@ -813,7 +797,6 @@ namespace FSBT.HHT.App.UI
                                 textBoxIP2.ReadOnly = true;
                                 btnWifiDownload.Enabled = false;
                                 btnWifiUpload.Enabled = false;
-
                             });
                         }
                         else
@@ -829,25 +812,25 @@ namespace FSBT.HHT.App.UI
                         }
 
                         checkValidateDeviceMode = false;
-                        bool transferDBSuccess = hhtBll.D_HHTTransferFileToPC(checkValidateDeviceMode);
+                        bool transferDBSuccess = hhtBll.D_HHTTransferFileToPC(checkValidateDeviceMode, HHTDBPath);
                         if (transferDBSuccess)
                         {
-                            string pathFolder = ConfigurationManager.AppSettings["pathFTPFolder"];
-                            bool transferfileSuccess = hhtBll.D_HHTTransferFileUploadToPC(pathFolder);
+                            string pathFolder = ConfigurationManager.AppSettings["SourcePath"];
+                            bool transferfileSuccess = hhtBll.D_HHTTransferFileUploadToPC(pathFolder, HHTTempPath);
                             if (transferfileSuccess)
                             {
                                 DateTime localDate = DateTime.Now;
                                 var culture = new CultureInfo("en-US");
-                                log.Info(localDate.ToString(culture) + " Transfering uploaded file from hand-held to PC success.");
+                                string log = localDate.ToString(culture) + " Transfering uploaded file from hand-held to PC success.";
+                                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, log, DateTime.Now);
                             }
                             else
                             {
                                 DateTime localDate = DateTime.Now;
                                 var culture = new CultureInfo("en-US");
-                                log.Info(localDate.ToString(culture) + " Do not Transfer uploaded file from hand-held to PC");
+                                string log = localDate.ToString(culture) + " Do not Transfer uploaded file from hand-held to PC";
+                                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, log, DateTime.Now);
                             }
-                            //auditList = hhtBll.GetAuditList();
-                            //SetLocationGridview(auditList);
 
                             if (this.tabControl1.InvokeRequired)
                             {
@@ -889,7 +872,6 @@ namespace FSBT.HHT.App.UI
                     }
                     else
                     {
-
                         hhtBll.D_DisconnectDevice();
                         if (this.tabControl1.InvokeRequired)
                         {
@@ -908,11 +890,6 @@ namespace FSBT.HHT.App.UI
                         MessageBox.Show(MessageConstants.Invaliddevice, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
-                    //hhtcomnameTxtBox.Text = myComputerName;
-                    //hhtnameTxtBox.Text = deviceName;
-                    //textBoxIP.ReadOnly = true;
-                    //return true;
-
                 }
                 else
                 {
@@ -931,12 +908,10 @@ namespace FSBT.HHT.App.UI
                         tabControl1.Enabled = true;
                     }
                     Console.WriteLine("cannot transfer database COMPUTER_NAME.sdf from hht device");
-                    //MessageBox.Show("Error connect device");
                     MessageBox.Show(MessageConstants.CannotconnecttoHandhelddatabase, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     hhtBll.D_DisconnectDevice();
                     return false;
                 }
-
             }
             else
             {
@@ -946,7 +921,6 @@ namespace FSBT.HHT.App.UI
                     {
                         Loading_Screen.CloseForm();
                         tabControl1.Enabled = true;
-
                     });
                 }
                 else
@@ -955,7 +929,8 @@ namespace FSBT.HHT.App.UI
                     tabControl1.Enabled = true;
                 }
                 MessageBox.Show(MessageConstants.Nodeviceconnected, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+                comnameTxtBox1.Text = "";
+                hhtnameTxtBox1.Text = "";
                 if (this.textBoxIP1.InvokeRequired)
                 {
                     Invoke((MethodInvoker)delegate
@@ -980,13 +955,225 @@ namespace FSBT.HHT.App.UI
             }
         }
 
+        private bool CheckCableConnection()
+        {
+            hhtBll = new HHTSyncBll();
+            Loading_Screen.ShowSplashScreen();
+            if (hhtBll.D_IsDevicePlugIn())
+            {
+                hhtBll.D_ConnectDevice();
+                string deviceName = hhtBll.D_GetDeviceName();
+                string myComputerName = hhtBll.GetComputerName().ToUpper();
+                //get database
+                bool checkValidateDeviceMode = true;
+                bool transferComplete = hhtBll.D_HHTTransferFileToPC(checkValidateDeviceMode, HHTDBPath);
+                if (transferComplete)
+                {
+                    ////check permission
+                    List<string> coumputerList = hhtBll.GetComputerList();
+                    bool validComputer = coumputerList.Any(s => myComputerName.Contains(s));
+
+                    if (validComputer)
+                    {
+                        if (this.comnameTxtBox1.InvokeRequired)
+                        {
+                            Invoke((MethodInvoker)delegate
+                            {
+                                comnameTxtBox1.Text = myComputerName;
+                                hhtnameTxtBox1.Text = deviceName;
+                                comnameTxtBox2.Text = myComputerName;
+                                hhtnameTxtBox2.Text = deviceName;
+                                textBoxIP1.ReadOnly = true;
+                                textBoxIP2.ReadOnly = true;
+                                btnWifiDownload.Enabled = false;
+                                btnWifiUpload.Enabled = false;
+                            });
+                        }
+                        else
+                        {
+                            comnameTxtBox1.Text = myComputerName;
+                            hhtnameTxtBox1.Text = deviceName;
+                            comnameTxtBox2.Text = myComputerName;
+                            hhtnameTxtBox2.Text = deviceName;
+                            textBoxIP1.ReadOnly = true;
+                            textBoxIP2.ReadOnly = true;
+                            btnWifiDownload.Enabled = false;
+                            btnWifiUpload.Enabled = false;
+                        }
+
+                        checkValidateDeviceMode = false;
+                        bool transferDBSuccess = hhtBll.D_HHTTransferFileToPC(checkValidateDeviceMode, HHTDBPath);
+                        if (transferDBSuccess)
+                        {
+                            string pathFolder = ConfigurationManager.AppSettings["SourcePath"];
+                            bool transferfileSuccess = hhtBll.D_HHTTransferFileUploadToPC(pathFolder, HHTTempPath);
+                            if (transferfileSuccess)
+                            {
+                                DateTime localDate = DateTime.Now;
+                                var culture = new CultureInfo("en-US");
+                                string log = localDate.ToString(culture) + " Transfering uploaded file from hand-held to PC success.";
+                                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, log, DateTime.Now);
+                            }
+                            else
+                            {
+                                DateTime localDate = DateTime.Now;
+                                var culture = new CultureInfo("en-US");
+                                string log = localDate.ToString(culture) + " Do not Transfer uploaded file from hand-held to PC";
+                                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, log, DateTime.Now);
+                            }
+
+                            if (this.tabControl1.InvokeRequired)
+                            {
+                                Invoke((MethodInvoker)delegate
+                                {
+                                    tabControl1.Enabled = true;
+                                });
+                            }
+                            else
+                            {
+                                tabControl1.Enabled = true;
+                            }
+                        }
+                        else
+                        {
+                            if (this.tabControl1.InvokeRequired)
+                            {
+                                Invoke((MethodInvoker)delegate
+                                {
+                                    tabControl1.Enabled = true;
+                                });
+                            }
+                            else
+                            {
+                                tabControl1.Enabled = true;
+                            }
+                        }
+
+                        hhtBll.D_DisconnectDevice();
+                        Loading_Screen.CloseForm();
+                        return true;
+                    }
+                    else
+                    {
+                        hhtBll.D_DisconnectDevice();
+                        if (this.tabControl1.InvokeRequired)
+                        {
+                            Invoke((MethodInvoker)delegate
+                            {
+                                tabControl1.Enabled = true;
+                            });
+                        }
+                        else
+                        {
+                            tabControl1.Enabled = true;
+                        }
+                        Loading_Screen.CloseForm();
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (this.tabControl1.InvokeRequired)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            tabControl1.Enabled = true;
+                        });
+                    }
+                    else
+                    {
+                        tabControl1.Enabled = true;
+                    }
+
+                    hhtBll.D_DisconnectDevice();
+                    Loading_Screen.CloseForm();
+                    return false;
+                }
+            }
+            else
+            {
+                if (this.tabControl1.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        tabControl1.Enabled = true;
+                    });
+                }
+                else
+                {
+                    tabControl1.Enabled = true;
+                }
+
+                if (this.textBoxIP1.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        textBoxIP1.ReadOnly = false;
+                        textBoxIP2.ReadOnly = false;
+                        btnWifiDownload.Enabled = originalbtnWifiDEnable;
+                        btnWifiUpload.Enabled = originalbtnWifiUEnable;
+                    });
+                }
+                else
+                {
+                    textBoxIP1.ReadOnly = false;
+                    textBoxIP2.ReadOnly = false;
+                    btnWifiDownload.Enabled = originalbtnWifiDEnable;
+                    btnWifiUpload.Enabled = originalbtnWifiUEnable;
+                }
+
+                hhtBll.D_DisconnectDevice();
+                Loading_Screen.CloseForm();
+                return false;
+            }
+        }
+
+        private bool GetAuditDataFromHHT()
+        {
+            hhtBll = new HHTSyncBll();
+            Loading_Screen.ShowSplashScreen();
+            if (hhtBll.D_IsDevicePlugIn())
+            {
+                hhtBll.D_ConnectDevice();                                   
+                string pathFolder = ConfigurationManager.AppSettings["SourcePath"];
+                bool transferfileSuccess = hhtBll.D_HHTTransferFileUploadToPC(pathFolder, HHTTempPath);
+                if (transferfileSuccess)
+                {
+                    DateTime localDate = DateTime.Now;
+                    var culture = new CultureInfo("en-US");
+                    string log = localDate.ToString(culture) + " Transfering uploaded file from hand-held to PC success.";
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, log, DateTime.Now);
+                }
+                else
+                {
+                    DateTime localDate = DateTime.Now;
+                    var culture = new CultureInfo("en-US");
+                    string log = localDate.ToString(culture) + " Do not Transfer uploaded file from hand-held to PC";
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, log, DateTime.Now);
+                }
+
+                hhtBll.D_DisconnectDevice();
+                Loading_Screen.CloseForm();
+                return true;
+            }         
+            else
+            {
+                Loading_Screen.CloseForm();
+                MessageBox.Show(MessageConstants.Nodeviceconnected, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                comnameTxtBox1.Text = "";
+                hhtnameTxtBox1.Text = "";
+                hhtBll.D_DisconnectDevice();
+                return false;
+            }
+        }
+
         //public bool CheckPermissionFTP(FTP ftpClient)
         private bool CheckPermissionFTP(string hostIP)
         {
             bool checkPermissionMode = true;
             //bool success = ftpClient.TransferHHTToPC(checkPermissionMode);
-            string myComputerName = hhtBll.GetComputerName();
-            bool success = hhtBll.FTPTransferHHTToPC(hostIP, checkPermissionMode);
+            string myComputerName = hhtBll.GetComputerName().ToUpper();
+            bool success = hhtBll.FTPTransferHHTToPC(hostIP, checkPermissionMode, HHTDBPath);
             if (success)
             {
                 //check permission
@@ -998,28 +1185,53 @@ namespace FSBT.HHT.App.UI
                 }
                 else
                 {
-
                     Loading_Screen.CloseForm();
                     tabControl1.Enabled = true;
 
                     MessageBox.Show(MessageConstants.Invaliddevice, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Console.WriteLine("invalid device");
                     return false;
                 }
             }
             else
             {
-
                 Loading_Screen.CloseForm();
                 tabControl1.Enabled = true;
 
                 //MessageBox.Show("Error : transfer file ftp");
                 MessageBox.Show(MessageConstants.CannotconnecttoHandhelddatabase, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Console.WriteLine("ftp cannot transfer COMPUTER_HHT.sdf from HHT.");
                 return false;
             }
 
         }
+
+        private bool CheckWifiConnection(string hostIP)
+        {
+            bool checkPermissionMode = true;
+            //bool success = ftpClient.TransferHHTToPC(checkPermissionMode);
+            string myComputerName = hhtBll.GetComputerName().ToUpper();
+            bool success = hhtBll.FTPTransferHHTToPC(hostIP, checkPermissionMode, HHTDBPath);
+            if (success)
+            {
+                //check permission
+                List<string> coumputerList = hhtBll.GetComputerList();
+                bool validComputer = coumputerList.Any(s => myComputerName.Contains(s));
+                if (validComputer)
+                {
+                    return true;
+                }
+                else
+                {
+                    tabControl1.Enabled = true;
+                    return false;
+                }
+            }
+            else
+            {
+                tabControl1.Enabled = true;              
+                return false;
+            }
+        }
+
 
         private void SetLocationGridview(List<AuditStocktakingModel> auditList)
         {
@@ -1033,7 +1245,6 @@ namespace FSBT.HHT.App.UI
                     dataGridViewLo.Columns[4].Visible = true;
                     dataGridViewLo.Columns[5].Visible = true;
                     dataGridViewLo.Rows.Clear();
-
                 });
             }
             else
@@ -1145,8 +1356,6 @@ namespace FSBT.HHT.App.UI
                                     //dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[2].Value = false;
                                     dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[2] = new DataGridViewTextBoxCell();
                                     dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[2].Value = "";
-
-
                                 }
                                 if (dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[5].Value == string.Empty)
                                 {
@@ -1154,10 +1363,8 @@ namespace FSBT.HHT.App.UI
                                     dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[4] = new DataGridViewTextBoxCell();
                                     dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[4].Value = "";
                                 }
-
                             }
                             rowIndex++;
-
                         });
                     }
                     else
@@ -1170,8 +1377,6 @@ namespace FSBT.HHT.App.UI
                                 //dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[2].Value = false;
                                 dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[2] = new DataGridViewTextBoxCell();
                                 dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[2].Value = "";
-
-
                             }
                             if (dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[5].Value == string.Empty)
                             {
@@ -1179,11 +1384,9 @@ namespace FSBT.HHT.App.UI
                                 dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[4] = new DataGridViewTextBoxCell();
                                 dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[4].Value = "";
                             }
-
                         }
                         rowIndex++;
                     }
-
                 }
                 rowIndex = 1;
             }
@@ -1213,10 +1416,7 @@ namespace FSBT.HHT.App.UI
                     dataGridViewLo.Columns[5].Visible = false;
                     dataGridViewLo.Rows[dataGridViewLo.Rows.Count - 1].Cells[3].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
                 }
-
             }
-
-
         }
 
         private void dataGridViewLo_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -1238,15 +1438,12 @@ namespace FSBT.HHT.App.UI
 
                 }
             }
-
-
-
         }
 
         private void SyncHhtForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            watcherInsert.Dispose();
-            watcherRemove.Dispose();
+            //watcherInsert.Dispose();
+            //watcherRemove.Dispose();
             hhtBll.D_DisconnectDevice();
             hhtBll.DeleteDBFile();
         }
@@ -1256,17 +1453,15 @@ namespace FSBT.HHT.App.UI
         {
             comnameTxtBox1.Text = "";
             hhtnameTxtBox1.Text = "";
-            radioLocation.Checked = true;
-            radioBtnSKU.Checked = true;
+            //radioLocation.Checked = true;
+            //radioBtnSKU.Checked = true;
             textBoxLoFrom.Text = "";
             textBoxLoTo.Text = "";
             dataGridView1.Rows.Clear();
-            comboBoxSKU.SelectedIndex = 0;
 
             ipAddress = textBoxIP1.Text.Trim();
             if (ipAddress == string.Empty)
             {
-
                 MessageBox.Show(MessageConstants.PleaseenterIPaddress, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 connectedWiFiDownload = false;
             }
@@ -1280,7 +1475,7 @@ namespace FSBT.HHT.App.UI
                 {
                     bool checkPermissionMode = false;
                     //bool transferSuccess = ftpClient.TransferHHTToPC(checkPermissionMode);
-                    bool transferSuccess = hhtBll.FTPTransferHHTToPC(ipAddress, checkPermissionMode);
+                    bool transferSuccess = hhtBll.FTPTransferHHTToPC(ipAddress, checkPermissionMode, HHTDBPath);
                     if (transferSuccess)
                     {
                         //auditList = hhtBll.GetAuditList();
@@ -1310,8 +1505,6 @@ namespace FSBT.HHT.App.UI
                     hhtnameTxtBox1.Text = "";
                 }
             }
-
-
         }
 
         private void btnWifiUpload_Click(object sender, EventArgs e)
@@ -1342,7 +1535,7 @@ namespace FSBT.HHT.App.UI
                 {
                     bool checkPermissionMode = false;
                     //bool transferSuccess = ftpClient.TransferHHTToPC(checkPermissionMode);
-                    bool transferSuccess = hhtBll.FTPTransferHHTToPC(ipAddressUpload, checkPermissionMode);
+                    bool transferSuccess = hhtBll.FTPTransferHHTToPC(ipAddressUpload, checkPermissionMode, HHTDBPath);
                     if (transferSuccess)
                     {
                         string deviceName = hhtBll.GetDeviceNameFTP();
@@ -1373,19 +1566,12 @@ namespace FSBT.HHT.App.UI
                     comnameTxtBox2.Text = "";
                     hhtnameTxtBox2.Text = "";
                 }
-
             }
-
         }
-
-
 
         #region Upload function
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            //List<AuditStocktakingModel> auditList = new List<AuditStocktakingModel>();
-
-
             tabControl1.Enabled = false;
             Loading_Screen.ShowSplashScreen();
             this.dataGridView3.Rows.Clear();
@@ -1396,9 +1582,10 @@ namespace FSBT.HHT.App.UI
             }
             else
             {
-
                 tabControl1.Enabled = true;
-
+                Loading_Screen.CloseForm();
+                comnameTxtBox1.Text = "";
+                hhtnameTxtBox1.Text = "";
                 MessageBox.Show(MessageConstants.Nodeviceconnected, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -1588,7 +1775,6 @@ namespace FSBT.HHT.App.UI
                 }
                 else
                 {
-
                     tabControl1.Enabled = true;
                     Loading_Screen.CloseForm();
                     MessageBox.Show(MessageConstants.UploadNotComplete, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1596,7 +1782,6 @@ namespace FSBT.HHT.App.UI
             }
             else
             {
-
                 tabControl1.Enabled = true;
                 Loading_Screen.CloseForm();
                 MessageBox.Show(MessageConstants.Pleasechooselocationbeforeupload, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1613,7 +1798,7 @@ namespace FSBT.HHT.App.UI
                 if (connectedCable)
                 {
                     hhtBll.D_ConnectDevice();
-                    if (hhtBll.D_PCTransferFileToHHT())
+                    if (hhtBll.D_PCTransferFileToHHT(HHTDBPath))
                     {
                         foreach (List<AuditStocktakingModel> auditListByLocation in auditListByLocationArr)
                         {
@@ -1638,15 +1823,13 @@ namespace FSBT.HHT.App.UI
 
                         Loading_Screen.CloseForm();
                         tabControl1.Enabled = true;
-
-                        Console.WriteLine("transferfile PC to HHT fail");
                         MessageBox.Show(MessageConstants.Deleteuploadeddatafail, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     hhtBll.D_DisconnectDevice();
                 }
                 else if (connectedWiFiUpload)
                 {
-                    if (hhtBll.FTPTransferPCToHHT(ipAddressUpload))
+                    if (hhtBll.FTPTransferPCToHHT(ipAddressUpload, HHTDBPath))
                     {
                         foreach (List<AuditStocktakingModel> auditListByLocation in auditListByLocationArr)
                         {
@@ -1669,94 +1852,35 @@ namespace FSBT.HHT.App.UI
                     }
                     else
                     {
-
                         Loading_Screen.CloseForm();
                         tabControl1.Enabled = true;
-
-                        Console.WriteLine("transferfile PC to HHT fail");
                         MessageBox.Show(MessageConstants.DeleteuploadeddatafailFailtransfertohht, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-
                     Loading_Screen.CloseForm();
                     tabControl1.Enabled = true;
-
                     MessageBox.Show(MessageConstants.DeleteuploadeddatafailNodeviceconnected, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
             else
             {
-
                 Loading_Screen.CloseForm();
                 tabControl1.Enabled = true;
-
                 MessageBox.Show(MessageConstants.Deleteuploadeddatafail, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private bool ConnectSdfDeleteDataStockTaking(List<AuditStocktakingModel>[] auditListByLocationArr)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeTransaction tx = connection.BeginTransaction(IsolationLevel.ReadCommitted);
-            SqlCeCommand cmd = PrepareDeleteStocktakingCommand(connection, tx);
-            try
-            {
-                foreach (List<AuditStocktakingModel> auditListByLocation in auditListByLocationArr)
-                {
-                    if (auditListByLocation.Count > 0)
-                    {
-                        foreach (var auditData in auditListByLocation)
-                        {
-                            cmd.Parameters["@StocktakingID"].Value = auditData.StockTakingID;
-
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-
-                }
-                tx.Commit();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                return false;
-            }
-        }
-
-        private SqlCeCommand PrepareDeleteStocktakingCommand(SqlCeConnection conn, SqlCeTransaction transaction)
-        {
-            // create SQL command object
-            SqlCeCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
-
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("DELETE FROM tb_t_Stocktaking ");
-            sb.Append("WHERE StocktakingID = @StocktakingID;");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@StocktakingID", SqlDbType.NVarChar, 15);
-
-            command.Prepare();
-
-            return command;
+            return hhtBll.ConnectSdfDeleteDataStockTaking(auditListByLocationArr);
         }
 
 
         private bool InsertToStocktaking(List<AuditStocktakingModel>[] auditListByLocationArr, List<string> duplicateIDList, string deviceName)
-        {
+        {                        
             Entities dbContext = new Entities();
             using (SqlConnection conn = new SqlConnection(dbContext.Database.Connection.ConnectionString))
             {
@@ -1766,7 +1890,7 @@ namespace FSBT.HHT.App.UI
                 {
                     SqlCommand commandInsert = PrepareInsertStocktakingCommand(conn, transaction);
                     SqlCommand commandDelete = PrepareDeleteStocktakingCommand(conn, transaction);
-                    CultureInfo defaulCulture = new CultureInfo("en-US");
+                    //CultureInfo defaulCulture = new CultureInfo("en-US");
 
                     try
                     {
@@ -1859,6 +1983,96 @@ namespace FSBT.HHT.App.UI
                                     commandInsert.Parameters["@UpdateDate"].Value = auditData.CreateDate;
                                     commandInsert.Parameters["@UpdateBy"].Value = auditData.CreateBy;
 
+                                    if (auditData.SerialNumber == "")
+                                    {
+                                        commandInsert.Parameters["@SerialNumber"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@SerialNumber"].Value = auditData.SerialNumber;
+                                    }
+
+                                    if (auditData.ConversionCounter == "")
+                                    {
+                                        commandInsert.Parameters["@ConversionCounter"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@ConversionCounter"].Value = auditData.ConversionCounter;
+                                    }
+
+                                    if (auditData.StorageLocation == "")
+                                    {
+                                        commandInsert.Parameters["@StorageLocation"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@StorageLocation"].Value = auditData.StorageLocation;
+                                    }
+
+                                    if (auditData.StorageLocationDesc == "")
+                                    {
+                                        commandInsert.Parameters["@StorageLocationDesc"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@StorageLocationDesc"].Value = auditData.StorageLocationDesc;
+                                    }
+
+                                    if (auditData.PIDoc == "")
+                                    {
+                                        commandInsert.Parameters["@PIDoc"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@PIDoc"].Value = auditData.PIDoc;
+                                    }
+
+                                    if (auditData.Plant == "")
+                                    {
+                                        commandInsert.Parameters["@Plant"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@Plant"].Value = auditData.Plant;
+                                    }
+
+                                    if (auditData.MCHLevel1 == "")
+                                    {
+                                        commandInsert.Parameters["@MCHLevel1"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@MCHLevel1"].Value = auditData.MCHLevel1;
+                                    }
+
+                                    if (auditData.MCHLevel2 == "")
+                                    {
+                                        commandInsert.Parameters["@MCHLevel2"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@MCHLevel2"].Value = auditData.MCHLevel2;
+                                    }
+
+                                    if (auditData.MCHLevel3 == "")
+                                    {
+                                        commandInsert.Parameters["@MCHLevel3"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@MCHLevel3"].Value = auditData.MCHLevel3;
+                                    }
+
+                                    if (auditData.MaterialGroup == "")
+                                    {
+                                        commandInsert.Parameters["@MaterialGroup"].Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        commandInsert.Parameters["@MaterialGroup"].Value = auditData.MaterialGroup;
+                                    }
+
                                     commandInsert.ExecuteNonQuery();
 
                                     this.dataGridView3.Rows[rowCount].Cells[3].Value = ++uploadedRec;
@@ -1867,7 +2081,6 @@ namespace FSBT.HHT.App.UI
                                 rowCount++;
                                 uploadedRec = 0;
                             }
-
                         }
 
                         transaction.Commit();
@@ -1875,208 +2088,187 @@ namespace FSBT.HHT.App.UI
                     }
                     catch (Exception ex)
                     {
-                        log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                        logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                         transaction.Rollback();
                         return false;
-
                     }
                 }
 
+                }
             }
-        }
+            private SqlCommand PrepareInsertStocktakingCommand(SqlConnection conn, SqlTransaction transaction)
+            {
+                // create SQL command object
+                SqlCommand command = conn.CreateCommand();
+                command.CommandType = CommandType.Text;
+                command.Transaction = transaction;
 
-        private SqlCommand PrepareInsertStocktakingCommand(SqlConnection conn, SqlTransaction transaction)
-        {
-            // create SQL command object
-            SqlCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
+                // create SQL command text
+                StringBuilder sb = new StringBuilder();
+                sb.Append("INSERT INTO HHTStocktaking ");
+                sb.Append("VALUES (@StocktakingID, @ScanMode, @LocationCode, @Barcode, @Quantity ,@NewQuantity , @UnitCode, @Flag, @Description, @SKUCode, @ExBarCode, @InBarCode, @SKUMode, @HHTName, @CountDate, @DepartmentCode, @MKCode, @FlagPrint, @CreateDate, @CreateBy, @UpdateDate, @UpdateBy,@SerialNumber, @ConversionCounter, @StorageLocation, @StorageLocationDesc, @Plant, @PIDoc, @MCHLevel1, @MCHLevel2, @MCHLevel3, @MaterialGroup);");
+                command.CommandText = sb.ToString();
 
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO HHTStocktaking ");
-            sb.Append("VALUES (@StocktakingID, @ScanMode, @LocationCode, @Barcode, @Quantity ,@NewQuantity , @UnitCode, @Flag, @Description, @SKUCode, @ExBarCode, @InBarCode, @SKUMode, @HHTName, @CountDate, @DepartmentCode, @MKCode, @FlagPrint, @CreateDate, @CreateBy, @UpdateDate, @UpdateBy);");
-            command.CommandText = sb.ToString();
+                // define parameter type
+                command.Parameters.Add("@StocktakingID", SqlDbType.VarChar, 16);
+                command.Parameters.Add("@ScanMode", SqlDbType.Int);
+                command.Parameters.Add("@LocationCode", SqlDbType.VarChar, 5);
+                command.Parameters.Add("@Barcode", SqlDbType.VarChar, 20);
+                command.Parameters.Add("@Quantity", SqlDbType.Decimal, 18);
+                command.Parameters["@Quantity"].Precision = 18;
+                command.Parameters["@Quantity"].Scale = 3;
+                command.Parameters.Add("@NewQuantity", SqlDbType.Decimal, 18);
+                command.Parameters["@NewQuantity"].Precision = 18;
+                command.Parameters["@NewQuantity"].Scale = 3;
+                command.Parameters.Add("@UnitCode", SqlDbType.Int);
+                command.Parameters.Add("@Flag", SqlDbType.VarChar, 1);
+                command.Parameters.Add("@Description", SqlDbType.VarChar, 50);
+                command.Parameters.Add("@SKUCode", SqlDbType.VarChar, 25);
+                command.Parameters.Add("@ExBarCode", SqlDbType.VarChar, 25);
+                command.Parameters.Add("@InBarCode", SqlDbType.VarChar, 25);
+                //command.Parameters.Add("@BrandCode", SqlDbType.VarChar, 5);
+                command.Parameters.Add("@SKUMode", SqlDbType.Bit);
+                command.Parameters.Add("@HHTName", SqlDbType.VarChar, 20);
+                command.Parameters.Add("@CountDate", SqlDbType.Date);
+                command.Parameters.Add("@DepartmentCode", SqlDbType.VarChar, 3);
+                command.Parameters.Add("@MKCode", SqlDbType.VarChar, 5);
+                command.Parameters.Add("@FlagPrint", SqlDbType.Bit);
+                command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
+                command.Parameters.Add("@CreateBy", SqlDbType.VarChar, 20);
+                command.Parameters.Add("@UpdateDate", SqlDbType.DateTime);
+                command.Parameters.Add("@UpdateBy", SqlDbType.VarChar, 20);
 
-            // define parameter type
-            command.Parameters.Add("@StocktakingID", SqlDbType.VarChar, 16);
-            command.Parameters.Add("@ScanMode", SqlDbType.Int);
-            command.Parameters.Add("@LocationCode", SqlDbType.VarChar, 5);
-            command.Parameters.Add("@Barcode", SqlDbType.VarChar, 20);
-            command.Parameters.Add("@Quantity", SqlDbType.Decimal, 18);
-            command.Parameters["@Quantity"].Precision = 18;
-            command.Parameters["@Quantity"].Scale = 3;
-            command.Parameters.Add("@NewQuantity", SqlDbType.Decimal, 18);
-            command.Parameters["@NewQuantity"].Precision = 18;
-            command.Parameters["@NewQuantity"].Scale = 3;
-            command.Parameters.Add("@UnitCode", SqlDbType.Int);
-            command.Parameters.Add("@Flag", SqlDbType.VarChar, 1);
-            command.Parameters.Add("@Description", SqlDbType.VarChar, 50);
-            command.Parameters.Add("@SKUCode", SqlDbType.VarChar, 25);
-            command.Parameters.Add("@ExBarCode", SqlDbType.VarChar, 25);
-            command.Parameters.Add("@InBarCode", SqlDbType.VarChar, 25);
-            //command.Parameters.Add("@BrandCode", SqlDbType.VarChar, 5);
-            command.Parameters.Add("@SKUMode", SqlDbType.Bit);
-            command.Parameters.Add("@HHTName", SqlDbType.VarChar, 20);
-            command.Parameters.Add("@CountDate", SqlDbType.Date);
-            command.Parameters.Add("@DepartmentCode", SqlDbType.VarChar, 3);
-            command.Parameters.Add("@MKCode", SqlDbType.VarChar, 5);
-            command.Parameters.Add("@FlagPrint", SqlDbType.Bit);
-            command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@CreateBy", SqlDbType.VarChar, 20);
-            command.Parameters.Add("@UpdateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@UpdateBy", SqlDbType.VarChar, 20);
+                command.Parameters.Add("@SerialNumber", SqlDbType.VarChar, 100);
+                command.Parameters.Add("@ConversionCounter", SqlDbType.VarChar,10);
+                command.Parameters.Add("@StorageLocation", SqlDbType.VarChar, 50);
+                command.Parameters.Add("@StorageLocationDesc", SqlDbType.VarChar,50);
+                command.Parameters.Add("@Plant", SqlDbType.VarChar, 50);
+                command.Parameters.Add("@PIDoc", SqlDbType.VarChar, 50);
+                command.Parameters.Add("@MCHLevel1", SqlDbType.VarChar,50);
+                command.Parameters.Add("@MCHLevel2", SqlDbType.VarChar, 50);
+                command.Parameters.Add("@MCHLevel3", SqlDbType.VarChar, 50);
+                command.Parameters.Add("@MaterialGroup", SqlDbType.VarChar, 50);
+                command.Prepare();
 
+                return command;
+            }
 
-            command.Prepare();
+            private SqlCommand PrepareDeleteStocktakingCommand(SqlConnection conn, SqlTransaction transaction)
+            {
+                // create SQL command object
+                SqlCommand command = conn.CreateCommand();
+                command.CommandType = CommandType.Text;
+                command.Transaction = transaction;
 
-            return command;
-        }
+                // create SQL command text
+                StringBuilder sb = new StringBuilder();
+                sb.Append("DELETE FROM HHTStocktaking ");
+                sb.Append("WHERE StocktakingID = @StocktakingID");
+                command.CommandText = sb.ToString();
 
-        private SqlCommand PrepareDeleteStocktakingCommand(SqlConnection conn, SqlTransaction transaction)
-        {
-            // create SQL command object
-            SqlCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
+                // define parameter type
+                command.Parameters.Add("@StocktakingID", SqlDbType.VarChar, 16);
+                command.Prepare();
 
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("DELETE FROM HHTStocktaking ");
-            sb.Append("WHERE StocktakingID = @StocktakingID");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@StocktakingID", SqlDbType.VarChar, 16);
-            command.Prepare();
-
-            return command;
-        }
-
-
-
-
+                return command;
+            }
 
         #endregion
 
         #region Download function
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            //hhtBll.SaveDownloadLog(new List<DownloadLocationModel>(), new List<PCSKUModel>(), "device_test", "username");
+            FillLocationFom();
+            FillLocationTo();
             tabControl1.Enabled = false;
             this.dataGridView1.Rows.Clear();
 
             string locationFrom = textBoxLoFrom.Text.Trim();
             string locationTo = textBoxLoTo.Text.Trim();
-            string scanMode = comboBoxSKU.SelectedValue.ToString();
-            List<DownloadLocationModel> downloadLocationList = new List<DownloadLocationModel>();
-            List<PCSKUModel> skuList = new List<PCSKUModel>();
+            
             List<UnitModel> unitList = new List<UnitModel>();
+            List<DownloadLocationModel> downloadLocationList = new List<DownloadLocationModel>();       
+            List<MasterSerialNumberModel> masterSerialNumberList = new List<MasterSerialNumberModel>();
+
+            connectedCable = CheckCableConnection();
+            connectedWiFiDownload = CheckWifiConnection(ipAddress);
+
             if (connectedCable || connectedWiFiDownload)
-            {
-                Loading_Screen.ShowSplashScreen();
+            {               
                 string deviceNameForFTP = "";
                 if (connectedWiFiDownload)
                 {
                     deviceNameForFTP = hhtBll.GetDeviceNameFTP();
                 }
-                if (radioLocation.Checked && radioBtnSKU.Checked)
+
+                if (radioLocation.Checked && radioBtnSKU.Checked) // load ทั้ง location และ SKU
                 {
                     if (locationFrom == string.Empty && locationTo == string.Empty)
                     {
-                        Loading_Screen.CloseForm();
                         tabControl1.Enabled = true;
                         MessageBox.Show(MessageConstants.PleasEnterLocationFormOrLocationTo, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
+                        Loading_Screen.ShowSplashScreen();
                         unitList = hhtBll.GetUnit();
+
                         bool downloadUnitSuccess = DoDownLoadUnit();
-                        bool downloadMasterBarcodeSuccess = DoDownLoadMasterBarcode();
-                        bool downloadMasterPackSuccess = DoDownLoadMasterPack();
-                        if (downloadUnitSuccess && downloadMasterBarcodeSuccess && downloadMasterPackSuccess)
+                        if (downloadUnitSuccess)
                         {
                             downloadLocationList = hhtBll.GetLocation(locationFrom, locationTo);
                             bool downloadLocationSuccess = DoDownloadLocation(downloadLocationList);
+
                             if (downloadLocationSuccess)
                             {
+                                masterSerialNumberList = hhtBll.GetMasterSerialNumber();
+                                bool downloadMasterSerialSuccess = DoDownLoadMasterSerialNumber(masterSerialNumberList);
 
-                                skuList = hhtBll.GetSKU(scanMode);
-                                bool downloadSkuSuccess = DoDownloadSKU(skuList);
-                                if (downloadSkuSuccess)
+                                if (downloadMasterSerialSuccess)
                                 {
                                     if (connectedCable)
                                     {
                                         hhtBll.D_ConnectDevice();
-                                        if (hhtBll.D_PCTransferFileToHHT())
+                                        if (hhtBll.D_PCTransferFileToHHT(HHTDBPath))
                                         {
-                                            bool saveLogSuccess = hhtBll.SaveDownloadLog(downloadLocationList, skuList, hhtBll.D_GetDeviceName(), UserName);
-                                            if (saveLogSuccess)
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                int rowCount = dataGridView1.Rows.Count;
-                                                this.dataGridView1.Rows[rowCount - 1].Cells[3].Value = skuList.Count;
-                                                this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
-                                                MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            }
-                                            else
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                Console.WriteLine("fail save log");
-                                                MessageBox.Show(MessageConstants.DownloadCompleteButsavingdownloadlogisfail, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                                //MessageBox.Show("Error : Download Not Complete!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                            }
+                                            Loading_Screen.CloseForm();
+                                            tabControl1.Enabled = true;
+                                            int rowCount = dataGridView1.Rows.Count;
+                                            this.dataGridView1.Rows[1].Cells[3].Value = masterSerialNumberList.Count;
+                                            this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
+                                            MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
                                         else
                                         {
                                             Loading_Screen.CloseForm();
                                             tabControl1.Enabled = true;
-                                            Console.WriteLine("fail transfer to hht(cable)");
                                             MessageBox.Show(MessageConstants.DownloadNotCompleteFailtotransferfiletoHandheld, MessageConstants.DownloadNotComplete, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         }
                                         hhtBll.D_DisconnectDevice();
                                     }
                                     else
                                     {
-                                        //if (ftpClient.TransferPCToHHT())
-                                        if (hhtBll.FTPTransferPCToHHT(ipAddress))
+                                        if (hhtBll.FTPTransferPCToHHT(ipAddress, HHTDBPath))
                                         {
-                                            bool saveLogSuccess = hhtBll.SaveDownloadLog(downloadLocationList, skuList, deviceNameForFTP, UserName);
-                                            if (saveLogSuccess)
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                int rowCount = dataGridView1.Rows.Count;
-                                                this.dataGridView1.Rows[rowCount - 1].Cells[3].Value = skuList.Count;
-                                                this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
-                                                MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            }
-                                            else
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                Console.WriteLine("fail save log");
-                                                //MessageBox.Show("Download Not Complete!");
-                                                MessageBox.Show(MessageConstants.DownloadCompleteButsavingdownloadlogisfail, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            }
+                                            Loading_Screen.CloseForm();
+                                            tabControl1.Enabled = true;
+                                            int rowCount = dataGridView1.Rows.Count;
+                                            this.dataGridView1.Rows[1].Cells[3].Value = masterSerialNumberList.Count;
+                                            this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
+                                            MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
                                         else
                                         {
                                             Loading_Screen.CloseForm();
                                             tabControl1.Enabled = true;
-                                            Console.WriteLine("fail transfer to hht (FTP)");
                                             MessageBox.Show(MessageConstants.DownloadNotCompleteFailtotransferfiletoHandheld, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         }
                                     }
-
                                 }
                                 else
                                 {
                                     Loading_Screen.CloseForm();
                                     tabControl1.Enabled = true;
-                                    Console.WriteLine("fail download sku");
                                     MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadSKUMaster, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
@@ -2084,25 +2276,18 @@ namespace FSBT.HHT.App.UI
                             {
                                 Loading_Screen.CloseForm();
                                 tabControl1.Enabled = true;
-                                Console.WriteLine("fail download location");
                                 MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadLocation, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                             }
-
                         }
                         else
                         {
                             Loading_Screen.CloseForm();
                             tabControl1.Enabled = true;
-                            Console.WriteLine("fail download unit, masterbarcode, masterpack");
-                            MessageBox.Show(MessageConstants.DownloadNotComplete, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            //MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadUnit, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                            MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadUnit, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
                 }
-                else if (radioLocation.Checked)
+                else if (radioLocation.Checked) // load แค่ location
                 {
                     Loading_Screen.ShowSplashScreen();
                     if (locationFrom == string.Empty && locationTo == string.Empty)
@@ -2115,80 +2300,50 @@ namespace FSBT.HHT.App.UI
                     {
                         unitList = hhtBll.GetUnit();
                         bool downloadUniSuccess = DoDownLoadUnit();
-                        bool downloadMasterBarcodeSuccess = DoDownLoadMasterBarcode();
-                        bool downloadMasterPackSuccess = DoDownLoadMasterPack();
-                        if (downloadUniSuccess && downloadMasterBarcodeSuccess && downloadMasterPackSuccess)
+                        
+                        if (downloadUniSuccess)
                         {
                             downloadLocationList = hhtBll.GetLocation(locationFrom, locationTo);
                             bool downloadLocationSuccess = DoDownloadLocation(downloadLocationList);
                             if (downloadLocationSuccess)
                             {
-                                bool deleteSuccess = ConnectSdfDeleteData("SKU");
-                                if (deleteSuccess)
+                                bool deleteSerial = ConnectSdfDeleteData("MasterSerialNumber");
+                                if (deleteSerial)
                                 {
                                     if (connectedCable)
                                     {
                                         hhtBll.D_ConnectDevice();
-                                        if (hhtBll.D_PCTransferFileToHHT())
+                                        if (hhtBll.D_PCTransferFileToHHT(HHTDBPath))
                                         {
-                                            bool saveLogSuccess = hhtBll.SaveDownloadLog(downloadLocationList, skuList, hhtBll.D_GetDeviceName(), UserName);
-                                            if (saveLogSuccess)
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                int rowCount = dataGridView1.Rows.Count;
-                                                this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
-                                                MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                            }
-                                            else
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                Console.WriteLine("fail save log");
-                                                MessageBox.Show(MessageConstants.DownloadCompleteButsavingdownloadlogisfail, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                                //MessageBox.Show("Error : Download Not Complete!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                            }
+                                            Loading_Screen.CloseForm();
+                                            tabControl1.Enabled = true;
+                                            int rowCount = dataGridView1.Rows.Count;
+                                            this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
+                                            MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
                                         else
                                         {
                                             Loading_Screen.CloseForm();
                                             tabControl1.Enabled = true;
-                                            Console.WriteLine("fail transfer to hht");
                                             MessageBox.Show(MessageConstants.DownloadNotCompleteFailtotransferfiletoHandheld, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         }
                                         hhtBll.D_DisconnectDevice();
                                     }
                                     else
                                     {
-                                        if (hhtBll.FTPTransferPCToHHT(ipAddress))
+                                        if (hhtBll.FTPTransferPCToHHT(ipAddress, HHTDBPath))
                                         {
-                                            bool saveLogSuccess = hhtBll.SaveDownloadLog(downloadLocationList, skuList, deviceNameForFTP, UserName);
-                                            if (saveLogSuccess)
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                int rowCount = dataGridView1.Rows.Count;
-                                                this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
-                                                MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            }
-                                            else
-                                            {
-                                                Loading_Screen.CloseForm();
-                                                tabControl1.Enabled = true;
-                                                Console.WriteLine("fail save log");
-                                                // MessageBox.Show("Download Not Complete!");
-                                                MessageBox.Show(MessageConstants.DownloadCompleteButsavingdownloadlogisfail, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                            }
+                                            Loading_Screen.CloseForm();
+                                            tabControl1.Enabled = true;
+                                            int rowCount = dataGridView1.Rows.Count;
+                                            this.dataGridView1.Rows[0].Cells[3].Value = downloadLocationList.Count;
+                                            MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
                                         else
                                         {
                                             Loading_Screen.CloseForm();
                                             tabControl1.Enabled = true;
-                                            Console.WriteLine("fail transfer to hht");
                                             MessageBox.Show(MessageConstants.DownloadNotCompleteFailtotransferfiletoHandheld, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                                         }
                                     }
                                 }
@@ -2196,43 +2351,36 @@ namespace FSBT.HHT.App.UI
                                 {
                                     Loading_Screen.CloseForm();
                                     tabControl1.Enabled = true;
-                                    Console.WriteLine("fail delete data in table tb_m_SKU.");
                                     MessageBox.Show(MessageConstants.FaildeleteSKUMasterdataindatabase, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
-
                             }
                             else
                             {
                                 Loading_Screen.CloseForm();
                                 tabControl1.Enabled = true;
-                                Console.WriteLine("fail download location");
                                 MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadLocation, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                             }
                         }
                         else
                         {
                             Loading_Screen.CloseForm();
                             tabControl1.Enabled = true;
-                            Console.WriteLine("fail download unit");
                             MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadUnit, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                         }
                     }
-
                 }
-                else if (radioBtnSKU.Checked)
+
+                else if (radioBtnSKU.Checked)// load แค่ skU
                 {
                     Loading_Screen.ShowSplashScreen();
                     unitList = hhtBll.GetUnit();
+                    
                     bool downloadUniSuccess = DoDownLoadUnit();
                     if (downloadUniSuccess)
                     {
-                        skuList = hhtBll.GetSKU(scanMode);
-                        bool downloadSkuSuccess = DoDownloadSKU(skuList);
-                        bool downloadMasterBarcodeSuccess = DoDownLoadMasterBarcode();
-                        bool downloadMasterPackSuccess = DoDownLoadMasterPack();
-                        if (downloadSkuSuccess && downloadMasterBarcodeSuccess && downloadMasterPackSuccess)
+                        masterSerialNumberList = hhtBll.GetMasterSerialNumber();
+                        bool downloadMasterSerialSuccess = DoDownLoadMasterSerialNumber(masterSerialNumberList);
+                        if (downloadMasterSerialSuccess)
                         {
                             bool deleteSuccess = ConnectSdfDeleteData("Location");
                             if (deleteSuccess)
@@ -2240,70 +2388,39 @@ namespace FSBT.HHT.App.UI
                                 if (connectedCable)
                                 {
                                     hhtBll.D_ConnectDevice();
-                                    if (hhtBll.D_PCTransferFileToHHT())
+                                    if (hhtBll.D_PCTransferFileToHHT(HHTDBPath))
                                     {
-                                        bool saveLogSuccess = hhtBll.SaveDownloadLog(downloadLocationList, skuList, hhtBll.D_GetDeviceName(), UserName);
-                                        if (saveLogSuccess)
-                                        {
-                                            Loading_Screen.CloseForm();
-                                            tabControl1.Enabled = true;
-                                            int rowCount = dataGridView1.Rows.Count;
-                                            this.dataGridView1.Rows[0].Cells[3].Value = skuList.Count;
-                                            MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                        }
-                                        else
-                                        {
-                                            Loading_Screen.CloseForm();
-                                            tabControl1.Enabled = true;
-                                            Console.WriteLine("fail save log");
-                                            MessageBox.Show(MessageConstants.DownloadCompleteButsavingdownloadlogisfail, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                            //MessageBox.Show("Download Not Complete!");
-                                        }
+                                        Loading_Screen.CloseForm();
+                                        tabControl1.Enabled = true;
+                                        int rowCount = dataGridView1.Rows.Count;
+                                        this.dataGridView1.Rows[0].Cells[3].Value = masterSerialNumberList.Count;
+                                        MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
                                     else
                                     {
                                         Loading_Screen.CloseForm();
                                         tabControl1.Enabled = true;
                                         int rowCount = dataGridView1.Rows.Count;
-                                        this.dataGridView1.Rows[0].Cells[3].Value = skuList.Count;
-                                        Console.WriteLine("fail transfer to hht");
+                                        this.dataGridView1.Rows[0].Cells[3].Value = masterSerialNumberList.Count;
                                         MessageBox.Show(MessageConstants.DownloadNotCompleteFailtotransferfiletoHandheld, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                                     }
                                     hhtBll.D_DisconnectDevice();
-
                                 }
                                 else
                                 {
-                                    if (hhtBll.FTPTransferPCToHHT(ipAddress))
+                                    if (hhtBll.FTPTransferPCToHHT(ipAddress, HHTDBPath))
                                     {
-                                        bool saveLogSuccess = hhtBll.SaveDownloadLog(downloadLocationList, skuList, deviceNameForFTP, UserName);
-                                        if (saveLogSuccess)
-                                        {
-                                            Loading_Screen.CloseForm();
-                                            tabControl1.Enabled = true;
-                                            MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                        }
-                                        else
-                                        {
-                                            Loading_Screen.CloseForm();
-                                            tabControl1.Enabled = true;
-                                            Console.WriteLine("fail save log");
-                                            MessageBox.Show(MessageConstants.DownloadCompleteButsavingdownloadlogisfail, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                            //MessageBox.Show("Download Not Complete!");
-                                        }
+                                        Loading_Screen.CloseForm();
+                                        tabControl1.Enabled = true;
+                                        int rowCount = dataGridView1.Rows.Count;
+                                        this.dataGridView1.Rows[0].Cells[3].Value = masterSerialNumberList.Count;
+                                        MessageBox.Show(MessageConstants.DownloadComplete, MessageConstants.DownloadComplete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
                                     else
                                     {
                                         Loading_Screen.CloseForm();
                                         tabControl1.Enabled = true;
-                                        Console.WriteLine("fail transfer to hht");
                                         MessageBox.Show(MessageConstants.DownloadNotCompleteFailtotransferfiletoHandheld, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                                     }
                                 }
                             }
@@ -2311,49 +2428,40 @@ namespace FSBT.HHT.App.UI
                             {
                                 Loading_Screen.CloseForm();
                                 tabControl1.Enabled = true;
-                                Console.WriteLine("fail delete data in table tb_m_Location.");
                                 MessageBox.Show(MessageConstants.FaildeleteLocationdatainHandhelddatabase, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-
                         }
                         else
                         {
                             Loading_Screen.CloseForm();
                             tabControl1.Enabled = true;
-                            Console.WriteLine("fail download sku");
                             MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadSKUMaster, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                         }
                     }
                     else
                     {
                         Loading_Screen.CloseForm();
                         tabControl1.Enabled = true;
-                        Console.WriteLine("fail download unit");
                         MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadUnit, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
-
                 }
-                else
+                else// ไม่โหลดทั้ง location and sku
                 {
                     Loading_Screen.ShowSplashScreen();
                     unitList = hhtBll.GetUnit();
                     bool downloadUniSuccess = DoDownLoadUnit();
-                    bool downloadMasterBarcodeSuccess = DoDownLoadMasterBarcode();
-                    bool downloadMasterPackSuccess = DoDownLoadMasterPack();
-                    if (downloadUniSuccess && downloadMasterBarcodeSuccess && downloadMasterPackSuccess)
+                    if (downloadUniSuccess)
                     {
                         bool deleteLoSuccess = ConnectSdfDeleteData("Location");
                         if (deleteLoSuccess)
                         {
-                            bool deleteSKUSuccess = ConnectSdfDeleteData("SKU");
-                            if (deleteSKUSuccess)
+                            bool deleteSerial = ConnectSdfDeleteData("MasterSerialNumber");
+                            if (deleteSerial)
                             {
                                 if (connectedCable)
                                 {
                                     hhtBll.D_ConnectDevice();
-                                    if (hhtBll.D_PCTransferFileToHHT())
+                                    if (hhtBll.D_PCTransferFileToHHT(HHTDBPath))
                                     {
                                         Loading_Screen.CloseForm();
                                         tabControl1.Enabled = true;
@@ -2364,14 +2472,12 @@ namespace FSBT.HHT.App.UI
                                         Loading_Screen.CloseForm();
                                         tabControl1.Enabled = true;
                                         MessageBox.Show(MessageConstants.DownloadNotComplete, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                                     }
                                     hhtBll.D_DisconnectDevice();
-
                                 }
                                 else
                                 {
-                                    if (hhtBll.FTPTransferPCToHHT(ipAddress))
+                                    if (hhtBll.FTPTransferPCToHHT(ipAddress, HHTDBPath))
                                     {
                                         Loading_Screen.CloseForm();
                                         tabControl1.Enabled = true;
@@ -2382,7 +2488,6 @@ namespace FSBT.HHT.App.UI
                                         Loading_Screen.CloseForm();
                                         tabControl1.Enabled = true;
                                         MessageBox.Show(MessageConstants.DownloadNotComplete, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                                     }
                                 }
                             }
@@ -2390,41 +2495,30 @@ namespace FSBT.HHT.App.UI
                             {
                                 Loading_Screen.CloseForm();
                                 tabControl1.Enabled = true;
-                                Console.WriteLine("fail delete sku");
                                 MessageBox.Show(MessageConstants.DownloadNotComplete, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                             }
-
                         }
                         else
                         {
                             Loading_Screen.CloseForm();
                             tabControl1.Enabled = true;
-                            Console.WriteLine("fail delete location");
                             MessageBox.Show(MessageConstants.DownloadNotComplete, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                         }
                     }
                     else
                     {
                         Loading_Screen.CloseForm();
                         tabControl1.Enabled = true;
-                        Console.WriteLine("fail download unit");
                         MessageBox.Show(MessageConstants.DownloadNotCompleteFailtodownloadUnit, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
-
-
-                    //tabControl1.Enabled = true;
-                    //MessageBox.Show(MessageConstants.NoDataToDownload, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                 }
             }
             else
             {
                 tabControl1.Enabled = true;
+                comnameTxtBox1.Text = "";
+                hhtnameTxtBox1.Text = "";
                 MessageBox.Show(MessageConstants.Nodeviceconnected, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
             }
         }
 
@@ -2436,8 +2530,10 @@ namespace FSBT.HHT.App.UI
                 ConnectSdfDeleteData("Unit");
                 return ConnectSdfInsertUnitData(unitList);
             }
+            logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "No data in MasterUnit", DateTime.Now);
             return false;
         }
+
         private bool DoDownLoadMasterBarcode()
         {
             List<MasterBarcodeModel> masterBarcodeList = hhtBll.GetMasterBarcode();
@@ -2446,7 +2542,26 @@ namespace FSBT.HHT.App.UI
                 ConnectSdfDeleteData("MasterBarcode");
                 return ConnectSdfInsertMasterBarcodeData(masterBarcodeList);
             }
+            logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "No data in MasterBarcode", DateTime.Now);
             return false;
+
+        }
+
+        private bool DoDownLoadMasterSerialNumber(List<MasterSerialNumberModel> masterSerialNumberList)
+        {
+            //List<MasterSerialNumberModel> masterSerialNumberList = hhtBll.GetMasterSerialNumber();
+            this.dataGridView1.Rows.Add(this.dataGridView1.Rows.Count + 1, "MasterSKU", masterSerialNumberList.Count, 0);
+
+            if (masterSerialNumberList.Count > 0)
+            {
+                ConnectSdfDeleteData("MasterSerialNumber");
+                return ConnectSdfInsertMasterSerialData(masterSerialNumberList);
+            }
+            else
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "No data in MasterSerialNumber", DateTime.Now);
+                return true;
+            }
         }
 
         private bool DoDownLoadMasterPack()
@@ -2468,7 +2583,6 @@ namespace FSBT.HHT.App.UI
 
                 this.dataGridView1.Rows.Add(this.dataGridView1.Rows.Count + 1, "Location", downloadLocationList.Count, 0);
 
-
                 ConnectSdfDeleteData("Location");
 
                 return ConnectSdfInsertLocationData(downloadLocationList);
@@ -2488,7 +2602,6 @@ namespace FSBT.HHT.App.UI
                 //BeginInvoke((MethodInvoker)delegate
                 //{
 
-
                 this.dataGridView1.Rows.Add(this.dataGridView1.Rows.Count + 1, "MasterSKU", skuList.Count, 0);
 
                 //});
@@ -2501,553 +2614,42 @@ namespace FSBT.HHT.App.UI
                 MessageBox.Show(MessageConstants.NoSKUdataFound, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
         }
 
 
         private bool ConnectSdfDeleteData(string type)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            //string dbfile = "D:\\TestDB1.sdf";
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeCommand cmd = connection.CreateCommand();
-            try
-            {
-
-                //cmd.CommandText = "INSERT INTO Location (LocationCode) VALUES ('00001')";
-                if (type == "Location")
-                {
-                    cmd.CommandText = "DELETE FROM tb_m_Location";
-                }
-                if (type == "SKU")
-                {
-                    cmd.CommandText = "DELETE tb_m_SKU";
-                }
-                if (type == "Unit")
-                {
-                    cmd.CommandText = "DELETE tb_m_Unit";
-                }
-                if (type == "MasterBarcode")
-                {
-                    cmd.CommandText = "DELETE tb_m_Barcode";
-                }
-                if (type == "MasterPack")
-                {
-                    cmd.CommandText = "DELETE tb_m_Pack";
-                }
-
-                //cmd.CommandText = "TRUNCATE TABLE SKUMaster";
-                cmd.ExecuteReader();
-
-                cmd.Dispose();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                cmd.Dispose();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                //MessageBox.Show(ex.Message, "Error");
-                return false;
-            }
+            return hhtBll.ConnectSdfDeleteData(type);
         }
 
         private bool ConnectSdfInsertSKUData(List<PCSKUModel> skuList)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeTransaction tx = connection.BeginTransaction(IsolationLevel.ReadCommitted);
-            SqlCeCommand cmd = PrepareInsertSKUCommand(connection, tx);
-            try
-            {
-                DateTime createDate = DateTime.Now;
-                int downloadedSKURec = 0;
-                foreach (PCSKUModel sku in skuList)
-                {
-                    cmd.Parameters["@Department"].Value = sku.Department;
-                    cmd.Parameters["@SKUCode"].Value = sku.SKUCode;
-                    if (sku.BrandCode == null)
-                    {
-                        cmd.Parameters["@BrandCode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@BrandCode"].Value = sku.BrandCode;
-                    }
-                    cmd.Parameters["@BrandName"].Value = DBNull.Value;
-                    cmd.Parameters["@ExBarcode"].Value = sku.ExBarcode;
-                    cmd.Parameters["@InBarcode"].Value = sku.InBarcode;
-                    cmd.Parameters["@Description"].Value = sku.Description;
-                    if (sku.Price == null)
-                    {
-                        cmd.Parameters["@Price"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@Price"].Value = sku.Price;
-                    }
-                    if (sku.QTYOnHand == null)
-                    {
-                        cmd.Parameters["@QTYOnHand"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@QTYOnHand"].Value = sku.QTYOnHand;
-                    }
-                    if (sku.StockOnHand == null)
-                    {
-                        cmd.Parameters["@StockOnHand"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@StockOnHand"].Value = sku.StockOnHand;
-                    }
-
-                    cmd.Parameters["@CreateDate"].Value = createDate;
-                    cmd.Parameters["@CreateBy"].Value = UserName;
-                    cmd.Parameters["@Department"].Value = sku.Department;
-                    if (sku.MKCode == null)
-                    {
-                        cmd.Parameters["@MKCode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@MKCode"].Value = sku.MKCode;
-                    }
-
-                    cmd.ExecuteNonQuery();
-
-                    //if (connectedCable || connectedWiFiDownload)
-                    //{
-
-                    //    int rowCount = dataGridView1.Rows.Count;
-                    //    this.dataGridView1.Rows[rowCount - 1].Cells[3].Value = ++downloadedSKURec;
-                    //    this.dataGridView1.Refresh();
-
-                    //}
-                    //else
-                    //{
-                    //    Thread.Sleep(100);
-                    //    tx.Commit();
-                    //    connection.Close();
-                    //    return false;
-                    //}
-                }
-                tx.Commit();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                return false;
-            }
+            return hhtBll.ConnectSdfInsertSKUData(skuList, UserName);
         }
-
-        private SqlCeCommand PrepareInsertSKUCommand(SqlCeConnection conn, SqlCeTransaction transaction)
-        {
-            // create SQL command object
-            SqlCeCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
-
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO tb_m_SKU ");
-            sb.Append("VALUES (@Department, @SKUCode, @BrandCode, @BrandName, @ExBarcode, @InBarcode, @Description, @Price, @QTYOnHand, @StockOnHand, @CreateDate, @CreateBy, @MKCode);");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@Department", SqlDbType.NVarChar, 3);
-            command.Parameters.Add("@SKUCode", SqlDbType.NVarChar, 25);
-            command.Parameters.Add("@BrandCode", SqlDbType.NVarChar, 5);
-            command.Parameters.Add("@BrandName", SqlDbType.NVarChar, 50);
-            command.Parameters.Add("@ExBarcode", SqlDbType.NVarChar, 25);
-            command.Parameters.Add("@InBarcode", SqlDbType.NVarChar, 25);
-            command.Parameters.Add("@Description", SqlDbType.NVarChar, 50);
-            command.Parameters.Add("@Price", SqlDbType.Money);
-            command.Parameters.Add("@QTYOnHand", SqlDbType.Int);
-            command.Parameters.Add("@StockOnHand", SqlDbType.Int);
-            command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@CreateBy", SqlDbType.NVarChar, 20);
-            command.Parameters.Add("@MKCode", SqlDbType.NVarChar, 5);
-
-            command.Prepare();
-
-            return command;
-        }
-
 
         private bool ConnectSdfInsertLocationData(List<DownloadLocationModel> locationList)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            //SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile  + ";LCID=1030;password=1234");
-            //string dbfile = "D:\\STOCKTAKING_HHT.sdf";
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeTransaction tx = connection.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-
-                SqlCeCommand cmd = PrepareInsertLoCommand(connection, tx);
-
-                DateTime createDate = DateTime.Now;
-                int downloadedLoRec = 0;
-                foreach (DownloadLocationModel location in locationList)
-                {
-                    cmd.Parameters["@LocationCode"].Value = location.LocationCode;
-                    cmd.Parameters["@SectionCode"].Value = location.SectionCode;
-                    cmd.Parameters["@ScanMode"].Value = location.ScanMode;
-                    cmd.Parameters["@SectionName"].Value = location.SectionName;
-                    if (location.BrandCode == null)
-                    {
-                        cmd.Parameters["@BrandCode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@BrandCode"].Value = location.BrandCode;
-                    }
-                    cmd.Parameters["@CreateDate"].Value = createDate;
-                    cmd.Parameters["@CreateBy"].Value = UserName;
-
-                    cmd.ExecuteNonQuery();
-
-                    //if (connectedCable || connectedWiFiDownload)
-                    //{
-
-                    //    this.dataGridView1.Rows[0].Cells[3].Value = ++downloadedLoRec;
-                    //    this.dataGridView1.Refresh(); 
-
-                    //}
-                    //else
-                    //{
-                    //    Thread.Sleep(100);
-                    //    tx.Commit();
-                    //    connection.Close();
-                    //    return false;
-                    //}                  
-
-                }
-
-                tx.Commit();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                return false;
-            }
-        }
-
-        private SqlCeCommand PrepareInsertLoCommand(SqlCeConnection conn, SqlCeTransaction transaction)
-        {
-            // create SQL command object
-            SqlCeCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
-
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO tb_m_Location ");
-            sb.Append("VALUES (@LocationCode, @SectionCode, @ScanMode, @SectionName, @BrandCode, @CreateDate, @CreateBy);");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@LocationCode", SqlDbType.NVarChar, 5);
-            command.Parameters.Add("@SectionCode", SqlDbType.NVarChar, 5);
-            command.Parameters.Add("@ScanMode", SqlDbType.Int);
-            command.Parameters.Add("@SectionName", SqlDbType.NVarChar, 100);
-            command.Parameters.Add("@BrandCode", SqlDbType.NVarChar, 5);
-            command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@CreateBy", SqlDbType.NVarChar, 20);
-
-            command.Prepare();
-
-            return command;
+            return hhtBll.ConnectSdfInsertLocationData(locationList,UserName);
         }
 
         private bool ConnectSdfInsertUnitData(List<UnitModel> unitList)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeTransaction tx = connection.BeginTransaction(IsolationLevel.ReadCommitted);
-            SqlCeCommand cmd = PrepareInsertUnitCommand(connection, tx);
-            try
-            {
-                DateTime createDate = DateTime.Now;
-                foreach (UnitModel unit in unitList)
-                {
-                    cmd.Parameters["@UnitCode"].Value = unit.UnitCode;
-                    cmd.Parameters["@UnitName"].Value = unit.UnitName;
-                    cmd.Parameters["@CodeType"].Value = unit.CodeType;
-                    cmd.Parameters["@CreateDate"].Value = createDate;
-                    cmd.Parameters["@CreateBy"].Value = UserName;
-                    cmd.Parameters["@UpdateDate"].Value = createDate;
-                    cmd.Parameters["@UpdateBy"].Value = UserName;
-
-                    cmd.ExecuteNonQuery();
-
-                }
-
-                tx.Commit();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                return false;
-            }
-        }
-
-        private SqlCeCommand PrepareInsertUnitCommand(SqlCeConnection conn, SqlCeTransaction transaction)
-        {
-            // create SQL command object
-            SqlCeCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
-
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO tb_m_Unit ");
-            sb.Append("VALUES (@UnitCode, @UnitName, @CodeType, @CreateDate, @CreateBy, @UpdateDate, @UpdateBy);");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@UnitCode", SqlDbType.Int);
-            command.Parameters.Add("@UnitName", SqlDbType.NVarChar, 5);
-            command.Parameters.Add("@CodeType", SqlDbType.NVarChar, 1);
-            command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@CreateBy", SqlDbType.NVarChar, 20);
-            command.Parameters.Add("@UpdateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@UpdateBy", SqlDbType.NVarChar, 20);
-
-            command.Prepare();
-
-            return command;
+            return hhtBll.ConnectSdfInsertUnitData(unitList, UserName);
         }
 
         private bool ConnectSdfInsertMasterBarcodeData(List<MasterBarcodeModel> masterBarcodeList)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeTransaction tx = connection.BeginTransaction(IsolationLevel.ReadCommitted);
-            SqlCeCommand cmd = PrepareInsertMasterBarcodeCommand(connection, tx);
-            try
-            {
-                DateTime createDate = DateTime.Now;
-                foreach (MasterBarcodeModel data in masterBarcodeList)
-                {
-                    cmd.Parameters["@Status"].Value = data.Status;
-                    cmd.Parameters["@ExBarcode"].Value = data.ExBarcode;
-                    if (data.Barcode == null)
-                    {
-                        cmd.Parameters["@Barcode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@Barcode"].Value = data.Barcode;
-                    }
-                    if (data.NoExBarcode == null)
-                    {
-                        cmd.Parameters["@NoExBarcode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@NoExBarcode"].Value = data.NoExBarcode;
-                    }
-                    if (data.EAN_UPC == null)
-                    {
-                        cmd.Parameters["@EAN_UPC"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@EAN_UPC"].Value = data.EAN_UPC;
-                    }
-                    if (data.GroupCode == null)
-                    {
-                        cmd.Parameters["@GroupCode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@GroupCode"].Value = data.GroupCode;
-                    }
-                    if (data.ProductCode == null)
-                    {
-                        cmd.Parameters["@ProductCode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@ProductCode"].Value = data.ProductCode;
-                    }
-
-                    cmd.Parameters["@SKUCode"].Value = data.SKUCode;
-                    cmd.Parameters["@ScanMode"].Value = data.ScanMode;
-                    cmd.Parameters["@CreateDate"].Value = createDate;
-                    cmd.Parameters["@CreateBy"].Value = UserName;
-
-                    cmd.ExecuteNonQuery();
-
-                }
-
-                tx.Commit();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                return false;
-            }
+            return hhtBll.ConnectSdfInsertMasterBarcodeData(masterBarcodeList, UserName);
         }
 
-        private SqlCeCommand PrepareInsertMasterBarcodeCommand(SqlCeConnection conn, SqlCeTransaction transaction)
+        private bool ConnectSdfInsertMasterSerialData(List<MasterSerialNumberModel> masterSerialNumberList)
         {
-            // create SQL command object
-            SqlCeCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
-
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO tb_m_Barcode ");
-            sb.Append("VALUES (@Status, @ExBarcode, @Barcode, @NoExBarcode, @EAN_UPC, @GroupCode, @ProductCode, @SKUCode, @ScanMode, @CreateDate, @CreateBy);");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@Status", SqlDbType.NVarChar, 1);
-            command.Parameters.Add("@ExBarcode", SqlDbType.NVarChar, 13);
-            command.Parameters.Add("@Barcode", SqlDbType.NVarChar, 13);
-            command.Parameters.Add("@NoExBarcode", SqlDbType.NVarChar, 2);
-            command.Parameters.Add("@EAN_UPC", SqlDbType.NVarChar, 1);
-            command.Parameters.Add("@GroupCode", SqlDbType.NVarChar, 2);
-            command.Parameters.Add("@ProductCode", SqlDbType.NVarChar, 6);
-            command.Parameters.Add("@SKUCode", SqlDbType.NVarChar, 25);
-            command.Parameters.Add("@ScanMode", SqlDbType.Int);
-            command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@CreateBy", SqlDbType.NVarChar, 20);
-
-            command.Prepare();
-
-            return command;
+            return hhtBll.ConnectSdfInsertMasterSerialData(masterSerialNumberList, UserName);
         }
 
         private bool ConnectSdfInsertMasterPackData(List<MasterPackModel> masterPackList)
         {
-            // Create a connection to the file datafile.sdf in the program folder
-            string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-            SqlCeConnection connection = new SqlCeConnection("datasource=" + dbfile + ";password=" + DBPassword);
-            connection.Open();
-            SqlCeTransaction tx = connection.BeginTransaction(IsolationLevel.ReadCommitted);
-            SqlCeCommand cmd = PrepareInsertMasterPackCommand(connection, tx);
-            try
-            {
-                DateTime createDate = DateTime.Now;
-                foreach (MasterPackModel data in masterPackList)
-                {
-                    if (data.Status == null)
-                    {
-                        cmd.Parameters["@Status"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@Status"].Value = data.Status;
-                    }
-                    cmd.Parameters["@GroupCode"].Value = data.GroupCode;
-                    cmd.Parameters["@ProductCode"].Value = data.ProductCode;
-                    cmd.Parameters["@Barcode"].Value = data.Barcode;
-
-                    if (data.ProductName == null)
-                    {
-                        cmd.Parameters["@ProductName"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@ProductName"].Value = data.ProductName;
-                    }
-                    if (data.UnitQTY == null)
-                    {
-                        cmd.Parameters["@UnitQTY"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@UnitQTY"].Value = data.UnitQTY;
-                    }
-                    if (data.SKUCode == null)
-                    {
-                        cmd.Parameters["@SKUCode"].Value = DBNull.Value;
-                    }
-                    else
-                    {
-                        cmd.Parameters["@SKUCode"].Value = data.SKUCode;
-                    }
-
-                    cmd.Parameters["@CreateDate"].Value = createDate;
-                    cmd.Parameters["@CreateBy"].Value = UserName;
-
-                    cmd.ExecuteNonQuery();
-
-                }
-
-                tx.Commit();
-                connection.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                connection.Close();
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                return false;
-            }
-        }
-
-        private SqlCeCommand PrepareInsertMasterPackCommand(SqlCeConnection conn, SqlCeTransaction transaction)
-        {
-            // create SQL command object
-            SqlCeCommand command = conn.CreateCommand();
-            command.CommandType = CommandType.Text;
-            command.Transaction = transaction;
-
-            // create SQL command text
-            StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO tb_m_Pack ");
-            sb.Append("VALUES (@Status, @GroupCode, @ProductCode, @Barcode, @ProductName, @UnitQTY, @SKUCode, @CreateDate, @CreateBy);");
-            command.CommandText = sb.ToString();
-
-            // define parameter type
-            command.Parameters.Add("@Status", SqlDbType.NVarChar, 1);
-            command.Parameters.Add("@GroupCode", SqlDbType.NVarChar, 2);
-            command.Parameters.Add("@ProductCode", SqlDbType.NVarChar, 6);
-            command.Parameters.Add("@Barcode", SqlDbType.NVarChar, 20);
-            command.Parameters.Add("@ProductName", SqlDbType.NVarChar, 45);
-            command.Parameters.Add("@UnitQTY", SqlDbType.Int);
-            command.Parameters.Add("@SKUCode", SqlDbType.NVarChar, 25); ;
-            command.Parameters.Add("@CreateDate", SqlDbType.DateTime);
-            command.Parameters.Add("@CreateBy", SqlDbType.NVarChar, 20);
-
-            command.Prepare();
-
-            return command;
+            return hhtBll.ConnectSdfInsertMasterPackData(masterPackList, UserName);
         }
 
         #endregion
@@ -3057,13 +2659,13 @@ namespace FSBT.HHT.App.UI
         {
             try
             {
-                ReportPrintForm fReport = new ReportPrintForm(UserName, "R06");
+                ReportPrintForm fReport = new ReportPrintForm(UserName, "R08");
                 fReport.StartPosition = FormStartPosition.CenterScreen;
-                fReport.Show();
+                fReport.ShowDialog();
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
 
             //Loading_Screen.ShowSplashScreen();
@@ -3120,13 +2722,13 @@ namespace FSBT.HHT.App.UI
         {
             try
             {
-                ReportPrintForm fReport = new ReportPrintForm(UserName, "R28");
+                ReportPrintForm fReport = new ReportPrintForm(UserName, "R09");
                 fReport.StartPosition = FormStartPosition.CenterScreen;
-                fReport.Show();
+                fReport.ShowDialog();
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
             //Loading_Screen.ShowSplashScreen();
             //tabControl1.Enabled = false;
@@ -3185,13 +2787,13 @@ namespace FSBT.HHT.App.UI
         {
             try
             {
-                ReportPrintForm fReport = new ReportPrintForm(UserName, "R08");
+                ReportPrintForm fReport = new ReportPrintForm(UserName, "R11");
                 fReport.StartPosition = FormStartPosition.CenterScreen;
-                fReport.Show();
+                fReport.ShowDialog();
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
 
             //Loading_Screen.ShowSplashScreen();
@@ -3251,13 +2853,13 @@ namespace FSBT.HHT.App.UI
         {
             try
             {
-                ReportPrintForm fReport = new ReportPrintForm(UserName, "R11");
+                ReportPrintForm fReport = new ReportPrintForm(UserName, "R12");
                 fReport.StartPosition = FormStartPosition.CenterScreen;
-                fReport.Show();
+                fReport.ShowDialog();
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
 
             //Loading_Screen.ShowSplashScreen();
@@ -3348,9 +2950,62 @@ namespace FSBT.HHT.App.UI
             {
                 MessageBox.Show("Cannot find " + pathFolder);
             }
+        }
 
+        private void FillLocationFom()
+        {
+            if (textBoxLoFrom.Text.Trim().Length == 1)
+            {
+                textBoxLoFrom.Text = "0000" + textBoxLoFrom.Text.Trim();
+            }
+            else if (textBoxLoFrom.Text.Trim().Length == 2)
+            {
+                textBoxLoFrom.Text = "000" + textBoxLoFrom.Text.Trim();
+            }
+            else if (textBoxLoFrom.Text.Trim().Length == 3)
+            {
+                textBoxLoFrom.Text = "00" + textBoxLoFrom.Text.Trim();
+            }
+            else if (textBoxLoFrom.Text.Trim().Length == 4)
+            {
+                textBoxLoFrom.Text = "0" + textBoxLoFrom.Text.Trim();
+            }
+        }
+        private void FillLocationTo()
+        {
+            if (textBoxLoTo.Text.Trim().Length == 1)
+            {
+                textBoxLoTo.Text = "0000" + textBoxLoTo.Text.Trim();
+            }
+            else if (textBoxLoTo.Text.Trim().Length == 2)
+            {
+                textBoxLoTo.Text = "000" + textBoxLoTo.Text.Trim();
+            }
+            else if (textBoxLoTo.Text.Trim().Length == 3)
+            {
+                textBoxLoTo.Text = "00" + textBoxLoTo.Text.Trim();
+            }
+            else if (textBoxLoTo.Text.Trim().Length == 4)
+            {
+                textBoxLoTo.Text = "0" + textBoxLoTo.Text.Trim();
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            connectedCable = CheckCableConnection();
+            if(!connectedCable)
+            {
+                comnameTxtBox1.Text = "";
+                hhtnameTxtBox1.Text = "";
+                MessageBox.Show(MessageConstants.Nodeviceconnected, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
         }
 
+        private void btnReceiveData_Click(object sender, EventArgs e)
+        {
+            connectedCable = GetAuditDataFromHHT();       
+        }
     }
 }

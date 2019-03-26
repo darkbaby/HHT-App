@@ -37,13 +37,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FSBT-HHT-App\Resources\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,7 +61,6 @@
     <Compile Include="BackupHistoryDetail.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="ConfigBackupTable.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
@@ -74,7 +70,16 @@
     <Compile Include="ConfigFileDetailAS400.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConfigFileFormat.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigFileFormatDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="ConfigReport.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigReport_bak.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="ConfigUserGroup.cs">
@@ -93,14 +98,20 @@
     <Compile Include="DAO\BackupRestoreDAO.cs" />
     <Compile Include="DAO\AuditManagementDAO.cs" />
     <Compile Include="DAO\DownloadMasterDAO.cs" />
+    <Compile Include="DAO\LogErrorDAO.cs" />
+    <Compile Include="DAO\TempFileAcknowledgeDAO.cs" />
+    <Compile Include="DAO\TempFileExportDAO.cs" />
     <Compile Include="DAO\GenTextFileDAO.cs" />
     <Compile Include="DAO\HHTSyncDAO.cs" />
     <Compile Include="DAO\SystemSettingDAO.cs" />
+    <Compile Include="DAO\TempFileImportDAO.cs" />
     <Compile Include="DAO\UserManagementDAO.cs" />
     <Compile Include="DAO\UserGroupManagementDAO.cs" />
     <Compile Include="DAO\LocationManagementDAO.cs" />
     <Compile Include="DAO\PermissionDAO.cs" />
     <Compile Include="DAO\ReportManagementDAO.cs" />
+    <Compile Include="DAO\ConfigFileFormatDAO.cs" />
+    <Compile Include="DAO\TempDataTableDAO.cs" />
     <Compile Include="DownloadLocation.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
@@ -129,7 +140,16 @@
     <Compile Include="Location.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="LogError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogSystem.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="MasterBarcode.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterBranch.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="MasterBrand.cs">
@@ -138,32 +158,94 @@
     <Compile Include="MasterPack.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="MasterPlant.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="MasterReport.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="MasterScanMode.cs">
+    <Compile Include="MasterReport_bak.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="MasterScreen.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="MasterSerialNumber.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="MasterSKU.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterStorageLocation.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="MasterUnit.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Section.cs">
+    <Compile Include="MastMCHLevel.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="MastSAP_Barcode.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MastSAP_RegularPrice.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MastSAP_SKU.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Section.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="SystemSetting.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="TempFileAcknowledgeBarDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileAcknowledgeSKUDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileBarcodeDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileBarcodeError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileBarcodeLineError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileExportDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileRegularPriceDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileRegularPriceError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileRegularPriceLineError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileSKUDetail.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileSKUError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TempFileSKULineError.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="tmpHHTStocktaking.cs">
+      <DependentUpon>FsbtEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tmp_MasterMapping.cs">
       <DependentUpon>FsbtEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
@@ -194,7 +276,13 @@
       <DependentUpon>FsbtEntity.edmx</DependentUpon>
       <LastGenOutput>FsbtEntity.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

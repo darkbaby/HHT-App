@@ -13,8 +13,7 @@ namespace FSBT_HHT_Model
         public string SectionName { get; set; }
         public string LocationCode { get; set; }
         public int RecordAmount { get; set; }
-        public int ScanMode { get; set; }
-        public string DepartmentCode { get; set; }
+        public string StorageLocationCode { get; set; }
     }
     public class FileModel
     {
@@ -55,5 +54,18 @@ namespace FSBT_HHT_Model
         public int StartPos { get; set; }
         public int EndPos { get; set; }
         public string Default { get; set; }
+    }
+
+    public class Request
+    {
+        public string PlantCode { get; set; }
+        public string CountSheet { get; set; }
+        public string MCHLevel1 { get; set; }
+        public string MCHLevel2 { get; set; }
+        public string MCHLevel3 { get; set; }
+        public string MCHLevel4 { get; set; }
+        public string StorageLocationCode { get; set; }
+        public string LocationFrom { get; set; }
+        public string LocationTo { get; set; }
     }
 }

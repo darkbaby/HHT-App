@@ -9,7 +9,15 @@ namespace FSBT_HHT_Model
     public class ReportParameter
     {
         public System.DateTime CountDate { get; set; }
-        public string DepartmentCode { get; set; }
+        public string Plant { get; set; }
+        public string CountSheet { get; set; }
+        public string MCH1 { get; set; }
+        public string MCH2 { get; set; }
+        public string MCH3 { get; set; }
+        public string MCH4 { get; set; }
+
+        public string StoregeLocation { get; set; }
+
         public string SectionCode { get; set; }
         public string LocationCode { get; set; }
         public string BrandCode { get; set; }

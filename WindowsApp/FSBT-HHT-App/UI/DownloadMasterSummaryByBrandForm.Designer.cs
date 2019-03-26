@@ -29,9 +29,8 @@
         private void InitializeComponent()
         {
             this.groupSummary = new System.Windows.Forms.GroupBox();
-            this.textStockW = new System.Windows.Forms.TextBox();
-            this.textQuantityW = new System.Windows.Forms.TextBox();
-            this.txtStock = new System.Windows.Forms.TextBox();
+            this.txtQuantityKG = new System.Windows.Forms.TextBox();
+            this.label_TotalKG = new System.Windows.Forms.Label();
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.lblTotal = new System.Windows.Forms.Label();
@@ -41,61 +40,45 @@
             // 
             // groupSummary
             // 
-            this.groupSummary.Controls.Add(this.textStockW);
-            this.groupSummary.Controls.Add(this.textQuantityW);
-            this.groupSummary.Controls.Add(this.txtStock);
+            this.groupSummary.Controls.Add(this.txtQuantityKG);
+            this.groupSummary.Controls.Add(this.label_TotalKG);
             this.groupSummary.Controls.Add(this.txtQuantity);
             this.groupSummary.Controls.Add(this.dataGridView1);
             this.groupSummary.Controls.Add(this.lblTotal);
             this.groupSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupSummary.Location = new System.Drawing.Point(18, 18);
-            this.groupSummary.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupSummary.Location = new System.Drawing.Point(12, 11);
             this.groupSummary.Name = "groupSummary";
-            this.groupSummary.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupSummary.Size = new System.Drawing.Size(1065, 571);
+            this.groupSummary.Size = new System.Drawing.Size(1064, 371);
             this.groupSummary.TabIndex = 3;
             this.groupSummary.TabStop = false;
             this.groupSummary.Text = "Summary";
             // 
-            // textStockW
+            // txtQuantityKG
             // 
-            this.textStockW.Location = new System.Drawing.Point(848, 518);
-            this.textStockW.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textStockW.Name = "textStockW";
-            this.textStockW.ReadOnly = true;
-            this.textStockW.Size = new System.Drawing.Size(148, 32);
-            this.textStockW.TabIndex = 8;
-            this.textStockW.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textStockW.Visible = false;
+            this.txtQuantityKG.Location = new System.Drawing.Point(625, 337);
+            this.txtQuantityKG.Name = "txtQuantityKG";
+            this.txtQuantityKG.ReadOnly = true;
+            this.txtQuantityKG.Size = new System.Drawing.Size(221, 24);
+            this.txtQuantityKG.TabIndex = 7;
+            this.txtQuantityKG.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtQuantityKG.Visible = false;
             // 
-            // textQuantityW
+            // label_TotalKG
             // 
-            this.textQuantityW.Location = new System.Drawing.Point(699, 518);
-            this.textQuantityW.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textQuantityW.Name = "textQuantityW";
-            this.textQuantityW.ReadOnly = true;
-            this.textQuantityW.Size = new System.Drawing.Size(148, 32);
-            this.textQuantityW.TabIndex = 7;
-            this.textQuantityW.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textQuantityW.Visible = false;
-            // 
-            // txtStock
-            // 
-            this.txtStock.Location = new System.Drawing.Point(550, 518);
-            this.txtStock.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txtStock.Name = "txtStock";
-            this.txtStock.ReadOnly = true;
-            this.txtStock.Size = new System.Drawing.Size(148, 32);
-            this.txtStock.TabIndex = 6;
-            this.txtStock.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.label_TotalKG.AutoSize = true;
+            this.label_TotalKG.Location = new System.Drawing.Point(523, 339);
+            this.label_TotalKG.Name = "label_TotalKG";
+            this.label_TotalKG.Size = new System.Drawing.Size(92, 18);
+            this.label_TotalKG.TabIndex = 6;
+            this.label_TotalKG.Text = "Total KG(W)";
+            this.label_TotalKG.Visible = false;
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(405, 518);
-            this.txtQuantity.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtQuantity.Location = new System.Drawing.Point(209, 337);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.ReadOnly = true;
-            this.txtQuantity.Size = new System.Drawing.Size(148, 32);
+            this.txtQuantity.Size = new System.Drawing.Size(221, 24);
             this.txtQuantity.TabIndex = 5;
             this.txtQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -104,30 +87,31 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(42, 54);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 28);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(978, 465);
+            this.dataGridView1.Size = new System.Drawing.Size(1052, 302);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(336, 523);
-            this.lblTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTotal.Location = new System.Drawing.Point(84, 339);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(71, 26);
+            this.lblTotal.Size = new System.Drawing.Size(111, 18);
             this.lblTotal.TabIndex = 2;
-            this.lblTotal.Text = "Total :";
+            this.lblTotal.Text = "Total PCS(G,F)";
             // 
             // DownloadMasterSummaryByBrandForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1106, 602);
+            this.ClientSize = new System.Drawing.Size(1088, 399);
             this.Controls.Add(this.groupSummary);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DownloadMasterSummaryByBrandForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DownloadMasterSummaryByBrandForm";
             this.groupSummary.ResumeLayout(false);
             this.groupSummary.PerformLayout();
@@ -139,11 +123,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupSummary;
-        private System.Windows.Forms.TextBox textStockW;
-        private System.Windows.Forms.TextBox textQuantityW;
-        private System.Windows.Forms.TextBox txtStock;
         private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.TextBox txtQuantityKG;
+        private System.Windows.Forms.Label label_TotalKG;
     }
 }

@@ -15,20 +15,18 @@ using FSBT_HHT_DAL.DAO;
 using FtpLib;
 using System.Data;
 using System.Threading;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace FSBT_HHT_BLL
 {
     public class HHTSyncBll
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         private HHTSyncDAO dao = new HHTSyncDAO();
         private RAPI rapi = new RAPI();
-        private string DBName = "STOCKTAKING_HHT.sdf";
-        private string validateDBName = "COMPUTER_NAME.sdf";
-        private string HHTDBPath = @"\Flash\TheMall-Stocktaking\Database\";
-        //private string HHTDBPath = @"\Program Files\denso-hht\Database\";
-        private string HHTTempPath = @"\Flash\TheMall-Stocktaking\temp";
-        //private string HHTDBPath = @"\Program Files\denso-hht\Database\";
+        private string DBName = LocalParameter.DBName;
+        private string validateDBName = LocalParameter.validateDBName;
         private string userFTP = "anonymous";
         private string passwordFTP = "s";
 
@@ -68,7 +66,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message , DateTime.Now);
                 Console.WriteLine("Error From D_GetDeviceName");
                 return "";
             }
@@ -80,67 +78,62 @@ namespace FSBT_HHT_BLL
             
         }
 
-        public bool D_PCTransferFileToHHT()
+        public bool D_PCTransferFileToHHT(string HHTDBPath)
         {
             try
             {
-                string fileToPushToDevice = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-                //string fileToPushToDevice = "D:\\TestDB1.sdf";
+                //string fileToPushToDevice = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+                string fileToPushToDevice = Path.Combine(LocalParameter.programPath, DBName);
                 string remotePath = HHTDBPath + DBName;
                 rapi.CopyFileToDevice(fileToPushToDevice, remotePath, true);
                 return true;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                Console.Error.WriteLine("Error from D_PCTransferFileToHHT");
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
 
-        public bool D_HHTTransferFileToPC(bool isCheckPermissionMode)
+        public bool D_HHTTransferFileToPC(bool isCheckPermissionMode, string HHTDBPath)
         {
+            string localPath = "";
+            string fileToPullFromDevice = "";
             try
             {
-                string fileToPullFromDevice = "";
-                string localPath = "";
                 if (isCheckPermissionMode)
                 {
                     fileToPullFromDevice = HHTDBPath + validateDBName;
-                    localPath = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + validateDBName;
-                    //localPath = "D:\\COMPUTER_NAME.sdf";
+                    localPath = Path.Combine(LocalParameter.programPath, validateDBName);
                 }
                 else
                 {
                     fileToPullFromDevice = HHTDBPath + DBName;
-                    localPath = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-                    //localPath ="D:\\STOCKTAKING_HHT.sdf";
+                    localPath = Path.Combine(LocalParameter.programPath, DBName);
                 }
 
                 rapi.CopyFileFromDevice(localPath, fileToPullFromDevice, true);
-                //rapi.CreateDeviceDirectory(@"\Program Files\Test");
                 return true;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 Console.WriteLine("Error from D_HHTTransferFileToPC");
                 return false;
             }
         }
 
-        public bool D_HHTTransferFileUploadToPC(string localPath)
+        public bool D_HHTTransferFileUploadToPC(string localPath, string HHTTempPath)
         {
             try
             {
-
                 string DicToPullFromDevice = HHTTempPath;
-                //string localPath = ConfigurationManager.AppSettings["pathFTPFolder"];
                 if (rapi.DeviceFileExists(DicToPullFromDevice))
                 {
                     if (rapi.DeviceFileExists(DicToPullFromDevice + "\\information.txt"))
                     {
-                        string txtPath = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\information.txt";
+                        //string txtPath = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\information.txt";
+                        string txtPath = Path.Combine(LocalParameter.programPath,"information.txt");
                         
                         rapi.CopyFileFromDevice(txtPath, DicToPullFromDevice + "\\information.txt", true);
                         
@@ -162,7 +155,10 @@ namespace FSBT_HHT_BLL
                                 rapi.CopyFileFromDevice(localPath + "\\" + fileName, HHTTempPath + "\\" + fileName, true);
                                 rapi.CopyFileFromDevice(localPath + "\\" + fileNameZip, HHTTempPath + "\\" + fileNameZip, true);
                                 File.Delete(localPath + "\\" + fileName);
-                                string successFilePath = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\success.txt";
+                                //string successFilePath = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\success.txt";
+
+                                string successFilePath = LocalParameter.programPath + "\\success.txt";
+
                                 FileStream fileStream = File.Create(successFilePath);
                                 fileStream.Close();                            
                                 rapi.CopyFileToDevice(successFilePath, HHTTempPath + "\\success.txt", true);
@@ -172,8 +168,6 @@ namespace FSBT_HHT_BLL
                             {
                                 return false;
                             }
-                            
-
                         }
                         else
                         {
@@ -189,19 +183,15 @@ namespace FSBT_HHT_BLL
                         
                     }
                     return false;
-                    
                 }
                 else
                 {
                     return false;
                 }
-
-
-                
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 Console.WriteLine("Error from D_HHTTransferFileToPC");
                 return false;
             }
@@ -216,6 +206,18 @@ namespace FSBT_HHT_BLL
         public List<PCSKUModel> GetSKU(string scanMode)
         {
             List<PCSKUModel> skuList = dao.GetSKUList(scanMode);
+            return skuList;
+        }
+
+        public List<PCSKUModel> GetSKU()
+        {
+            List<PCSKUModel> skuList = dao.GetSKUList();
+            return skuList;
+        }
+
+        public List<PCSKUModel> GetSKUAll()
+        {
+            List<PCSKUModel> skuList = dao.GetSKUListAll();
             return skuList;
         }
 
@@ -235,6 +237,12 @@ namespace FSBT_HHT_BLL
         {
             List<MasterBarcodeModel> masterBarcodeList = dao.GetMasterBarcode();
             return masterBarcodeList;
+        }
+
+        public List<MasterSerialNumberModel> GetMasterSerialNumber()
+        {
+            List<MasterSerialNumberModel> masterSerialNumberList = dao.GetMasterSerialNumber();
+            return masterSerialNumberList;
         }
 
         public List<MasterPackModel> GetMasterPack()
@@ -261,12 +269,14 @@ namespace FSBT_HHT_BLL
 
         public List<string> GetComputerList()
         {
-            return dao.GetComputerList();
+            string dbfile = Path.Combine(LocalParameter.programPath, validateDBName);
+            return dao.GetComputerList(dbfile);
         }
 
         public List<AuditStocktakingModel> GetAuditList()
         {
-            List<AuditStocktakingModel> auditList = dao.GetAuditList();
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            List<AuditStocktakingModel> auditList = dao.GetAuditList(dbfile);
             return auditList;
         }
 
@@ -274,8 +284,12 @@ namespace FSBT_HHT_BLL
         {
             try
             {
-                string computerNameDB = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + validateDBName;
-                string stocktakinDB = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+                //string computerNameDB = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + validateDBName;
+                //string stocktakinDB = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+
+                string computerNameDB = Path.Combine(LocalParameter.programPath, validateDBName);
+                string stocktakinDB = Path.Combine(LocalParameter.programPath, DBName);
+
                 if (File.Exists(computerNameDB))
                 {
                     File.Delete(computerNameDB);
@@ -287,13 +301,13 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 Console.WriteLine("delete DB file error");
             }
             
         }
 
-        public bool FTPTransferHHTToPC(string hostIP, bool checkpermissionMode)
+        public bool FTPTransferHHTToPC(string hostIP, bool checkpermissionMode, string HHTDBPath)
         {
             using (FtpConnection ftp = new FtpConnection(hostIP, userFTP, passwordFTP))
             {
@@ -308,18 +322,22 @@ namespace FSBT_HHT_BLL
                     if (checkpermissionMode)
                     {
                         remoteFile = HHTDBPath + validateDBName;
-                        localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + validateDBName;
+
+                        //localFile = new System.IO.FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)) + "\\" + validateDBName;
+                        localFile = Path.Combine(LocalParameter.programPath, validateDBName);
                     }
                     else
                     {
                         remoteFile = HHTDBPath + DBName;
-                        localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+                        localFile = Path.Combine(LocalParameter.programPath, DBName);
+                       // localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
                     }
 
-                
                     if (ftp.FileExists(remoteFile)) /* check that a file exists */
                     {
+                        logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "ftp.GetFile" + remoteFile , DateTime.Now);
                         ftp.GetFile(remoteFile, localFile, false); /* download /incoming/file.txt as file.txt to current executing directory, overwrite if it exists */
+                        logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, "ftp.GetFile" + remoteFile + "success", DateTime.Now);
                         return true;
                     }
                     else
@@ -330,13 +348,13 @@ namespace FSBT_HHT_BLL
                 catch (Exception ex)
                 {
                     //Console.WriteLine(String.Format("FTP Error: {0} {1}", e.ErrorCode, e.Message));
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     return false;
                 }
             }
         }
 
-        public bool FTPTransferPCToHHT(string hostIP)
+        public bool FTPTransferPCToHHT(string hostIP, string HHTDBPath)
         {
             using (FtpConnection ftp = new FtpConnection(hostIP, userFTP, passwordFTP))
             {
@@ -346,15 +364,15 @@ namespace FSBT_HHT_BLL
                     ftp.Login(userFTP, passwordFTP); /* Login using previously provided credentials */
 
                     string remoteFile = HHTDBPath + DBName;
-                    string localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
-               
+                    //string localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+                    string localFile = Path.Combine(LocalParameter.programPath, DBName);
                     ftp.PutFile(localFile, remoteFile); 
                     return true;
                 }
                 catch (Exception ex)
                 {
                     //Console.WriteLine(String.Format("FTP Error: {0} {1}", e.ErrorCode, e.Message));
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     return false;
                 }
             }
@@ -362,12 +380,18 @@ namespace FSBT_HHT_BLL
 
         public string GetDeviceNameFTP()
         {
-            return dao.GetDeviceName();
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.GetDeviceName(dbfile);
         }
 
         public DataTable LoadReport_StocktakingAuditCheckWithUnit_AutoPrint(string LocationCode, string StoreType, DateTime countDate, string allDepartmentCode, string allSectionCode, string allBrandCode)
         {
             return dao.GetReportAutoPrint_StocktakingAuditCheckWithUnit(LocationCode, StoreType, countDate, allDepartmentCode, allSectionCode, allBrandCode);
+        }
+
+        public DataTable LoadReport_StocktakingAuditCheckWithUnit_AutoPrint(string LocationCode,  DateTime countDate)
+        {
+            return dao.GetReportAutoPrint_StocktakingAuditCheckWithUnit(LocationCode,  countDate);
         }
 
         public bool UpdatePrintFlag(DataTable dt)
@@ -380,169 +404,63 @@ namespace FSBT_HHT_BLL
             return dao.UpdateImportFlagInTmpHHTStocktaking(auditListTempOneLocation);
         }
 
+        public bool ConnectSdfDeleteDataStockTaking(List<AuditStocktakingModel>[] auditListByLocationArr)
+        {
+            // Create a connection to the file datafile.sdf in the program folder
+            //string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+
+            string dbfile = Path.Combine(LocalParameter.programPath,DBName);
+            return dao.ConnectSdfDeleteDataStockTaking(auditListByLocationArr, dbfile);
+        }
+
+        public bool ConnectSdfDeleteData(string type)
+        {
+            // Create a connection to the file datafile.sdf in the program folder
+            //string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfDeleteData(type, dbfile);
+        }
+
+        public bool ConnectSdfInsertLocationData(List<DownloadLocationModel> locationList, string username)
+        {
+            // Create a connection to the file datafile.sdf in the program folder
+            //string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+            //string dbfile = new System.IO.FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)) + "\\" + DBName;
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfInsertLocationData(locationList, dbfile, username);
+        }
+
+        public bool ConnectSdfInsertMasterBarcodeData(List<MasterBarcodeModel> masterBarcodeList, string username)
+        {
+            // Create a connection to the file datafile.sdf in the program folder
+            //string dbfile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\" + DBName;
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfInsertMasterBarcodeData(masterBarcodeList, dbfile, username);
+        }
+        public bool ConnectSdfInsertMasterSerialData(List<MasterSerialNumberModel> masterSerialNumberList, string username)
+        {
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfInsertMasterSerialData(masterSerialNumberList, dbfile, username);
+
+        }
+
+        public bool ConnectSdfInsertMasterPackData(List<MasterPackModel> masterPackList, string username)
+        {
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfInsertMasterPackData(masterPackList, dbfile, username);
+        }
+
+        public bool ConnectSdfInsertSKUData(List<PCSKUModel> skuList, string username)
+        {
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfInsertSKUData(skuList, dbfile, username);
+        }
+
+        public bool ConnectSdfInsertUnitData(List<UnitModel> unitList, string username)
+        {
+            string dbfile = Path.Combine(LocalParameter.programPath, DBName);
+            return dao.ConnectSdfInsertUnitData(unitList, dbfile, username);
+        }
     }
-
-
-
-    //public class FTP
-    //{
-    //    private string host = null;
-    //    private string user = null;
-    //    private string pass = null;
-    //    private FtpWebRequest ftpRequest = null;
-    //    private FtpWebResponse ftpResponse = null;
-    //    private Stream ftpStream = null;
-    //    private int bufferSize = 4000;
-
-    //    /* Construct Object */
-    //    public FTP(string hostIP, string userName, string password) { host = hostIP; user = userName; pass = password; }
-
-    //    /* Download File */
-    //    public bool TransferHHTToPC(bool checkPermission)
-    //    {
-    //        string remoteFile = @"\Program Files\denso_hht\Database\COMPUTER_NAME.sdf";
-    //        string localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\COMPUTER_NAME.sdf";
-    //        ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
-
-    //        ftpRequest.Credentials = new NetworkCredential(user, pass);
-
-    //        FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse();
-
-    //        Stream responseStream = response.GetResponseStream();
-    //        StreamReader reader = new StreamReader(responseStream);
-    //        FileStream file = File.Create(localFile);
-    //        byte[] buffer = new byte[32 * 1024];
-    //        int read;
-    //        while ((read = responseStream.Read(buffer, 0, buffer.Length)) > 0)
-    //        {
-    //            file.Write(buffer, 0, read);
-    //        }
-    //        file.Close();
-    //        reader.Close();
-    //        response.Close();
-    //        return true;
-
-    //        //try
-    //        //{
-    //        //    /* Create an FTP Request */
-    //        //    //System.Net.ServicePointManager.Expect100Continue = false;
-    //        //    string remoteFile = "";
-    //        //    string localFile = "";
-    //        //    if (checkPermission)
-    //        //    {
-    //        //        remoteFile = @"\Program Files\denso_hht\Database\COMPUTER_NAME.sdf";
-    //        //        localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\COMPUTER_NAME.sdf";
-    //        //        //remoteFile = @"\Program Files\denso_hht\Database\test_transfer.txt";
-    //        //        //localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\test_transfer1.txt";
-    //        //    }
-    //        //    else
-    //        //    {
-    //        //        remoteFile = @"\Program Files\denso_hht\Database\STOCKTAKING_HHT.sdf";
-    //        //        localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\STOCKTAKING_HHT.sdf";
-    //        //    }                
-                
-    //        //    ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
-    //        //    /* Log in to the FTP Server with the User Name and Password Provided */
-    //        //    ftpRequest.Credentials = new NetworkCredential(user, pass);
-    //        //    /* When in doubt, use these options */
-    //        //    ftpRequest.UseBinary = true;
-    //        //    ftpRequest.UsePassive = true;
-    //        //    ftpRequest.KeepAlive = true;
-    //        //    /* Specify the Type of FTP Request */
-    //        //    ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-    //        //    /* Establish Return Communication with the FTP Server */
-    //        //    ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-    //        //    /* Get the FTP Server's Response Stream */
-    //        //    ftpStream = ftpResponse.GetResponseStream();
-    //        //    /* Open a File Stream to Write the Downloaded File */
-    //        //    FileStream localFileStream = new FileStream(localFile, FileMode.Create);
-    //        //    /* Buffer for the Downloaded Data */
-    //        //    byte[] byteBuffer = new byte[bufferSize];
-    //        //    int bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
-    //        //    /* Download the File by Writing the Buffered Data Until the Transfer is Complete */
-    //        //    try
-    //        //    {
-    //        //        while (bytesRead > 0)
-    //        //        {
-    //        //            localFileStream.Write(byteBuffer, 0, bytesRead);
-    //        //            bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
-    //        //        }
-                    
-    //        //    }
-    //        //    catch (Exception ex) 
-    //        //    { 
-    //        //        Console.WriteLine(ex.ToString());
-    //        //        return false;
-    //        //    }
-
-    //        //    /* Resource Cleanup */
-    //        //    localFileStream.Close();
-    //        //    ftpStream.Close();
-    //        //    ftpResponse.Close();
-    //        //    ftpRequest = null;
-    //        //    return true;
-                
-    //        //}
-    //        //catch (Exception ex) 
-    //        //{ 
-    //        //    Console.WriteLine(ex.ToString());
-    //        //    return false;
-    //        //}
-            
-    //    }
-
-    //    /* Upload File */
-    //    public bool TransferPCToHHT()
-    //    {
-    //        try
-    //        {
-    //            /* Create an FTP Request */
-    //            string remoteFile = @"\Program Files\denso_hht\Database\STOCKTAKING_HHT.sdf";
-    //            string localFile = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).DirectoryName + "\\STOCKTAKING_HHT.sdf";
-    //            ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
-    //            /* Log in to the FTP Server with the User Name and Password Provided */
-    //            ftpRequest.Credentials = new NetworkCredential(user, pass);
-    //            /* When in doubt, use these options */
-    //            ftpRequest.UseBinary = true;
-    //            ftpRequest.UsePassive = true;
-    //            ftpRequest.KeepAlive = true;
-    //            /* Specify the Type of FTP Request */
-    //            ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
-    //            /* Establish Return Communication with the FTP Server */
-    //            ftpStream = ftpRequest.GetRequestStream();
-    //            /* Open a File Stream to Read the File for Upload */
-    //            FileStream localFileStream = new FileStream(localFile, FileMode.Create);
-    //            /* Buffer for the Downloaded Data */
-    //            byte[] byteBuffer = new byte[bufferSize];
-    //            int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-    //            /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
-    //            try
-    //            {
-    //                while (bytesSent != 0)
-    //                {
-    //                    ftpStream.Write(byteBuffer, 0, bytesSent);
-    //                    bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-    //                }
-
-    //            }
-    //            catch (Exception ex)
-    //            {
-    //                Console.WriteLine(ex.ToString());
-    //                return false;
-    //            }
-    //            /* Resource Cleanup */
-    //            localFileStream.Close();
-    //            ftpStream.Close();
-    //            ftpRequest = null;
-    //            return true;
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            Console.WriteLine(ex.ToString());
-    //            return false;
-    //        }
-
-    //    }
-    //}
-
 }

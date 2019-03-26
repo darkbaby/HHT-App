@@ -17,7 +17,6 @@ namespace FSBT_HHT_DAL
         public string ExBarcode { get; set; }
         public string DepartmentCode { get; set; }
         public string SKUCode { get; set; }
-        public int ScanMode { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
     }

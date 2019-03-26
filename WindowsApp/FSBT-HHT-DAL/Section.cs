@@ -14,23 +14,21 @@ namespace FSBT_HHT_DAL
     
     public partial class Section
     {
-        public Section()
-        {
-            this.Locations = new HashSet<Location>();
-        }
-    
         public string SectionCode { get; set; }
         public string SectionName { get; set; }
-        public int ScanMode { get; set; }
+        public string StorageLocationCode { get; set; }
+        public string PlantCode { get; set; }
+        public string CountSheet { get; set; }
+        public string MCHLevel1 { get; set; }
+        public string MCHLevel2 { get; set; }
+        public string MCHLevel3 { get; set; }
+        public string MCHLevel4 { get; set; }
         public string LocationFrom { get; set; }
         public string LocationTo { get; set; }
         public string BrandCode { get; set; }
-        public string DepartmentCode { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
         public System.DateTime UpdateDate { get; set; }
         public string UpdateBy { get; set; }
-    
-        public virtual ICollection<Location> Locations { get; set; }
     }
 }

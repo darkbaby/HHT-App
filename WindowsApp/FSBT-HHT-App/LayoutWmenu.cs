@@ -11,12 +11,13 @@ using System.Net;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 
 namespace FSBT.HHT.App
 {
     public partial class LayoutWmenu : FSBT.HHT.App.Layout
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         public string UserName { get; set; }
         private SyncHhtForm syncForm;
 
@@ -35,6 +36,7 @@ namespace FSBT.HHT.App
         private const string GroupPermissionScreen = "UserGroupManagementForm";
         private const string SystemSettingsScreen = "SettingsForm";
         Process proc = new Process();
+        bool closed = true;
 
         #region Constructor
         public LayoutWmenu()
@@ -42,7 +44,7 @@ namespace FSBT.HHT.App
             InitializeComponent();
         }
 
-        public LayoutWmenu(string username,Process p)
+        public LayoutWmenu(string username, Process p)
         {
             UserName = username;
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace FSBT.HHT.App
             setStatusStrip();
             formPool = new Dictionary<string, Form>();
             proc = p;
+            this.Text = "Stocktaking V " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         #endregion
 
@@ -73,7 +76,8 @@ namespace FSBT.HHT.App
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -111,7 +115,8 @@ namespace FSBT.HHT.App
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -140,7 +145,8 @@ namespace FSBT.HHT.App
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 databaseInfo = "";
             }
 
@@ -205,14 +211,12 @@ namespace FSBT.HHT.App
                 permissionComponent = new PermissionComponentBll(UserName);
                 syncForm = new SyncHhtForm(UserName);
                 syncForm.CallThread();
-                
-
                 //syncForm.SetAutoUploadGrid();
-
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -221,26 +225,40 @@ namespace FSBT.HHT.App
             try
             {
                 LocationManagementForm form;
-                if (!formPool.ContainsKey(LocationScreen))
+
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new LocationManagementForm(UserName);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(LocationScreen, form);
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    if (!formPool.ContainsKey(LocationScreen))
+                    {
+                        form = new LocationManagementForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(LocationScreen, form);
+                    }
+                    else
+                    {
+                        form = (LocationManagementForm)formPool[LocationScreen];
+                    }
+
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (LocationManagementForm)formPool[LocationScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                //logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -249,25 +267,39 @@ namespace FSBT.HHT.App
             try
             {
                 BarcodePrintForm form;
-                if (!formPool.ContainsKey(PrintBarcodeScreen))
+
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new BarcodePrintForm();
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(PrintBarcodeScreen, form);
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    if (!formPool.ContainsKey(PrintBarcodeScreen))
+                    {
+                        form = new BarcodePrintForm();
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(PrintBarcodeScreen, form);
+                    }
+                    else
+                    {
+                        form = (BarcodePrintForm)formPool[PrintBarcodeScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (BarcodePrintForm)formPool[PrintBarcodeScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                //logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -275,26 +307,40 @@ namespace FSBT.HHT.App
         {
             try
             {
-                EditQuantityForm form;
-                if (!formPool.ContainsKey(QuantityManagementScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new EditQuantityForm(UserName);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(QuantityManagementScreen, form);
+                    openedFrom.Close();
+                }
+
+                if (closed)
+                {
+                    EditQuantityForm form;
+                    if (!formPool.ContainsKey(QuantityManagementScreen))
+                    {
+                        form = new EditQuantityForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(QuantityManagementScreen, form);
+                    }
+                    else
+                    {
+                        form = (EditQuantityForm)formPool[QuantityManagementScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (EditQuantityForm)formPool[QuantityManagementScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -302,27 +348,41 @@ namespace FSBT.HHT.App
         {
             try
             {
-               // SyncHhtForm form;
-                if (!formPool.ContainsKey(SyncHandheldScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    //form = new SyncHhtForm(UserName);
-                    syncForm.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(syncForm);
-                    formPool.Add(SyncHandheldScreen, syncForm);
+                    openedFrom.Close();
+                }
+
+                if (closed)
+                {
+                    // SyncHhtForm form;
+                    if (!formPool.ContainsKey(SyncHandheldScreen))
+                    {
+                        //form = new SyncHhtForm(UserName);
+                        syncForm.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(syncForm);
+                        formPool.Add(SyncHandheldScreen, syncForm);
+                    }
+                    else
+                    {
+                        syncForm = (SyncHhtForm)formPool[SyncHandheldScreen];
+                    }
+
+                    syncForm.Show();
+                    syncForm.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //syncForm.WindowState = FormWindowState.Minimized;
+                    syncForm.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    syncForm = (SyncHhtForm)formPool[SyncHandheldScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-
-                syncForm.Show();
-                syncForm.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                syncForm.WindowState = FormWindowState.Minimized;
-                syncForm.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -330,26 +390,40 @@ namespace FSBT.HHT.App
         {
             try
             {
-                TextFileForm form;
-                if (!formPool.ContainsKey(TextFileScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new TextFileForm();
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(TextFileScreen, form);
+                    openedFrom.Close();
+                }
+                
+                if(closed)
+                {
+                    TextFileForm form;
+                    if (!formPool.ContainsKey(TextFileScreen))
+                    {
+                        form = new TextFileForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(TextFileScreen, form);
+                    }
+                    else
+                    {
+                        form = (TextFileForm)formPool[TextFileScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (TextFileForm)formPool[TextFileScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -357,26 +431,39 @@ namespace FSBT.HHT.App
         {
             try
             {
-                ReportPrintForm form;
-                if (!formPool.ContainsKey(ReportScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new ReportPrintForm(UserName,string.Empty);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(ReportScreen, form);
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    ReportPrintForm form;
+                    if (!formPool.ContainsKey(ReportScreen))
+                    {
+                        form = new ReportPrintForm(UserName, string.Empty);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(ReportScreen, form);
+                    }
+                    else
+                    {
+                        form = (ReportPrintForm)formPool[ReportScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (ReportPrintForm)formPool[ReportScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -384,15 +471,40 @@ namespace FSBT.HHT.App
         {
             try
             {
-                SettingsForm form = new SettingsForm();
-                form.MaximizeBox = false;
-                form.MinimizeBox = false;
-                permissionComponent.SetPermissionComponentByScreen(form);
-                form.ShowDialog();
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
+                {
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    SettingsForm form;
+                    if (!formPool.ContainsKey(SystemSettingsScreen))
+                    {
+                        form = new SettingsForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(SystemSettingsScreen, form);
+                    }
+                    else
+                    {
+                        form = (SettingsForm)formPool[SystemSettingsScreen];
+                    }
+
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
+                }
+                else
+                {
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
+                }
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -400,26 +512,39 @@ namespace FSBT.HHT.App
         {
             try
             {
-                UserManagementForm form;
-                if (!formPool.ContainsKey(UserManagementScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new UserManagementForm(UserName);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(UserManagementScreen, form);
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    UserManagementForm form;
+                    if (!formPool.ContainsKey(UserManagementScreen))
+                    {
+                        form = new UserManagementForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(UserManagementScreen, form);
+                    }
+                    else
+                    {
+                        form = (UserManagementForm)formPool[UserManagementScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (UserManagementForm)formPool[UserManagementScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -427,26 +552,39 @@ namespace FSBT.HHT.App
         {
             try
             {
-                UserGroupManagementForm form;
-                if (!formPool.ContainsKey(GroupPermissionScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new UserGroupManagementForm(UserName);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(GroupPermissionScreen, form);
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    UserGroupManagementForm form;
+                    if (!formPool.ContainsKey(GroupPermissionScreen))
+                    {
+                        form = new UserGroupManagementForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(GroupPermissionScreen, form);
+                    }
+                    else
+                    {
+                        form = (UserGroupManagementForm)formPool[GroupPermissionScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    //form.WindowState = FormWindowState.Minimized;
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (UserGroupManagementForm)formPool[GroupPermissionScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -455,25 +593,39 @@ namespace FSBT.HHT.App
             try
             {
                 DownloadMasterForm form;
-                if (!formPool.ContainsKey(DownloadMasterScreen))
+
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new DownloadMasterForm(UserName);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(DownloadMasterScreen, form);
+                    openedFrom.Close();
+                }
+                if (closed)
+                {
+                    if (!formPool.ContainsKey(DownloadMasterScreen))
+                    {
+                        form = new DownloadMasterForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(DownloadMasterScreen, form);
+                    }
+                    else
+                    {
+                        form = (DownloadMasterForm)formPool[DownloadMasterScreen];
+                    }
+                    //form.Show();
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (DownloadMasterForm)formPool[DownloadMasterScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -481,26 +633,40 @@ namespace FSBT.HHT.App
         {
             try
             {
-                BackupRestoreForm form;
-                if (!formPool.ContainsKey(BackupRestoreScreen))
+                Form openedFrom = new Form();
+                if (IsAnotherFormAlreadyOpen(ref openedFrom))
                 {
-                    form = new BackupRestoreForm(UserName);
-                    form.MdiParent = this;
-                    permissionComponent.SetPermissionComponentByScreen(form);
-                    formPool.Add(BackupRestoreScreen, form);
+                    openedFrom.Close();
+
+                }
+                if (closed)
+                {
+                    BackupRestoreForm form;
+                    if (!formPool.ContainsKey(BackupRestoreScreen))
+                    {
+                        form = new BackupRestoreForm(UserName);
+                        form.MdiParent = this;
+                        permissionComponent.SetPermissionComponentByScreen(form);
+                        formPool.Add(BackupRestoreScreen, form);
+                    }
+                    else
+                    {
+                        form = (BackupRestoreForm)formPool[BackupRestoreScreen];
+                    }
+                    form.Show();
+                    form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
+                    form.WindowState = FormWindowState.Maximized;
                 }
                 else
                 {
-                    form = (BackupRestoreForm)formPool[BackupRestoreScreen];
+                    SetMainMenuStrip_ItemClicked(openedFrom.Text);
                 }
-                form.Show();
-                form.FormClosing += new FormClosingEventHandler(validationForm_FormClosing);
-                form.WindowState = FormWindowState.Minimized;
-                form.WindowState = FormWindowState.Maximized;
+                
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -526,7 +692,8 @@ namespace FSBT.HHT.App
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
 
             Application.Exit();
@@ -554,7 +721,8 @@ namespace FSBT.HHT.App
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                //logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
 
             Application.Exit();
@@ -564,20 +732,44 @@ namespace FSBT.HHT.App
         {
             try
             {
-                //child form closing remove in formPool
-                formPool.Remove(sender.GetType().Name.ToString());
+                if(e.Cancel)
+                {
+                    e.Cancel = true;
+                    closed = false;
+
+                }
+                else
+                {
+                    //child form closing remove in formPool
+                    formPool.Remove(sender.GetType().Name.ToString());
+                    closed = true;
+                }
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
-                
+
+        public bool IsAnotherFormAlreadyOpen(ref Form openedForm)
+        {
+            bool result = false;
+            foreach (var form in formPool)
+            {
+                if (form.Key != "SyncHhtForm")
+                {
+                    openedForm = form.Value;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
         #endregion
 
         private void MainMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            if(e.ClickedItem.Text == "Download AS/400")
+        {           
+            if (e.ClickedItem.Text == "Download SAP")
             {
                 DownloadMasterForm.BackColor = SystemColors.ControlDark;
                 //DownloadMasterForm.BackColor = SystemColors.ControlLight;
@@ -592,7 +784,7 @@ namespace FSBT.HHT.App
                 UserGroupManagementForm.BackColor = SystemColors.ControlLight;
                 SettingsForm.BackColor = SystemColors.ControlLight;
             }
-            else if (e.ClickedItem.Text == "Location")
+            else if (e.ClickedItem.Text == "Sub Location")
             {
                 LocationManagementForm.BackColor = SystemColors.ControlDark;
                 DownloadMasterForm.BackColor = SystemColors.ControlLight;
@@ -726,6 +918,189 @@ namespace FSBT.HHT.App
                 UserManagementForm.BackColor = SystemColors.ControlLight;
                 //UserGroupManagementForm.BackColor = SystemColors.ControlLight;
                 SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (e.ClickedItem.Text == "Settings")
+            {
+                SettingsForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+            }
+        }
+
+
+        private void SetMainMenuStrip_ItemClicked(string ClickedItem)
+        {
+            if (ClickedItem == "Download Master SAP")
+            {
+                DownloadMasterForm.BackColor = SystemColors.ControlDark;
+                //DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "LocationManagement")
+            {
+                LocationManagementForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                //LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "Print BarCode")
+            {
+                BarcodePrintForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                //BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "HHT Sync")
+            {
+                SyncHhtForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                //SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "EditQTYForm")
+            {
+                EditQuantityForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                //EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "GenTextFileForm")
+            {
+                TextFileForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                //TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "Print Report")
+            {
+                ReportPrintForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                //ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "Backup & Restore Database")
+            {
+                BackupRestoreForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                //BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "UserManagement")
+            {
+                UserManagementForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                //UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "UserGroupManagementForm")
+            {
+                UserGroupManagementForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                //UserGroupManagementForm.BackColor = SystemColors.ControlLight;
+                SettingsForm.BackColor = SystemColors.ControlLight;
+            }
+            else if (ClickedItem == "System Settings")
+            {
+                SettingsForm.BackColor = SystemColors.ControlDark;
+                DownloadMasterForm.BackColor = SystemColors.ControlLight;
+                LocationManagementForm.BackColor = SystemColors.ControlLight;
+                BarcodePrintForm.BackColor = SystemColors.ControlLight;
+                SyncHhtForm.BackColor = SystemColors.ControlLight;
+                EditQuantityForm.BackColor = SystemColors.ControlLight;
+                TextFileForm.BackColor = SystemColors.ControlLight;
+                ReportPrintForm.BackColor = SystemColors.ControlLight;
+                BackupRestoreForm.BackColor = SystemColors.ControlLight;
+                UserManagementForm.BackColor = SystemColors.ControlLight;
+                UserGroupManagementForm.BackColor = SystemColors.ControlLight;
             }
         }
     }

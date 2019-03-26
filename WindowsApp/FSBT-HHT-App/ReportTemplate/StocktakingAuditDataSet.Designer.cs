@@ -319,6 +319,22 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             private global::System.Data.DataColumn columnRowNo;
             
+            private global::System.Data.DataColumn columnPlant;
+            
+            private global::System.Data.DataColumn columnPlantDesc;
+            
+            private global::System.Data.DataColumn columnStorageLocation;
+            
+            private global::System.Data.DataColumn columnSerialnumber;
+            
+            private global::System.Data.DataColumn columnCountSheet;
+            
+            private global::System.Data.DataColumn columnScanmode;
+            
+            private global::System.Data.DataColumn columnQuantityPiece;
+            
+            private global::System.Data.DataColumn columnCorrectionPiece;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StocktakingAuditDataTable() {
@@ -514,6 +530,70 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantColumn {
+                get {
+                    return this.columnPlant;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantDescColumn {
+                get {
+                    return this.columnPlantDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StorageLocationColumn {
+                get {
+                    return this.columnStorageLocation;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SerialnumberColumn {
+                get {
+                    return this.columnSerialnumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CountSheetColumn {
+                get {
+                    return this.columnCountSheet;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ScanmodeColumn {
+                get {
+                    return this.columnScanmode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QuantityPieceColumn {
+                get {
+                    return this.columnQuantityPiece;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CorrectionPieceColumn {
+                get {
+                    return this.columnCorrectionPiece;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -569,7 +649,15 @@ namespace FSBT.HHT.App.ReportTemplate {
                         string ProductType, 
                         string GroupProductType, 
                         decimal NewQuantityNoDelete, 
-                        string RowNo) {
+                        string RowNo, 
+                        string Plant, 
+                        string PlantDesc, 
+                        string StorageLocation, 
+                        string Serialnumber, 
+                        string CountSheet, 
+                        string Scanmode, 
+                        decimal QuantityPiece, 
+                        decimal CorrectionPiece) {
                 StocktakingAuditRow rowStocktakingAuditRow = ((StocktakingAuditRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Barcode,
@@ -591,7 +679,15 @@ namespace FSBT.HHT.App.ReportTemplate {
                         ProductType,
                         GroupProductType,
                         NewQuantityNoDelete,
-                        RowNo};
+                        RowNo,
+                        Plant,
+                        PlantDesc,
+                        StorageLocation,
+                        Serialnumber,
+                        CountSheet,
+                        Scanmode,
+                        QuantityPiece,
+                        CorrectionPiece};
                 rowStocktakingAuditRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStocktakingAuditRow);
                 return rowStocktakingAuditRow;
@@ -634,6 +730,14 @@ namespace FSBT.HHT.App.ReportTemplate {
                 this.columnGroupProductType = base.Columns["GroupProductType"];
                 this.columnNewQuantityNoDelete = base.Columns["NewQuantityNoDelete"];
                 this.columnRowNo = base.Columns["RowNo"];
+                this.columnPlant = base.Columns["Plant"];
+                this.columnPlantDesc = base.Columns["PlantDesc"];
+                this.columnStorageLocation = base.Columns["StorageLocation"];
+                this.columnSerialnumber = base.Columns["Serialnumber"];
+                this.columnCountSheet = base.Columns["CountSheet"];
+                this.columnScanmode = base.Columns["Scanmode"];
+                this.columnQuantityPiece = base.Columns["QuantityPiece"];
+                this.columnCorrectionPiece = base.Columns["CorrectionPiece"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -679,6 +783,22 @@ namespace FSBT.HHT.App.ReportTemplate {
                 base.Columns.Add(this.columnNewQuantityNoDelete);
                 this.columnRowNo = new global::System.Data.DataColumn("RowNo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRowNo);
+                this.columnPlant = new global::System.Data.DataColumn("Plant", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlant);
+                this.columnPlantDesc = new global::System.Data.DataColumn("PlantDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlantDesc);
+                this.columnStorageLocation = new global::System.Data.DataColumn("StorageLocation", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStorageLocation);
+                this.columnSerialnumber = new global::System.Data.DataColumn("Serialnumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSerialnumber);
+                this.columnCountSheet = new global::System.Data.DataColumn("CountSheet", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCountSheet);
+                this.columnScanmode = new global::System.Data.DataColumn("Scanmode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnScanmode);
+                this.columnQuantityPiece = new global::System.Data.DataColumn("QuantityPiece", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuantityPiece);
+                this.columnCorrectionPiece = new global::System.Data.DataColumn("CorrectionPiece", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCorrectionPiece);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1142,6 +1262,134 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Plant {
+                get {
+                    try {
+                        return ((string)(this[this.tableStocktakingAudit.PlantColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Plant\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.PlantColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PlantDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableStocktakingAudit.PlantDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PlantDesc\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.PlantDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string StorageLocation {
+                get {
+                    try {
+                        return ((string)(this[this.tableStocktakingAudit.StorageLocationColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StorageLocation\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.StorageLocationColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Serialnumber {
+                get {
+                    try {
+                        return ((string)(this[this.tableStocktakingAudit.SerialnumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Serialnumber\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.SerialnumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CountSheet {
+                get {
+                    try {
+                        return ((string)(this[this.tableStocktakingAudit.CountSheetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CountSheet\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.CountSheetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Scanmode {
+                get {
+                    try {
+                        return ((string)(this[this.tableStocktakingAudit.ScanmodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Scanmode\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.ScanmodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal QuantityPiece {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableStocktakingAudit.QuantityPieceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'QuantityPiece\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.QuantityPieceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal CorrectionPiece {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableStocktakingAudit.CorrectionPieceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CorrectionPiece\' in table \'StocktakingAudit\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStocktakingAudit.CorrectionPieceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsBarcodeNull() {
                 return this.IsNull(this.tableStocktakingAudit.BarcodeColumn);
             }
@@ -1378,6 +1626,102 @@ namespace FSBT.HHT.App.ReportTemplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetRowNoNull() {
                 this[this.tableStocktakingAudit.RowNoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantNull() {
+                return this.IsNull(this.tableStocktakingAudit.PlantColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantNull() {
+                this[this.tableStocktakingAudit.PlantColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantDescNull() {
+                return this.IsNull(this.tableStocktakingAudit.PlantDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantDescNull() {
+                this[this.tableStocktakingAudit.PlantDescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStorageLocationNull() {
+                return this.IsNull(this.tableStocktakingAudit.StorageLocationColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStorageLocationNull() {
+                this[this.tableStocktakingAudit.StorageLocationColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSerialnumberNull() {
+                return this.IsNull(this.tableStocktakingAudit.SerialnumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSerialnumberNull() {
+                this[this.tableStocktakingAudit.SerialnumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCountSheetNull() {
+                return this.IsNull(this.tableStocktakingAudit.CountSheetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCountSheetNull() {
+                this[this.tableStocktakingAudit.CountSheetColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsScanmodeNull() {
+                return this.IsNull(this.tableStocktakingAudit.ScanmodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetScanmodeNull() {
+                this[this.tableStocktakingAudit.ScanmodeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsQuantityPieceNull() {
+                return this.IsNull(this.tableStocktakingAudit.QuantityPieceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetQuantityPieceNull() {
+                this[this.tableStocktakingAudit.QuantityPieceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCorrectionPieceNull() {
+                return this.IsNull(this.tableStocktakingAudit.CorrectionPieceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCorrectionPieceNull() {
+                this[this.tableStocktakingAudit.CorrectionPieceColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -8,12 +8,13 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Globalization;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace FSBT_HHT_DAL.DAO
 {
     public class UserManagementDAO
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorDAO logBll = new LogErrorDAO(); 
         public UserManagementDAO()
         {
 
@@ -66,7 +67,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 allUserData = new List<UserModel>();
             }
 
@@ -88,7 +89,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 allGroup = new List<UGM_GroupModel>();
             }
             return allGroup;
@@ -113,7 +114,7 @@ namespace FSBT_HHT_DAL.DAO
 
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -130,7 +131,7 @@ namespace FSBT_HHT_DAL.DAO
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
 
                     bool res = false;
-                    string cmd = "EXEC [dbo].[SP_ADD_USERDETAIL]"
+                    string cmd = "EXEC [dbo].[SCR10_SP_ADD_USERDETAIL]"
                                    + " @Username = '" + newUserData.Username + "',@EncryPassword = '" + newUserData.Password + "'"
                                    + " ,@GroupName = '" + newUserData.GroupName + "'"
                                    + " ,@FirstName = '" + newUserData.FisrtName + "',@LastName = '" + newUserData.LastName + "'"
@@ -144,7 +145,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
 
@@ -163,8 +164,8 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                newUserNumber = -1;
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                newUserNumber = 0;
             }
             return newUserNumber;
         }
@@ -181,7 +182,7 @@ namespace FSBT_HHT_DAL.DAO
                     SqlDataAdapter dtAdapter = new SqlDataAdapter();
 
                     bool res = false;
-                    string cmd = "EXEC [dbo].[SP_UPDATE_USERDETAIL]"
+                    string cmd = "EXEC [dbo].[SCR10_SP_UPDATE_USERDETAIL]"
                                    + " @Username = '" + userNewData.Username + "'"
                                    + " ,@NewGroupName = '" + userNewData.GroupName + "',@EncryPassword = '" + userNewData.Password + "'"
                                    + " ,@FirstName = '" + userNewData.FisrtName + "',@LastName = '" + userNewData.LastName + "'"
@@ -195,7 +196,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = "error";
             }
 
@@ -224,7 +225,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 result = false;
             }
             return result;
@@ -276,7 +277,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 searchUserData = new List<UserModel>();
             }
             return searchUserData;
@@ -302,7 +303,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
             return "error";
         }
@@ -327,12 +328,12 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
             return "error";
         }
 
-        static bool ExeScript(string script, SqlConnection conn)
+        public bool ExeScript(string script, SqlConnection conn)
         {
             SqlCommand comm = new SqlCommand(script, conn);
             bool isExe;
@@ -344,7 +345,7 @@ namespace FSBT_HHT_DAL.DAO
             }
             catch(Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 isExe = false;
             }
             finally

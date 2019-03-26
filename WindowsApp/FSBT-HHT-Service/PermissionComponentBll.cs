@@ -5,12 +5,13 @@ using System.Text;
 using System.Windows.Forms;
 using FSBT_HHT_DAL.DAO;
 using FSBT_HHT_Model;
+using System.Reflection;
 
 namespace FSBT_HHT_BLL
 {
     public class PermissionComponentBll
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         public Form FrmSetup { get; set; }
         public string UserName { get; set; }
         private PermissionDAO permissDAO = new PermissionDAO();
@@ -56,7 +57,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }

@@ -12,12 +12,13 @@ using CrystalDecisions.Shared;
 using FSBT_HHT_Model;
 using System.IO;
 using FSBT_HHT_BLL;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
     public partial class LocationReportForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         public LocationReportForm()
         {
             InitializeComponent();
@@ -32,29 +33,32 @@ namespace FSBT.HHT.App.UI
                 string startFilePath = Application.StartupPath;
                 //string parentPath = new DirectoryInfo(startFilePath).Parent.Parent.FullName;
                 //string filePath = parentPath + "\\ReportTemplate\\RPT_SectionLocationByBrandGroup.rpt";
-                string reportFile = bllReportManagement.GetReportURLByReportCode("R05");
-                string reportName = bllReportManagement.GetReportNameByReportCode("R05");
+                string reportFile = bllReportManagement.GetReportURLByReportCode("R07");
+                string reportName = bllReportManagement.GetReportNameByReportCode("R07");
                 string filePath = Path.GetFullPath("./ReportTemplate/" + reportFile);                
-
+ 
+                SystemSettingBll bllSystemSetting = new SystemSettingBll();
+                DateTime countDate = DateTime.Now;
+                countDate = bllSystemSetting.GetSettingData().CountDate;
                 ParameterFields paramFields = new ParameterFields();
-                ParameterField paramField = new ParameterField();
-                ParameterDiscreteValue paramDiscreteValue = new ParameterDiscreteValue();
                 ParameterField paramField1 = new ParameterField();
                 ParameterDiscreteValue paramDiscreteValue1 = new ParameterDiscreteValue();
                 ParameterField paramField2 = new ParameterField();
                 ParameterDiscreteValue paramDiscreteValue2 = new ParameterDiscreteValue();
-                paramField.Name = "@Subject";
-                paramDiscreteValue.Value = localType;
-                paramField.CurrentValues.Add(paramDiscreteValue);
-                paramField1.Name = "pBranchName";
-                paramDiscreteValue1.Value = brachName;
+                ParameterField paramField3 = new ParameterField();
+                ParameterDiscreteValue paramDiscreteValue3 = new ParameterDiscreteValue();
+                paramField1.Name = "pCountDate";
+                paramDiscreteValue1.Value = countDate;
                 paramField1.CurrentValues.Add(paramDiscreteValue1);
-                paramField2.Name = "pReportName";
-                paramDiscreteValue2.Value = reportName;
+                paramField2.Name = "pBranchName";
+                paramDiscreteValue2.Value = brachName;
                 paramField2.CurrentValues.Add(paramDiscreteValue2);
-                paramFields.Add(paramField);
+                paramField3.Name = "pReportName";
+                paramDiscreteValue3.Value = reportName;
+                paramField3.CurrentValues.Add(paramDiscreteValue3);
                 paramFields.Add(paramField1);
                 paramFields.Add(paramField2);
+                paramFields.Add(paramField3);
 
                 locationReport.Load(filePath);
                 locationReport.SetDataSource(listSectionLocation);
@@ -67,9 +71,11 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
+
+       
     }
 }

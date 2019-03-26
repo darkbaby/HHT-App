@@ -303,6 +303,12 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             private global::System.Data.DataColumn columnDescription;
             
+            private global::System.Data.DataColumn columnPlant;
+            
+            private global::System.Data.DataColumn columnPlantDesc;
+            
+            private global::System.Data.DataColumn columnCountSheet;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ControlSheetDataTable() {
@@ -434,6 +440,30 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantColumn {
+                get {
+                    return this.columnPlant;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantDescColumn {
+                get {
+                    return this.columnPlantDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CountSheetColumn {
+                get {
+                    return this.columnCountSheet;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -469,7 +499,7 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ControlSheetRow AddControlSheetRow(string Location, string SectionCode, string SectionName, string JC, string Client, string HNTNumber, string Stocktaker, string _UnitCount_Counted, string ErrorsFound, string _100Counts, string FinalUnitCount, string Description) {
+            public ControlSheetRow AddControlSheetRow(string Location, string SectionCode, string SectionName, string JC, string Client, string HNTNumber, string Stocktaker, string _UnitCount_Counted, string ErrorsFound, string _100Counts, string FinalUnitCount, string Description, string Plant, string PlantDesc, string CountSheet) {
                 ControlSheetRow rowControlSheetRow = ((ControlSheetRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Location,
@@ -483,7 +513,10 @@ namespace FSBT.HHT.App.ReportTemplate {
                         ErrorsFound,
                         _100Counts,
                         FinalUnitCount,
-                        Description};
+                        Description,
+                        Plant,
+                        PlantDesc,
+                        CountSheet};
                 rowControlSheetRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowControlSheetRow);
                 return rowControlSheetRow;
@@ -518,6 +551,9 @@ namespace FSBT.HHT.App.ReportTemplate {
                 this.column100Counts = base.Columns["100Counts"];
                 this.columnFinalUnitCount = base.Columns["FinalUnitCount"];
                 this.columnDescription = base.Columns["Description"];
+                this.columnPlant = base.Columns["Plant"];
+                this.columnPlantDesc = base.Columns["PlantDesc"];
+                this.columnCountSheet = base.Columns["CountSheet"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -551,6 +587,12 @@ namespace FSBT.HHT.App.ReportTemplate {
                 base.Columns.Add(this.columnFinalUnitCount);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
+                this.columnPlant = new global::System.Data.DataColumn("Plant", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlant);
+                this.columnPlantDesc = new global::System.Data.DataColumn("PlantDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlantDesc);
+                this.columnCountSheet = new global::System.Data.DataColumn("CountSheet", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCountSheet);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -885,6 +927,54 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Plant {
+                get {
+                    try {
+                        return ((string)(this[this.tableControlSheet.PlantColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Plant\' in table \'ControlSheet\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableControlSheet.PlantColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PlantDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableControlSheet.PlantDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PlantDesc\' in table \'ControlSheet\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableControlSheet.PlantDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CountSheet {
+                get {
+                    try {
+                        return ((string)(this[this.tableControlSheet.CountSheetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CountSheet\' in table \'ControlSheet\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableControlSheet.CountSheetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsLocationNull() {
                 return this.IsNull(this.tableControlSheet.LocationColumn);
             }
@@ -1025,6 +1115,42 @@ namespace FSBT.HHT.App.ReportTemplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDescriptionNull() {
                 this[this.tableControlSheet.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantNull() {
+                return this.IsNull(this.tableControlSheet.PlantColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantNull() {
+                this[this.tableControlSheet.PlantColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantDescNull() {
+                return this.IsNull(this.tableControlSheet.PlantDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantDescNull() {
+                this[this.tableControlSheet.PlantDescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCountSheetNull() {
+                return this.IsNull(this.tableControlSheet.CountSheetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCountSheetNull() {
+                this[this.tableControlSheet.CountSheetColumn] = global::System.Convert.DBNull;
             }
         }
         

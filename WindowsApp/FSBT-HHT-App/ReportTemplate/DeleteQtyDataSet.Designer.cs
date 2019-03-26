@@ -305,6 +305,12 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             private global::System.Data.DataColumn columnUnitCode;
             
+            private global::System.Data.DataColumn columnPlant;
+            
+            private global::System.Data.DataColumn columnPlantDesc;
+            
+            private global::System.Data.DataColumn columnCountSheet;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DeleteQtyDataTable() {
@@ -444,6 +450,30 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantColumn {
+                get {
+                    return this.columnPlant;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantDescColumn {
+                get {
+                    return this.columnPlantDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CountSheetColumn {
+                get {
+                    return this.columnCountSheet;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -479,7 +509,23 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DeleteQtyRow AddDeleteQtyRow(string No, string LocationCode, string Barcode, decimal Quantity, decimal NewQuantity, string Flag, string Description, string ScanModeName, string UnitName, string Store, string SectionCode, string SectionName, string UnitCode) {
+            public DeleteQtyRow AddDeleteQtyRow(
+                        string No, 
+                        string LocationCode, 
+                        string Barcode, 
+                        decimal Quantity, 
+                        decimal NewQuantity, 
+                        string Flag, 
+                        string Description, 
+                        string ScanModeName, 
+                        string UnitName, 
+                        string Store, 
+                        string SectionCode, 
+                        string SectionName, 
+                        string UnitCode, 
+                        string Plant, 
+                        string PlantDesc, 
+                        string CountSheet) {
                 DeleteQtyRow rowDeleteQtyRow = ((DeleteQtyRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         No,
@@ -494,7 +540,10 @@ namespace FSBT.HHT.App.ReportTemplate {
                         Store,
                         SectionCode,
                         SectionName,
-                        UnitCode};
+                        UnitCode,
+                        Plant,
+                        PlantDesc,
+                        CountSheet};
                 rowDeleteQtyRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDeleteQtyRow);
                 return rowDeleteQtyRow;
@@ -530,6 +579,9 @@ namespace FSBT.HHT.App.ReportTemplate {
                 this.columnSectionCode = base.Columns["SectionCode"];
                 this.columnSectionName = base.Columns["SectionName"];
                 this.columnUnitCode = base.Columns["UnitCode"];
+                this.columnPlant = base.Columns["Plant"];
+                this.columnPlantDesc = base.Columns["PlantDesc"];
+                this.columnCountSheet = base.Columns["CountSheet"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -561,6 +613,12 @@ namespace FSBT.HHT.App.ReportTemplate {
                 base.Columns.Add(this.columnSectionName);
                 this.columnUnitCode = new global::System.Data.DataColumn("UnitCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUnitCode);
+                this.columnPlant = new global::System.Data.DataColumn("Plant", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlant);
+                this.columnPlantDesc = new global::System.Data.DataColumn("PlantDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlantDesc);
+                this.columnCountSheet = new global::System.Data.DataColumn("CountSheet", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCountSheet);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -911,6 +969,54 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Plant {
+                get {
+                    try {
+                        return ((string)(this[this.tableDeleteQty.PlantColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Plant\' in table \'DeleteQty\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeleteQty.PlantColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PlantDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableDeleteQty.PlantDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PlantDesc\' in table \'DeleteQty\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeleteQty.PlantDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CountSheet {
+                get {
+                    try {
+                        return ((string)(this[this.tableDeleteQty.CountSheetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CountSheet\' in table \'DeleteQty\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDeleteQty.CountSheetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsNoNull() {
                 return this.IsNull(this.tableDeleteQty.NoColumn);
             }
@@ -1063,6 +1169,42 @@ namespace FSBT.HHT.App.ReportTemplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetUnitCodeNull() {
                 this[this.tableDeleteQty.UnitCodeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantNull() {
+                return this.IsNull(this.tableDeleteQty.PlantColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantNull() {
+                this[this.tableDeleteQty.PlantColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantDescNull() {
+                return this.IsNull(this.tableDeleteQty.PlantDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantDescNull() {
+                this[this.tableDeleteQty.PlantDescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCountSheetNull() {
+                return this.IsNull(this.tableDeleteQty.CountSheetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCountSheetNull() {
+                this[this.tableDeleteQty.CountSheetColumn] = global::System.Convert.DBNull;
             }
         }
         

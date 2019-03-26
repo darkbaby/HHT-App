@@ -12,17 +12,20 @@ using FSBT_HHT_DAL;
 using FSBT_HHT_Model;
 using FSBT.HHT.App.Resources;
 using System.IO;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
     public partial class BackupRestoreForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         public string UserName { get; set; }
         private string FormatPath { get; set; }
         private BackUpRestoreDataBll backuprestoreData = new BackUpRestoreDataBll();
         private List<ConfigBackupTable> lstBackupTable = new List<ConfigBackupTable>();
         private string suffixBackup = @"_bak";
+        private FilesUtilBll filesUtilBll = new FilesUtilBll();
+        private DownloadMasterDataBll downloadMasterBLL = new DownloadMasterDataBll();
 
         #region Constructor
         public BackupRestoreForm()
@@ -77,14 +80,15 @@ namespace FSBT.HHT.App.UI
             string path = "";
             try
             {
-                StringBuilder strBuilder = new StringBuilder(AppDomain.CurrentDomain.BaseDirectory);
+                //StringBuilder strBuilder = new StringBuilder(AppDomain.CurrentDomain.BaseDirectory);
+                StringBuilder strBuilder = new StringBuilder(LocalParameter.programPath);
                 strBuilder.AppendFormat(backuprestoreData.GetBackupFolderPath(), backupID);
                 path = strBuilder.ToString();
                 return path;
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return path;
             }  
         }
@@ -100,11 +104,11 @@ namespace FSBT.HHT.App.UI
                 }
                 catch (IndexOutOfRangeException ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 }
             }
         }
@@ -116,7 +120,6 @@ namespace FSBT.HHT.App.UI
             BackupHistoryModel backupData = new BackupHistoryModel();
             try
             {
-
                 backupData.BackupName = txtBackupName.Text;
                 backupData.BackupBy = UserName;
                 backupData.BackupDate = DateTime.Now;
@@ -124,7 +127,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return backupData;
             }
         }
@@ -140,7 +143,7 @@ namespace FSBT.HHT.App.UI
                     string fileName = bck.TableName + @".csv";
                     string fullPath = folderPath + @"\" + fileName;
                     DataTable dtExportFile = backuprestoreData.GetSchemaTableByTableName(tableName);
-                    if (FilesUtilBll.ExportTextFileFromDataTable(fullPath, dtExportFile, ",", true, true))
+                    if (filesUtilBll.ExportTextFileFromDataTable(fullPath, dtExportFile, ",", true, true))
                     {
                         BackupHistoryDetail backupDetail = new BackupHistoryDetail();
                         backupDetail.BackupID = backupID;
@@ -164,7 +167,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -193,7 +196,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -218,7 +221,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -241,11 +244,11 @@ namespace FSBT.HHT.App.UI
                     dtFormat = backuprestoreData.GetSchemaTableByTableName(bDetail[0].BackupTable);
                     if (dtFormat != null)
                     {
-                        dtImport = FilesUtilBll.GetDataTableFromTextFile(dtFormat, fullPath, ",", true, true);
+                        dtImport = filesUtilBll.GetDataTableFromTextFile(dtFormat, fullPath, ",", true, true);
                     }
                     else
                     {
-                        dtImport = FilesUtilBll.GetDataTableFromTextFile(fullPath, ",", true, true);
+                        dtImport = filesUtilBll.GetDataTableFromTextFile(fullPath, ",", true, true);
                     }
                     if (dtImport != null)
                     {
@@ -263,7 +266,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return false;
             }
         }
@@ -328,7 +331,6 @@ namespace FSBT.HHT.App.UI
                 {
                     chk.Value = chk.FalseValue;
                 }
-                
             }
         }
 
@@ -390,7 +392,7 @@ namespace FSBT.HHT.App.UI
                 {
                     //rollback
                     RollBackDataFromBackupTable(deletedTable);
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     MessageBox.Show(MessageConstants.CannotrestoredataPleasetryagain, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 DropBackupTable(bakTableName);
@@ -420,12 +422,12 @@ namespace FSBT.HHT.App.UI
                     {
                         if (Directory.Exists(folderPath))
                         {
-                            FilesUtilBll.DeleteDirectory(folderPath);
+                            filesUtilBll.DeleteDirectory(folderPath);
                         }
 
                         if (!ExportTableToTextFile(folderPath, backupID))
                         {
-                            FilesUtilBll.DeleteDirectory(folderPath);
+                            filesUtilBll.DeleteDirectory(folderPath);
                             backuprestoreData.UpdateDeletedFlagBackupHistory(backupID, UserName);
                             MessageBox.Show(MessageConstants.Cannotcreatebackupfileerrorexportcsvfile, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
@@ -443,8 +445,6 @@ namespace FSBT.HHT.App.UI
             {
                 MessageBox.Show(MessageConstants.BackupNamemustnotbeNullorBlank, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            
-
         }
 
         private void btnDeleteBackUp_Click(object sender, EventArgs e)
@@ -455,7 +455,6 @@ namespace FSBT.HHT.App.UI
             int selected = selectedRow.Count;
             if (selected > 0)
             {
-
                 try
                 {
                     DialogResult dialogresult = MessageBox.Show(MessageConstants.Doyouwanttodeletebackupdata, MessageConstants.TitleClearDataConfirmation, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -477,7 +476,7 @@ namespace FSBT.HHT.App.UI
                                 }
                                 else
                                 {
-                                    if (FilesUtilBll.DeleteDirectory(folderPath))
+                                    if (filesUtilBll.DeleteDirectory(folderPath))
                                     {
                                         //update flag
                                         backuprestoreData.UpdateDeletedFlagBackupHistory(backupID, UserName);
@@ -503,7 +502,7 @@ namespace FSBT.HHT.App.UI
                 }
                 catch (Exception ex)
                 {
-                    log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                     MessageBox.Show(MessageConstants.Cannotdeletebackupdata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -515,44 +514,72 @@ namespace FSBT.HHT.App.UI
 
         private void btnClearData_Click(object sender, EventArgs e)
         {
-            bool success = true;
-            List<string> bakTableName = new List<string>();
-            List<string> deletedTable = new List<string>();
+            //bool success = true;
+            //List<string> bakTableName = new List<string>();
+            //List<string> deletedTable = new List<string>();
+            //try
+            //{
+            //    DialogResult dialogresult = MessageBox.Show(MessageConstants.Doyouwanttodeletecurrentdata, MessageConstants.TitleClearDataConfirmation, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //    if (dialogresult == DialogResult.Yes)
+            //    {
+            //        success = CreateBackupTable(ref bakTableName);
+            //        if (success)
+            //        {
+            //            success = DeleteTableData(ref deletedTable);
+            //            if (success)
+            //            {
+            //                MessageBox.Show(MessageConstants.Cleardatasuccessful, MessageConstants.TitleInfomation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //            }
+            //            else
+            //            {
+            //                RollBackDataFromBackupTable(deletedTable);
+            //                MessageBox.Show(MessageConstants.Cannotcleardata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show(MessageConstants.Cannotcleardata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //rollback
+            //    RollBackDataFromBackupTable(deletedTable);
+            //    logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            //    MessageBox.Show(MessageConstants.Cannotcleardata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            //}
+            //DropBackupTable(bakTableName);
+            //RefreshData();
+
             try
             {
-                DialogResult dialogresult = MessageBox.Show(MessageConstants.Doyouwanttodeletecurrentdata, MessageConstants.TitleClearDataConfirmation, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogresult == DialogResult.Yes)
+                DialogResult dialogResult = MessageBox.Show(MessageConstants.Doyouwanttoclearalldata, MessageConstants.TitleConfirm, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    success = CreateBackupTable(ref bakTableName);
-                    if (success)
+                    Loading_Screen.ShowSplashScreen();
+                    bool result = downloadMasterBLL.ClearDataTable();
+                    Loading_Screen.CloseForm();
+                    if (result)
                     {
-                        success = DeleteTableData(ref deletedTable);
-                        if (success)
-                        {
-                            MessageBox.Show(MessageConstants.Cleardatasuccessful, MessageConstants.TitleInfomation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            RollBackDataFromBackupTable(deletedTable);
-                            MessageBox.Show(MessageConstants.Cannotcleardata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        MessageBox.Show(MessageConstants.ClearDataSuccessful, MessageConstants.TitleInfomation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show(MessageConstants.Cannotcleardata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(MessageConstants.CannotClearData, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do nothing
                 }
             }
             catch (Exception ex)
             {
-                //rollback
-                RollBackDataFromBackupTable(deletedTable);
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                MessageBox.Show(MessageConstants.Cannotcleardata, MessageConstants.TitleError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
+                logBll.LogError(UserName, this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
-            DropBackupTable(bakTableName);
-            RefreshData();
         }
 
         #endregion

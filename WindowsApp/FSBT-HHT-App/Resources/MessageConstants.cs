@@ -17,6 +17,7 @@ namespace FSBT.HHT.App.Resources
         #endregion
 
         #region SysHhtForm
+        public static string Cannotconnecttodatabase = "Cannot connect to database.";
         public static string CannotconnecttoHandhelddatabase = "Cannot connect to Handheld database.";
         public static string Invaliddevice = "Invalid device.";
         public static string Nodeviceconnected = "No device connected.";
@@ -51,17 +52,22 @@ namespace FSBT.HHT.App.Resources
 
         #region EditQTYForm
         public static string NoAuditdatafound = "No Audit data found.";
-        public static string LocationBarcodeQuantityDescriptionCannotbenull = "Location,Barcode,Quantity,Description Can not be null.";
+        public static string LocationBarcodeQuantityDescriptionCannotbenull = "Sub Location,Barcode and Quantity can not be null.";
+        public static string NewRecordSKUCodeCannotbenull = "SKUCode cannot be null in all new records.";
+        public static string ConversionCounterCannotbenull = "Conversion Counter can not be null.";
         public static string Nochangeddata = "No changed data.";
         public static string Nodatadeleterecordreport = "No data for generate report, please try again.";
         public static string cannotgeneratereport = "can’t generate report, please try again.";
         public static string Savecomplete = "Save completed.";
         public static string CannotsaveEditQtydatatodatabase = "Can’t save Edit Qty data to database, please try again.";
         public static string Cannotbenull = " can not null.";
-        public static string BarcodenotexistinMaster = "Barcode not exist in Master.";
-        public static string LocationnotexistinMaster = "Location not exist in Master.";
+        public static string BarcodenotexistinMaster = "Barcode is not exist in Master.";
+        public static string SerialnotexistinMaster = "Serial Number is not exist in Master.";
+        public static string LocationnotexistinMaster = "Location is not exist in Master.";
         public static string LocationandBarcodecannotbeduplicate = "Location and Barcode can not be duplicate.";
+        public static string SeialNumbernotexistinMaster = "Serial Number is not exist in Master.";
         public static string DoyouwanttochangeScanmode = "Current data will be lost Do you want to continue ?";
+        public static string DuplicateSerialNumber = "Serial Number can not be duplicate";
         #endregion
 
         #region UserManagementForm
@@ -112,6 +118,8 @@ namespace FSBT.HHT.App.Resources
         public static string ComputerNameistoolong = "Computer Name is too long.";
         public static string CountDatecannotbeblank = "Count Date can’t be blank.";
         public static string CountDatecannotmorethan2099 = "Count Date Year cannot set more than 2099AD or 2642BE";
+        public static string MCHLevelcannotbeblank = "MCH Level can’t be blank.";
+        public static string Plantcannotduplicate = "Plant can't duplicate.";
         #endregion
 
         #region PrintBarCodeForm
@@ -125,13 +133,22 @@ namespace FSBT.HHT.App.Resources
         #region LocationMasterForm
         public static string Youhavenotsavecurrentdatasavenow = "You have not save current data, save now?";
         public static string Departmentcodecannotbenull = "Department code cannot be null.";
-        public static string Sectioncodecannotbenull = "Section code cannot be null.";
+        public static string Sectioncodecannotbenull = "Section Code/Brand Code cannot be null.";
         public static string Sectiontypecannotbenull = "Section type cannot be null.";
-        public static string Sectionnamecannotbenull = "Section name cannot be null.";
+        public static string Sectionnamecannotbenull = " Section Name/Brand Name cannot be null.";
         public static string LocationFromcannotbenull = "LocationFrom cannot be null.";
         public static string LocationTocannotbenull = "LocationTo cannot be null.";
+        public static string CountSheetcannotbenull = "CountSheet cannot be null.";
+        public static string StorageLocationcannotbenull = "StorageLocation cannot be null.";
+        public static string Plantcannotbenull = "Plant cannot be null.";
         public static string DuplicatesectioncodeDoyouwanttoreplacesection = "Duplicate section code. Do you want to replace section code now ?";
-        public static string Cannotsavesectiondatatodatabase = "Can’t save section data to database, please try again.";
+        public static string Cannotsavesectiondatatodatabase = "Cannot save data to database, please try again.";
+        public static string StorageLocationisnotexists = "StorageLocation is not exists in master storage location.";
+        public static string Plantisnotexists = "Plant is not exists in master plant.";
+        public static string Countsheetisnotexists = "Countsheet is not exists in master";
+        public static string Brandisnotexists = "Brand is not exists in master brand.";
+        public static string Sectionisnotexists = "Section is not exists in master brand.";
+        public static string StorageLocationisnumberonly = "StorageLocation is number only.";
         public static string SectionCodeisnumberonly = "Section Code is number only.";
         public static string LocationFromisnumberonly = "LocationFrom is number only.";
         public static string LocationToisnumberonly = "LocationTo is number only.";
@@ -139,13 +156,18 @@ namespace FSBT.HHT.App.Resources
         public static string Doyouwanttodeleteallsectionbelow = "Do you want to delete all section below ?";
         public static string Allsectiondatahasbeendeleted = "All section data has been deleted.";
         public static string Errorclearall = "Error clear all";
-        public static string Doyouwanttosaveallsectionbelow = "Do you want to save all section below ?";
-        public static string SavesectiondatacompletebutCannotexporttextfile  = "Save section data to database completed but Can’t export text file, please try again.";
+        public static string Doyouwanttosaveallsectionbelow = "Do you want to save all data below ?";
+        public static string Doyouwanttoclearallsectionbelow = "Do you want to clear all data in grid below ?";
+        public static string SavesectiondatacompletebutCannotexporttextfile  = "Save data to database completed but Can’t export text file, please try again.";
         public static string Nodatachanged = "No data changed.";
         public static string DeptCodemustbe3digits = "Department Code must be 3 digits.";
         public static string SectionCodemustbe5digits = "Section Code must be 5 digits.";
+        public static string StorageLocationmustbe4digits ="Storage Location must be 4 digits";
         public static string SectionTypecannotbeduplicate = "Section Type cannot be duplicate.";
         public static string SectionCodecannotbeduplicate = "Section Code cannot be duplicate.";
+        public static string StorageLocationcannotbeduplicate = "Storage Location Code cannot be duplicate.";
+        public static string Plantcannotbeduplicate = "Plant cannot be duplicate.";
+        public static string Countsheetcannotbeduplicate = "Count Sheet cannot be duplicate.";
         public static string LocationFrommustbe5digits = "LocationFrom must be 5 digits.";
         public static string LocationFromcannotbeduplicate = "LocationFrom cannot be duplicate.";
         public static string LocationFormmustequealorlessthanLocationTo = "LocationForm must equeal or less than LocationTo.";
@@ -154,7 +176,15 @@ namespace FSBT.HHT.App.Resources
         public static string LocationTomustequalormorethanLocationForm = "LocationTo must equal or more than LocationForm.";
         public static string Importcomplete = "Import completed.";
         public static string Cannotimportsectiondatatodatabase = "Can’t import section data to database, please try again.";
+        public static string Cannotloadtemplate = "Cannot load template, please try again.";
         public static string Oldsectiondatawillbedeletedafterthisaction = "Old section data will be deleted after this action. Do you want to continue?";
+        public static string ClearGrid = "Do you want to clear data in gridview?";
+        public static string LocationFromToIncorrect = "Cannot save duplication Location From/To, please verify.";
+        public static string ExportLocationFromToIncorrect = "Cannot export duplication Location From/To, please verify.";
+        public static string PlantAndCountsheetIncorrect = "Plant and Countsheet are incorrect, please verify.";
+        public static string PlantIncorrect = "Plant is incorrect, please verify.";
+        public static string CountsheetIncorrect = "Countsheet is incorrect, please verify.";
+        public static string Duplicatesectioncode = "Duplicate section code, please verify. ";
         #endregion
 
         #region GentextFileForm
@@ -162,6 +192,7 @@ namespace FSBT.HHT.App.Resources
         public static string LocationFromshouldnotlessthan5digits = "Location From should not less than 5 digits.";
         public static string LocationToshouldnotlessthan5digits = "Location To should not less than 5 digits.";
         public static string Exportcomplete = "Export completed.";
+        public static string PleaseSelectCountSheet = "Please select at least one count sheet.";
         public static string Cannotexporttextfile  = "Can’t export text file, please try again.";
         public static string Storetypecannotnull = "Store type cannot null.";
         public static string Filenamecannotnull = "File name cannot null.";
@@ -174,6 +205,8 @@ namespace FSBT.HHT.App.Resources
         public static string DifferentFileType = "Added a new file is different file type, please try again.";
         public static string PathNotExists = "Your path does not exist.";
         public static string ConditionExportNotMatch = "Condition is not match with file export.";
+        public static string PleaseenterPassword = "Please enter Password.";
+        public static string PasswordWrong = "Wrong Password.";
         #endregion
 
         #region DownloadMasterForm
@@ -187,6 +220,7 @@ namespace FSBT.HHT.App.Resources
         public static string CannotClearData = "Cannot Clear Data.";
         public static string NoDatafound = "No Data found.";
         public static string CannotBrowse = "Cannot Browse.";
+        public static string CannotconnectSFTP = "Cannot connect to SFTP Server.";
         #endregion
 
         #region BackupRestoreForm
@@ -214,8 +248,14 @@ namespace FSBT.HHT.App.Resources
         public static string TheseDepartmentCodedonotexistOpen = "These Department Code do not exist in system. (";
         public static string TheseSectionCodedonotexistOpen = "These Section Code do not exist in system. (";
         public static string Close = ")";
-        public static string PleaseinsertDepartmentCode = "Please insert Department Code.";
-        public static string PleaseinsertSectionCode = "Please insert Section Code.";
+        public static string PleaseinsertPlantCode = "Please insert Plant Code.";
+        public static string PleaseinsertCountSheet ="Please insert Count Sheet.";
+        public static string PleaseinsertMCHLevel1 = "Please insert MCH Level 1.";
+        public static string PleaseinsertMCHLevel2 = "Please insert MCH Level 2.";
+        public static string PleaseinsertMCHLevel3 = "Please insert MCH Level 3.";
+        public static string PleaseinsertMCHLevel4 = "Please insert MCH Level 4.";
+        public static string PleaseinsertStoregeLocation = "Please insert Storege Location.";
+        public static string PleaseinsertSectionCode = "Please insert Section Code.";     
         public static string TheLocationFromhastobelessthanLocationTo = "The Location From has to be less than Location To.";
         public static string TheseLocationCodedonotexistinsystem = "These Location Code do not exist in system. (";
         public static string PleaseinsertLocationFromorLocationTo = "Please insert Location From or Location To.";

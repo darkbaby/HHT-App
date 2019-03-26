@@ -14,31 +14,43 @@ using CrystalDecisions.Shared;
 using System.Web;
 using System.IO;
 using FSBT.HHT.App.Resources;
+using FSBT_HHT_DAL;
+using System.Reflection;
 
 namespace FSBT.HHT.App.UI
 {
     public partial class BarcodePrintForm : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         ReportManagementBll barcodeBLL = new ReportManagementBll();
         List<LocationBarcode> displayData = new List<LocationBarcode>();
         SystemSettingBll settingBLL = new SystemSettingBll();
+        private string Plant = "";
+        private LocationManagementBll bll = new LocationManagementBll();
 
         public BarcodePrintForm()
         {
             InitializeComponent();
+            AddDropDownPlant();
+            AddDropDownCountSheet();
+            AddDropDownStorageLocation();
+
+            //AddDropDownMCHLevel();
+            //AddDropDownCountSheet();
         }
         private void BarcodePrintForm_Load(object sender, EventArgs e)
         {
             SystemSettingModel displayData = new SystemSettingModel();
             displayData = settingBLL.GetSettingData();
+            Plant = settingBLL.GetSettingStringByKey("Plant");
+            //lbPlant.Text = "Plant : " + Plant;
             string[] sectionType = displayData.SectionType.Split('|');
             foreach (string s in sectionType)
             {
-                if (s.Equals("1")) { chFront.Checked = true; }
-                if (s.Equals("2")) { chBack.Checked = true; }
-                if (s.Equals("3")) { chWarehouse.Checked = true; }
-                if (s.Equals("4")) { chFreshFood.Checked = true; }
+                //if (s.Equals("1")) { chFront.Checked = true; }
+                //if (s.Equals("2")) { chBack.Checked = true; }
+                //if (s.Equals("3")) { chWarehouse.Checked = true; }
+                //if (s.Equals("4")) { chFreshFood.Checked = true; }
             }
         }
         private void searchButton_Click(object sender, EventArgs e)
@@ -67,27 +79,11 @@ namespace FSBT.HHT.App.UI
                     }
                 }
 
-                if (!(string.IsNullOrWhiteSpace(searchSection.SectionCode.Trim())))
-                {
-                    if (!(Int32.TryParse(searchSection.SectionCode.Trim(), out x)))
-                    {
-                        resultValidate = false;
-                        MessageBox.Show(MessageConstants.Sectioncodemustbenumberonly, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-
-                if (!(string.IsNullOrWhiteSpace(searchSection.DepartmentCode.Trim())))
-                {
-                    if (!(Int32.TryParse(searchSection.DepartmentCode.Trim(), out x)))
-                    {
-                        resultValidate = false;
-                        MessageBox.Show(MessageConstants.Departmentisnumberonly, MessageConstants.TitleWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-
                 if (resultValidate)
                 {
                     displayData = barcodeBLL.GetSearchSection(searchSection);
+                    //displayData = barcodeBLL.GetSection(searchSection);
+                    
                     if (displayData == null)
                     {
                         MessageBox.Show(MessageConstants.Nosectiondatafound, MessageConstants.TitleInfomation, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -108,7 +104,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
         private void printButton_Click(object sender, EventArgs e)
@@ -117,6 +113,12 @@ namespace FSBT.HHT.App.UI
             {
                 Loading_Screen.ShowSplashScreen();
                 List<LocationBarcode> barcodeData = barcodeBLL.GenDataToBarCode(displayData);
+
+                //List<LocationModel> locationData = barcodeBLL.GetSectionLocationBarcode(searchList);
+
+                //List<LocationBarcode> barcodeData = barcodeBLL.GenDataToBarCode(locationData);
+
+
                 BarCodeReportForm barcodeReport = new BarCodeReportForm();
                 bool isCreateReportSuccess = barcodeReport.CreateReport(barcodeData);
                 Loading_Screen.CloseForm();
@@ -132,88 +134,164 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
         private LocationManagementModel GetSearchCondition()
         {
-            //sectioncode
-            if (textBoxSecCode.Text.Trim().Length == 1)
-            {
-                textBoxSecCode.Text = "0000" + textBoxSecCode.Text.Trim();
-            }
-            else if (textBoxSecCode.Text.Trim().Length == 2)
-            {
-                textBoxSecCode.Text = "000" + textBoxSecCode.Text.Trim();
-            }
-            else if (textBoxSecCode.Text.Trim().Length == 3)
-            {
-                textBoxSecCode.Text = "00" + textBoxSecCode.Text.Trim();
-            }
-            else if (textBoxSecCode.Text.Trim().Length == 4)
-            {
-                textBoxSecCode.Text = "0" + textBoxSecCode.Text.Trim();
-            }
-            ////locationfrom
-            if (textBoxLoFrom.Text.Trim().Length == 1)
-            {
-                textBoxLoFrom.Text = "0000" + textBoxLoFrom.Text.Trim();
-            }
-            else if (textBoxLoFrom.Text.Trim().Length == 2)
-            {
-                textBoxLoFrom.Text = "000" + textBoxLoFrom.Text.Trim();
-            }
-            else if (textBoxLoFrom.Text.Trim().Length == 3)
-            {
-                textBoxLoFrom.Text = "00" + textBoxLoFrom.Text.Trim();
-            }
-            else if (textBoxLoFrom.Text.Trim().Length == 4)
-            {
-                textBoxLoFrom.Text = "0" + textBoxLoFrom.Text.Trim();
-            }
-            ////locationto
-            if (textBoxLoTo.Text.Trim().Length == 1)
-            {
-                textBoxLoTo.Text = "0000" + textBoxLoTo.Text.Trim();
-            }
-            else if (textBoxLoTo.Text.Trim().Length == 2)
-            {
-                textBoxLoTo.Text = "000" + textBoxLoTo.Text.Trim();
-            }
-            else if (textBoxLoTo.Text.Trim().Length == 3)
-            {
-                textBoxLoTo.Text = "00" + textBoxLoTo.Text.Trim();
-            }
-            else if (textBoxLoTo.Text.Trim().Length == 4)
-            {
-                textBoxLoTo.Text = "0" + textBoxLoTo.Text.Trim();
-            }
-
-
-
+            #region
             LocationManagementModel searchSection = new LocationManagementModel();
-            searchSection.SectionCode = textBoxSecCode.Text;
-            searchSection.SectionName = textBoxSecName.Text;
-            searchSection.LocationFrom = textBoxLoFrom.Text;
-            searchSection.LocationTo = textBoxLoTo.Text;
-            searchSection.DepartmentCode = textBoxDeptCode.Text;
-
-
-
-
-
-            string sectionTypeList = "";
-            foreach (CheckBox sectionType in groupSectionType.Controls)
+            try
             {
-                if (sectionType.Checked == true)
+                string storageLoc = "";
+
+                if (comboBoxStorageLocal.Text.ToUpper().Equals("ALL"))
                 {
-                    sectionTypeList = sectionTypeList + (sectionTypeList == "" ? "" : "|") + (string)sectionType.Text;
+                    storageLoc = comboBoxStorageLocal.Text;
+                }
+                else
+                {
+                    storageLoc = (string)((FSBT_HHT_Model.ComboboxItem)comboBoxStorageLocal.SelectedItem).Value;
+                }
+
+                //locationfrom
+                if (textBoxLoForm.Text.Trim().Length == 1)
+                {
+                    textBoxLoForm.Text = "0000" + textBoxLoForm.Text.Trim();
+                }
+                else if (textBoxLoForm.Text.Trim().Length == 2)
+                {
+                    textBoxLoForm.Text = "000" + textBoxLoForm.Text.Trim();
+                }
+                else if (textBoxLoForm.Text.Trim().Length == 3)
+                {
+                    textBoxLoForm.Text = "00" + textBoxLoForm.Text.Trim();
+                }
+                else if (textBoxLoForm.Text.Trim().Length == 4)
+                {
+                    textBoxLoForm.Text = "0" + textBoxLoForm.Text.Trim();
+                }
+
+                //locationto
+                if (textBoxLoTo.Text.Trim().Length == 1)
+                {
+                    textBoxLoTo.Text = "0000" + textBoxLoTo.Text.Trim();
+                }
+                else if (textBoxLoTo.Text.Trim().Length == 2)
+                {
+                    textBoxLoTo.Text = "000" + textBoxLoTo.Text.Trim();
+                }
+                else if (textBoxLoTo.Text.Trim().Length == 3)
+                {
+                    textBoxLoTo.Text = "00" + textBoxLoTo.Text.Trim();
+                }
+                else if (textBoxLoTo.Text.Trim().Length == 4)
+                {
+                    textBoxLoTo.Text = "0" + textBoxLoTo.Text.Trim();
+                }
+
+            #endregion
+
+                searchSection.PlantCode = comboBoxPlant.Text;
+                searchSection.CountSheet = comboBoxCountSheet.Text;
+
+                searchSection.StorageLocationCode = storageLoc;
+
+                searchSection.LocationFrom = textBoxLoForm.Text;
+                searchSection.LocationTo = textBoxLoTo.Text;
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return searchSection;
+        }
+
+
+        protected void AddDropDownPlant()
+        {
+            try
+            {
+                //Get DropDown
+                List<string> listPlant = new List<string>();
+                listPlant = settingBLL.GetAllPlant();
+
+                comboBoxPlant.Items.Clear();
+
+                if (listPlant.Count > 0)
+                {
+                    comboBoxPlant.Items.Add("All");
+
+                    foreach (var l in listPlant)
+                    {
+                        comboBoxPlant.Items.Add(l);
+                    }
+
+                    comboBoxPlant.SelectedIndex = 0;
                 }
             }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            }
+        }
 
-            searchSection.SectionType = sectionTypeList;
+        protected void AddDropDownStorageLocation()
+        {
+            try
+            {
+                List<MasterStorageLocation> listType = new List<MasterStorageLocation>();
 
-            return searchSection;
+                listType = bll.GetListMasterStorageLocation();
+                comboBoxStorageLocal.Items.Clear();
+                comboBoxStorageLocal.Items.Add("All");
+                foreach (MasterStorageLocation m in listType)
+                {
+                    ComboboxItem item = new ComboboxItem();
+                    item.Text = m.StorageLocationCode + " - " + m.StorageLocationName;
+                    item.Value = m.StorageLocationCode;
+
+                    comboBoxStorageLocal.Items.Add(item);
+                }
+                comboBoxStorageLocal.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            }
+        }
+       
+        protected void AddDropDownCountSheet()
+        {
+            try
+            {
+                //Get DropDown
+                List<string> listCountSheet = new List<string>();
+                string plant = comboBoxPlant.Text;
+                listCountSheet = settingBLL.GetDropDownCountSheetSKU(plant);
+
+                comboBoxCountSheet.Items.Clear();
+                comboBoxCountSheet.Items.Add("All");
+                if (listCountSheet.Count > 0)
+                {
+                    foreach (var l in listCountSheet)
+                    {
+                        comboBoxCountSheet.Items.Add(l);
+                    }                   
+                }
+                comboBoxCountSheet.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
+            }
+        }
+
+        private void comboBoxPlant_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddDropDownCountSheet();
+            AddDropDownStorageLocation();
         }
     }
 }

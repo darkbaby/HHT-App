@@ -1,8 +1,10 @@
-﻿using System;
+﻿using FSBT_HHT_BLL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -11,7 +13,6 @@ namespace FSBT.HHT.App.UI
 {
     public partial class Loading_Screen : Form
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
         #region "Declare Variable"
         private static string _message2 = string.Empty;
         private string _message = string.Empty;
@@ -50,6 +51,7 @@ namespace FSBT.HHT.App.UI
         private static Loading_Screen splashForm;
         private static bool threadCall;
         private static Thread thread;
+        private static LogErrorBll logBll = new LogErrorBll();  
 
         static public void ShowSplashScreen(string message = "Loading... Please waiting")
         {
@@ -68,7 +70,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem("ShowSplashScreen", MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -82,7 +84,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem("ShowForm", MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -103,8 +105,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                //log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                log.Error(String.Format("Exception : {0}", ex == null ? string.Empty : ex.Message));
+                logBll.LogSystem("CloseForm", MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 
@@ -116,8 +117,7 @@ namespace FSBT.HHT.App.UI
             }
             catch (Exception ex)
             {
-                //log.Error(String.Format("Exception : {0}", ex.StackTrace));
-                log.Error(String.Format("Exception : {0}", ex.Message));
+                logBll.LogSystem("CloseFormInternal", MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
             }
         }
 

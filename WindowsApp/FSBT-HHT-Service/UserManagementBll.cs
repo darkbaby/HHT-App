@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using FSBT_HHT_DAL.DAO;
 using FSBT_HHT_Model;
 using System.Security.Cryptography;
+using System.Reflection;
 
 namespace FSBT_HHT_BLL
 {
     public class UserManagementBll
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
+        private LogErrorBll logBll = new LogErrorBll(); 
         private UserManagementDAO userDAO = new UserManagementDAO();
 
         public UserManagementBll()
@@ -44,7 +45,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return "";
             }
         }
@@ -66,7 +67,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return "";
             }
         }
@@ -87,7 +88,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return "";
             }
         }
@@ -100,7 +101,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return new List<UserModel>();
             }
         }
@@ -121,7 +122,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return "";
             }
         }
@@ -139,7 +140,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return "";
             }
         }
@@ -161,7 +162,7 @@ namespace FSBT_HHT_BLL
             }
             catch (Exception ex)
             {
-                log.Error(String.Format("Exception : {0}", ex.StackTrace));
+                logBll.LogSystem(this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message, DateTime.Now);
                 return "";
             }
         }

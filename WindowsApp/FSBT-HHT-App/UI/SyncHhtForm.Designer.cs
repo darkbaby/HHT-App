@@ -33,9 +33,10 @@ namespace FSBT.HHT.App.UI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.comboBoxSKU = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioBtnNoSKU = new System.Windows.Forms.RadioButton();
-            this.comboBoxSKU = new System.Windows.Forms.ComboBox();
             this.radioBtnSKU = new System.Windows.Forms.RadioButton();
             this.groupBoxLocation = new System.Windows.Forms.GroupBox();
             this.radioNoLocation = new System.Windows.Forms.RadioButton();
@@ -81,6 +82,7 @@ namespace FSBT.HHT.App.UI
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnReceiveData = new System.Windows.Forms.Button();
             this.btnReport_Control = new System.Windows.Forms.Button();
             this.btnReport_Delete = new System.Windows.Forms.Button();
             this.btnReport_AuditA = new System.Windows.Forms.Button();
@@ -142,14 +144,15 @@ namespace FSBT.HHT.App.UI
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(2, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1514, 840);
+            this.tabControl1.Size = new System.Drawing.Size(1010, 546);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnRefresh);
+            this.tabPage1.Controls.Add(this.comboBoxSKU);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.groupBoxLocation);
             this.tabPage1.Controls.Add(this.btnWifiDownload);
@@ -161,63 +164,68 @@ namespace FSBT.HHT.App.UI
             this.tabPage1.Controls.Add(this.comnameTxtBox1);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 38);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Size = new System.Drawing.Size(1506, 798);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1002, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "PC->HHT";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.Location = new System.Drawing.Point(838, 101);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(106, 50);
+            this.btnRefresh.TabIndex = 23;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // comboBoxSKU
+            // 
+            this.comboBoxSKU.FormattingEnabled = true;
+            this.comboBoxSKU.Location = new System.Drawing.Point(455, 64);
+            this.comboBoxSKU.Name = "comboBoxSKU";
+            this.comboBoxSKU.Size = new System.Drawing.Size(92, 26);
+            this.comboBoxSKU.TabIndex = 13;
+            this.comboBoxSKU.Visible = false;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.radioBtnNoSKU);
-            this.groupBox1.Controls.Add(this.comboBoxSKU);
             this.groupBox1.Controls.Add(this.radioBtnSKU);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(32, 243);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Location = new System.Drawing.Point(21, 158);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(782, 83);
+            this.groupBox1.Size = new System.Drawing.Size(609, 54);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "SKU Master";
+            this.groupBox1.Text = "SKU Master (Serial Number)";
             // 
             // radioBtnNoSKU
             // 
             this.radioBtnNoSKU.AutoSize = true;
             this.radioBtnNoSKU.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioBtnNoSKU.Location = new System.Drawing.Point(516, 37);
-            this.radioBtnNoSKU.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioBtnNoSKU.Location = new System.Drawing.Point(327, 23);
             this.radioBtnNoSKU.Name = "radioBtnNoSKU";
-            this.radioBtnNoSKU.Size = new System.Drawing.Size(258, 33);
+            this.radioBtnNoSKU.Size = new System.Drawing.Size(267, 22);
             this.radioBtnNoSKU.TabIndex = 16;
-            this.radioBtnNoSKU.Text = "Exclude SKU Master";
+            this.radioBtnNoSKU.Text = "Exclude SKU Master(Serial Number)";
             this.radioBtnNoSKU.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxSKU
-            // 
-            this.comboBoxSKU.FormattingEnabled = true;
-            this.comboBoxSKU.Location = new System.Drawing.Point(273, 32);
-            this.comboBoxSKU.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.comboBoxSKU.Name = "comboBoxSKU";
-            this.comboBoxSKU.Size = new System.Drawing.Size(136, 37);
-            this.comboBoxSKU.TabIndex = 13;
             // 
             // radioBtnSKU
             // 
             this.radioBtnSKU.AutoSize = true;
             this.radioBtnSKU.Checked = true;
             this.radioBtnSKU.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioBtnSKU.Location = new System.Drawing.Point(36, 37);
-            this.radioBtnSKU.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioBtnSKU.Location = new System.Drawing.Point(24, 24);
             this.radioBtnSKU.Name = "radioBtnSKU";
-            this.radioBtnSKU.Size = new System.Drawing.Size(250, 33);
+            this.radioBtnSKU.Size = new System.Drawing.Size(261, 22);
             this.radioBtnSKU.TabIndex = 17;
             this.radioBtnSKU.TabStop = true;
-            this.radioBtnSKU.Text = "Include SKU Master";
+            this.radioBtnSKU.Text = "Include SKU Master(Serial Number)";
             this.radioBtnSKU.UseVisualStyleBackColor = true;
             this.radioBtnSKU.CheckedChanged += new System.EventHandler(this.radioBtnSKU_CheckedChanged);
             // 
@@ -230,11 +238,9 @@ namespace FSBT.HHT.App.UI
             this.groupBoxLocation.Controls.Add(this.radioLocation);
             this.groupBoxLocation.Controls.Add(this.textBoxLoTo);
             this.groupBoxLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxLocation.Location = new System.Drawing.Point(32, 148);
-            this.groupBoxLocation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxLocation.Location = new System.Drawing.Point(21, 96);
             this.groupBoxLocation.Name = "groupBoxLocation";
-            this.groupBoxLocation.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxLocation.Size = new System.Drawing.Size(782, 86);
+            this.groupBoxLocation.Size = new System.Drawing.Size(609, 56);
             this.groupBoxLocation.TabIndex = 21;
             this.groupBoxLocation.TabStop = false;
             this.groupBoxLocation.Text = "Location";
@@ -242,79 +248,73 @@ namespace FSBT.HHT.App.UI
             // radioNoLocation
             // 
             this.radioNoLocation.AutoSize = true;
+            this.radioNoLocation.Checked = true;
             this.radioNoLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioNoLocation.Location = new System.Drawing.Point(516, 35);
-            this.radioNoLocation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioNoLocation.Location = new System.Drawing.Point(382, 21);
             this.radioNoLocation.Name = "radioNoLocation";
-            this.radioNoLocation.Size = new System.Drawing.Size(221, 33);
+            this.radioNoLocation.Size = new System.Drawing.Size(169, 22);
             this.radioNoLocation.TabIndex = 23;
             this.radioNoLocation.TabStop = true;
-            this.radioNoLocation.Text = "Exclude Location";
+            this.radioNoLocation.Text = "Exclude Sub Location";
             this.radioNoLocation.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(196, 38);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(179, 24);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(82, 29);
+            this.label8.Size = new System.Drawing.Size(52, 18);
             this.label8.TabIndex = 20;
             this.label8.Text = "From :";
             // 
             // textBoxLoFrom
             // 
-            this.textBoxLoFrom.Location = new System.Drawing.Point(274, 32);
-            this.textBoxLoFrom.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxLoFrom.Enabled = false;
+            this.textBoxLoFrom.Location = new System.Drawing.Point(234, 20);
             this.textBoxLoFrom.MaxLength = 5;
             this.textBoxLoFrom.Name = "textBoxLoFrom";
-            this.textBoxLoFrom.Size = new System.Drawing.Size(73, 33);
+            this.textBoxLoFrom.Size = new System.Drawing.Size(50, 24);
             this.textBoxLoFrom.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(357, 37);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(289, 24);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 29);
+            this.label3.Size = new System.Drawing.Size(34, 18);
             this.label3.TabIndex = 6;
             this.label3.Text = "To :";
             // 
             // radioLocation
             // 
             this.radioLocation.AutoSize = true;
-            this.radioLocation.Checked = true;
             this.radioLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioLocation.Location = new System.Drawing.Point(34, 34);
-            this.radioLocation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioLocation.Location = new System.Drawing.Point(22, 22);
             this.radioLocation.Name = "radioLocation";
-            this.radioLocation.Size = new System.Drawing.Size(213, 33);
+            this.radioLocation.Size = new System.Drawing.Size(163, 22);
             this.radioLocation.TabIndex = 18;
-            this.radioLocation.TabStop = true;
-            this.radioLocation.Text = "Include Location";
+            this.radioLocation.Text = "Include Sub Location";
             this.radioLocation.UseVisualStyleBackColor = true;
             this.radioLocation.CheckedChanged += new System.EventHandler(this.radioLocation_CheckedChanged);
             // 
             // textBoxLoTo
             // 
-            this.textBoxLoTo.Location = new System.Drawing.Point(411, 34);
-            this.textBoxLoTo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxLoTo.Enabled = false;
+            this.textBoxLoTo.Location = new System.Drawing.Point(327, 20);
             this.textBoxLoTo.MaxLength = 5;
             this.textBoxLoTo.Name = "textBoxLoTo";
-            this.textBoxLoTo.Size = new System.Drawing.Size(73, 33);
+            this.textBoxLoTo.Size = new System.Drawing.Size(50, 24);
             this.textBoxLoTo.TabIndex = 7;
             // 
             // btnWifiDownload
             // 
             this.btnWifiDownload.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnWifiDownload.Image = ((System.Drawing.Image)(resources.GetObject("btnWifiDownload.Image")));
-            this.btnWifiDownload.Location = new System.Drawing.Point(1176, 40);
-            this.btnWifiDownload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnWifiDownload.Location = new System.Drawing.Point(784, 26);
             this.btnWifiDownload.Name = "btnWifiDownload";
-            this.btnWifiDownload.Size = new System.Drawing.Size(78, 35);
+            this.btnWifiDownload.Size = new System.Drawing.Size(52, 23);
             this.btnWifiDownload.TabIndex = 15;
             this.btnWifiDownload.UseVisualStyleBackColor = true;
             this.btnWifiDownload.Click += new System.EventHandler(this.btnWifiDownload_Click);
@@ -322,30 +322,27 @@ namespace FSBT.HHT.App.UI
             // textBoxIP1
             // 
             this.textBoxIP1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxIP1.Location = new System.Drawing.Point(879, 43);
-            this.textBoxIP1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxIP1.Location = new System.Drawing.Point(586, 28);
             this.textBoxIP1.Name = "textBoxIP1";
-            this.textBoxIP1.Size = new System.Drawing.Size(271, 33);
+            this.textBoxIP1.Size = new System.Drawing.Size(182, 24);
             this.textBoxIP1.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(678, 43);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(452, 28);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(208, 29);
+            this.label6.Size = new System.Drawing.Size(128, 18);
             this.label6.TabIndex = 11;
             this.label6.Text = "IP Address (HHT) ";
             // 
             // btnDownload
             // 
             this.btnDownload.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDownload.Location = new System.Drawing.Point(1257, 248);
-            this.btnDownload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDownload.Location = new System.Drawing.Point(838, 161);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(159, 78);
+            this.btnDownload.Size = new System.Drawing.Size(106, 50);
             this.btnDownload.TabIndex = 10;
             this.btnDownload.Text = "Download";
             this.btnDownload.UseVisualStyleBackColor = true;
@@ -364,11 +361,10 @@ namespace FSBT.HHT.App.UI
             this.Type,
             this.InitialRecords,
             this.DownloadRecord});
-            this.dataGridView1.Location = new System.Drawing.Point(10, 358);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridView1.Location = new System.Drawing.Point(7, 232);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(876, 285);
+            this.dataGridView1.Size = new System.Drawing.Size(623, 185);
             this.dataGridView1.TabIndex = 9;
             // 
             // No
@@ -401,31 +397,28 @@ namespace FSBT.HHT.App.UI
             // hhtnameTxtBox1
             // 
             this.hhtnameTxtBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hhtnameTxtBox1.Location = new System.Drawing.Point(213, 83);
-            this.hhtnameTxtBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.hhtnameTxtBox1.Location = new System.Drawing.Point(142, 54);
             this.hhtnameTxtBox1.Name = "hhtnameTxtBox1";
             this.hhtnameTxtBox1.ReadOnly = true;
-            this.hhtnameTxtBox1.Size = new System.Drawing.Size(271, 33);
+            this.hhtnameTxtBox1.Size = new System.Drawing.Size(182, 24);
             this.hhtnameTxtBox1.TabIndex = 3;
             // 
             // comnameTxtBox1
             // 
             this.comnameTxtBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comnameTxtBox1.Location = new System.Drawing.Point(213, 43);
-            this.comnameTxtBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comnameTxtBox1.Location = new System.Drawing.Point(142, 28);
             this.comnameTxtBox1.Name = "comnameTxtBox1";
             this.comnameTxtBox1.ReadOnly = true;
-            this.comnameTxtBox1.Size = new System.Drawing.Size(271, 33);
+            this.comnameTxtBox1.Size = new System.Drawing.Size(182, 24);
             this.comnameTxtBox1.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(27, 82);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(18, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 29);
+            this.label2.Size = new System.Drawing.Size(83, 18);
             this.label2.TabIndex = 1;
             this.label2.Text = "HHT Name";
             // 
@@ -433,10 +426,9 @@ namespace FSBT.HHT.App.UI
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(27, 43);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(18, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(190, 29);
+            this.label1.Size = new System.Drawing.Size(118, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Computer Name";
             // 
@@ -453,21 +445,19 @@ namespace FSBT.HHT.App.UI
             this.tabPage2.Controls.Add(this.comnameTxtBox2);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Location = new System.Drawing.Point(4, 38);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Size = new System.Drawing.Size(1506, 798);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1002, 515);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "HHT->PC";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnCheckFile
             // 
-            this.btnCheckFile.Location = new System.Drawing.Point(1074, 154);
-            this.btnCheckFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCheckFile.Location = new System.Drawing.Point(716, 100);
             this.btnCheckFile.Name = "btnCheckFile";
-            this.btnCheckFile.Size = new System.Drawing.Size(225, 75);
+            this.btnCheckFile.Size = new System.Drawing.Size(150, 49);
             this.btnCheckFile.TabIndex = 19;
             this.btnCheckFile.Text = "Check files waiting to be uploaded";
             this.btnCheckFile.UseVisualStyleBackColor = true;
@@ -476,38 +466,34 @@ namespace FSBT.HHT.App.UI
             // btnWifiUpload
             // 
             this.btnWifiUpload.Image = ((System.Drawing.Image)(resources.GetObject("btnWifiUpload.Image")));
-            this.btnWifiUpload.Location = new System.Drawing.Point(990, 42);
-            this.btnWifiUpload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnWifiUpload.Location = new System.Drawing.Point(660, 28);
             this.btnWifiUpload.Name = "btnWifiUpload";
-            this.btnWifiUpload.Size = new System.Drawing.Size(78, 35);
+            this.btnWifiUpload.Size = new System.Drawing.Size(52, 23);
             this.btnWifiUpload.TabIndex = 14;
             this.btnWifiUpload.UseVisualStyleBackColor = true;
             this.btnWifiUpload.Click += new System.EventHandler(this.btnWifiUpload_Click);
             // 
             // textBoxIP2
             // 
-            this.textBoxIP2.Location = new System.Drawing.Point(693, 45);
-            this.textBoxIP2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxIP2.Location = new System.Drawing.Point(462, 29);
             this.textBoxIP2.Name = "textBoxIP2";
-            this.textBoxIP2.Size = new System.Drawing.Size(271, 33);
+            this.textBoxIP2.Size = new System.Drawing.Size(182, 24);
             this.textBoxIP2.TabIndex = 13;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(574, 49);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(382, 32);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(130, 29);
+            this.label7.Size = new System.Drawing.Size(79, 18);
             this.label7.TabIndex = 12;
             this.label7.Text = "IP Address";
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(890, 154);
-            this.btnUpload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnUpload.Location = new System.Drawing.Point(593, 100);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(176, 75);
+            this.btnUpload.Size = new System.Drawing.Size(117, 49);
             this.btnUpload.TabIndex = 11;
             this.btnUpload.Text = "Upload";
             this.btnUpload.UseVisualStyleBackColor = true;
@@ -525,11 +511,10 @@ namespace FSBT.HHT.App.UI
             this.LocationHHT,
             this.InitialRecordHHT,
             this.UploadRecord});
-            this.dataGridView3.Location = new System.Drawing.Point(34, 351);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridView3.Location = new System.Drawing.Point(22, 228);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(1437, 423);
+            this.dataGridView3.Size = new System.Drawing.Size(958, 275);
             this.dataGridView3.TabIndex = 10;
             // 
             // HHTName
@@ -571,11 +556,10 @@ namespace FSBT.HHT.App.UI
             this.Location2,
             this.CheckBox3,
             this.Location3});
-            this.dataGridViewLo.Location = new System.Drawing.Point(34, 154);
-            this.dataGridViewLo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridViewLo.Location = new System.Drawing.Point(22, 100);
             this.dataGridViewLo.Name = "dataGridViewLo";
             this.dataGridViewLo.ReadOnly = true;
-            this.dataGridViewLo.Size = new System.Drawing.Size(846, 151);
+            this.dataGridViewLo.Size = new System.Drawing.Size(564, 98);
             this.dataGridViewLo.TabIndex = 8;
             this.dataGridViewLo.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewLo_CellClick);
             // 
@@ -634,50 +618,45 @@ namespace FSBT.HHT.App.UI
             // 
             // hhtnameTxtBox2
             // 
-            this.hhtnameTxtBox2.Location = new System.Drawing.Point(183, 89);
-            this.hhtnameTxtBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.hhtnameTxtBox2.Location = new System.Drawing.Point(122, 58);
             this.hhtnameTxtBox2.Name = "hhtnameTxtBox2";
             this.hhtnameTxtBox2.ReadOnly = true;
-            this.hhtnameTxtBox2.Size = new System.Drawing.Size(271, 33);
+            this.hhtnameTxtBox2.Size = new System.Drawing.Size(182, 24);
             this.hhtnameTxtBox2.TabIndex = 7;
             // 
             // comnameTxtBox2
             // 
-            this.comnameTxtBox2.Location = new System.Drawing.Point(183, 49);
-            this.comnameTxtBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comnameTxtBox2.Location = new System.Drawing.Point(122, 32);
             this.comnameTxtBox2.Name = "comnameTxtBox2";
             this.comnameTxtBox2.ReadOnly = true;
-            this.comnameTxtBox2.Size = new System.Drawing.Size(271, 33);
+            this.comnameTxtBox2.Size = new System.Drawing.Size(182, 24);
             this.comnameTxtBox2.TabIndex = 6;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(30, 88);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(20, 57);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 29);
+            this.label4.Size = new System.Drawing.Size(83, 18);
             this.label4.TabIndex = 5;
             this.label4.Text = "HHT Name";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(30, 49);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(20, 32);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(190, 29);
+            this.label5.Size = new System.Drawing.Size(118, 18);
             this.label5.TabIndex = 4;
             this.label5.Text = "Computer Name";
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.groupBox2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 38);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage3.Location = new System.Drawing.Point(4, 27);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage3.Size = new System.Drawing.Size(1506, 798);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1002, 515);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Auto Upload";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -687,29 +666,39 @@ namespace FSBT.HHT.App.UI
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnReceiveData);
             this.groupBox2.Controls.Add(this.btnReport_Control);
             this.groupBox2.Controls.Add(this.btnReport_Delete);
             this.groupBox2.Controls.Add(this.btnReport_AuditA);
             this.groupBox2.Controls.Add(this.btnReport_AuditC);
             this.groupBox2.Controls.Add(this.dataGridViewAutoUp);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(24, 25);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Location = new System.Drawing.Point(16, 16);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(1221, 625);
+            this.groupBox2.Size = new System.Drawing.Size(814, 406);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Importing and Printing";
+            // 
+            // btnReceiveData
+            // 
+            this.btnReceiveData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnReceiveData.Location = new System.Drawing.Point(6, 349);
+            this.btnReceiveData.Margin = new System.Windows.Forms.Padding(2);
+            this.btnReceiveData.Name = "btnReceiveData";
+            this.btnReceiveData.Size = new System.Drawing.Size(131, 46);
+            this.btnReceiveData.TabIndex = 23;
+            this.btnReceiveData.Text = "Receive Data (Cable)";
+            this.btnReceiveData.UseVisualStyleBackColor = true;
+            this.btnReceiveData.Click += new System.EventHandler(this.btnReceiveData_Click);
             // 
             // btnReport_Control
             // 
             this.btnReport_Control.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReport_Control.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReport_Control.Location = new System.Drawing.Point(1164, 536);
-            this.btnReport_Control.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReport_Control.Location = new System.Drawing.Point(776, 349);
             this.btnReport_Control.Name = "btnReport_Control";
-            this.btnReport_Control.Size = new System.Drawing.Size(166, 71);
+            this.btnReport_Control.Size = new System.Drawing.Size(111, 46);
             this.btnReport_Control.TabIndex = 22;
             this.btnReport_Control.Text = "Report Control Sheet";
             this.btnReport_Control.UseVisualStyleBackColor = true;
@@ -719,10 +708,9 @@ namespace FSBT.HHT.App.UI
             // 
             this.btnReport_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReport_Delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReport_Delete.Location = new System.Drawing.Point(984, 536);
-            this.btnReport_Delete.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReport_Delete.Location = new System.Drawing.Point(656, 349);
             this.btnReport_Delete.Name = "btnReport_Delete";
-            this.btnReport_Delete.Size = new System.Drawing.Size(171, 71);
+            this.btnReport_Delete.Size = new System.Drawing.Size(114, 46);
             this.btnReport_Delete.TabIndex = 21;
             this.btnReport_Delete.Text = "Report Delete Record";
             this.btnReport_Delete.UseVisualStyleBackColor = true;
@@ -732,10 +720,9 @@ namespace FSBT.HHT.App.UI
             // 
             this.btnReport_AuditA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReport_AuditA.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReport_AuditA.Location = new System.Drawing.Point(720, 536);
-            this.btnReport_AuditA.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReport_AuditA.Location = new System.Drawing.Point(480, 349);
             this.btnReport_AuditA.Name = "btnReport_AuditA";
-            this.btnReport_AuditA.Size = new System.Drawing.Size(255, 71);
+            this.btnReport_AuditA.Size = new System.Drawing.Size(170, 46);
             this.btnReport_AuditA.TabIndex = 20;
             this.btnReport_AuditA.Text = "Report Stocktaking Audit Adjust With Unit";
             this.btnReport_AuditA.UseVisualStyleBackColor = true;
@@ -745,10 +732,9 @@ namespace FSBT.HHT.App.UI
             // 
             this.btnReport_AuditC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReport_AuditC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReport_AuditC.Location = new System.Drawing.Point(450, 536);
-            this.btnReport_AuditC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReport_AuditC.Location = new System.Drawing.Point(300, 349);
             this.btnReport_AuditC.Name = "btnReport_AuditC";
-            this.btnReport_AuditC.Size = new System.Drawing.Size(261, 71);
+            this.btnReport_AuditC.Size = new System.Drawing.Size(174, 46);
             this.btnReport_AuditC.TabIndex = 19;
             this.btnReport_AuditC.Text = "Report Stocktaking Audit Check With Unit";
             this.btnReport_AuditC.UseVisualStyleBackColor = true;
@@ -774,11 +760,10 @@ namespace FSBT.HHT.App.UI
             this.PrintStatus,
             this.ImportDate,
             this.ImportRemark});
-            this.dataGridViewAutoUp.Location = new System.Drawing.Point(9, 48);
-            this.dataGridViewAutoUp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridViewAutoUp.Location = new System.Drawing.Point(6, 31);
             this.dataGridViewAutoUp.Name = "dataGridViewAutoUp";
             this.dataGridViewAutoUp.ReadOnly = true;
-            this.dataGridViewAutoUp.Size = new System.Drawing.Size(1204, 468);
+            this.dataGridViewAutoUp.Size = new System.Drawing.Size(802, 304);
             this.dataGridViewAutoUp.TabIndex = 0;
             // 
             // hhtID
@@ -812,7 +797,7 @@ namespace FSBT.HHT.App.UI
             // 
             // Location
             // 
-            this.Location.HeaderText = "Location";
+            this.Location.HeaderText = "Sub Location";
             this.Location.Name = "Location";
             this.Location.ReadOnly = true;
             this.Location.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -989,11 +974,10 @@ namespace FSBT.HHT.App.UI
             // 
             // SyncHhtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1512, 834);
+            this.ClientSize = new System.Drawing.Size(1008, 542);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SyncHhtForm";
             this.Text = "HHT Sync";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SyncHhtForm_FormClosed);
@@ -1093,20 +1077,22 @@ namespace FSBT.HHT.App.UI
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
         private System.Windows.Forms.RadioButton radioNoLocation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImportRemark;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImportDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PrintStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImportStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TotalQuantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TotalRecords;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Location;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fileName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Stoktaker;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hhtNameAuto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hhtID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DownloadRecord;
         private System.Windows.Forms.DataGridViewTextBoxColumn InitialRecords;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn No;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hhtID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hhtNameAuto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Stoktaker;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fileName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Location;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalRecords;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImportStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PrintStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImportDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImportRemark;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnReceiveData;
     }
 }

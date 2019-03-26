@@ -364,6 +364,56 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             private global::System.Data.DataColumn columnItemFFOnhand;
             
+            private global::System.Data.DataColumn columnCountSheet;
+            
+            private global::System.Data.DataColumn columnStorageLocation;
+            
+            private global::System.Data.DataColumn columnPlant;
+            
+            private global::System.Data.DataColumn columnMCHLevel1;
+            
+            private global::System.Data.DataColumn columnMCHLevel2;
+            
+            private global::System.Data.DataColumn columnMCHLevel3;
+            
+            private global::System.Data.DataColumn columnMCHLevel4;
+            
+            private global::System.Data.DataColumn columnLocation;
+            
+            private global::System.Data.DataColumn columnPlantDesc;
+            
+            private global::System.Data.DataColumn columnStorageLocationDesc;
+            
+            private global::System.Data.DataColumn columnMCHLevel1Desc;
+            
+            private global::System.Data.DataColumn columnMCHLevel2Desc;
+            
+            private global::System.Data.DataColumn columnMCHLevel3Desc;
+            
+            private global::System.Data.DataColumn columnMCHLevel4Desc;
+            
+            private global::System.Data.DataColumn columnSerialnumber;
+            
+            private global::System.Data.DataColumn columnFrontQty;
+            
+            private global::System.Data.DataColumn columnFrontPrice;
+            
+            private global::System.Data.DataColumn columnFFQty;
+            
+            private global::System.Data.DataColumn columnFFPrice;
+            
+            private global::System.Data.DataColumn columnFFWQty;
+            
+            private global::System.Data.DataColumn columnFFWPrice;
+            
+            private global::System.Data.DataColumn columnStatus;
+            
+            private global::System.Data.DataColumn columncountAllRecord;
+            
+            private global::System.Data.DataColumn columncountUnidentified;
+            
+            private global::System.Data.DataColumn columncountNew;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public MasterReportDataTable() {
@@ -599,6 +649,206 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CountSheetColumn {
+                get {
+                    return this.columnCountSheet;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StorageLocationColumn {
+                get {
+                    return this.columnStorageLocation;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantColumn {
+                get {
+                    return this.columnPlant;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel1Column {
+                get {
+                    return this.columnMCHLevel1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel2Column {
+                get {
+                    return this.columnMCHLevel2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel3Column {
+                get {
+                    return this.columnMCHLevel3;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel4Column {
+                get {
+                    return this.columnMCHLevel4;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LocationColumn {
+                get {
+                    return this.columnLocation;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantDescColumn {
+                get {
+                    return this.columnPlantDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StorageLocationDescColumn {
+                get {
+                    return this.columnStorageLocationDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel1DescColumn {
+                get {
+                    return this.columnMCHLevel1Desc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel2DescColumn {
+                get {
+                    return this.columnMCHLevel2Desc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel3DescColumn {
+                get {
+                    return this.columnMCHLevel3Desc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MCHLevel4DescColumn {
+                get {
+                    return this.columnMCHLevel4Desc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SerialnumberColumn {
+                get {
+                    return this.columnSerialnumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FrontQtyColumn {
+                get {
+                    return this.columnFrontQty;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FrontPriceColumn {
+                get {
+                    return this.columnFrontPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FFQtyColumn {
+                get {
+                    return this.columnFFQty;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FFPriceColumn {
+                get {
+                    return this.columnFFPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FFWQtyColumn {
+                get {
+                    return this.columnFFWQty;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FFWPriceColumn {
+                get {
+                    return this.columnFFWPrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StatusColumn {
+                get {
+                    return this.columnStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn countAllRecordColumn {
+                get {
+                    return this.columncountAllRecord;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn countUnidentifiedColumn {
+                get {
+                    return this.columncountUnidentified;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn countNewColumn {
+                get {
+                    return this.columncountNew;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -654,12 +904,37 @@ namespace FSBT.HHT.App.ReportTemplate {
                         string ScanMode, 
                         string ItemQTYOnHand, 
                         string ItemStockOnHand, 
-                        string TotalPrice, 
+                        decimal TotalPrice, 
                         string Pack, 
                         string Piece, 
                         string Unit, 
                         string ItemWarehouseOnHand, 
-                        string ItemFFOnhand) {
+                        string ItemFFOnhand, 
+                        string CountSheet, 
+                        string StorageLocation, 
+                        string Plant, 
+                        string MCHLevel1, 
+                        string MCHLevel2, 
+                        string MCHLevel3, 
+                        string MCHLevel4, 
+                        string Location, 
+                        string PlantDesc, 
+                        string StorageLocationDesc, 
+                        string MCHLevel1Desc, 
+                        string MCHLevel2Desc, 
+                        string MCHLevel3Desc, 
+                        string MCHLevel4Desc, 
+                        string Serialnumber, 
+                        decimal FrontQty, 
+                        decimal FrontPrice, 
+                        decimal FFQty, 
+                        decimal FFPrice, 
+                        decimal FFWQty, 
+                        decimal FFWPrice, 
+                        string Status, 
+                        int countAllRecord, 
+                        int countUnidentified, 
+                        int countNew) {
                 MasterReportRow rowMasterReportRow = ((MasterReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SKUCode,
@@ -686,7 +961,32 @@ namespace FSBT.HHT.App.ReportTemplate {
                         Piece,
                         Unit,
                         ItemWarehouseOnHand,
-                        ItemFFOnhand};
+                        ItemFFOnhand,
+                        CountSheet,
+                        StorageLocation,
+                        Plant,
+                        MCHLevel1,
+                        MCHLevel2,
+                        MCHLevel3,
+                        MCHLevel4,
+                        Location,
+                        PlantDesc,
+                        StorageLocationDesc,
+                        MCHLevel1Desc,
+                        MCHLevel2Desc,
+                        MCHLevel3Desc,
+                        MCHLevel4Desc,
+                        Serialnumber,
+                        FrontQty,
+                        FrontPrice,
+                        FFQty,
+                        FFPrice,
+                        FFWQty,
+                        FFWPrice,
+                        Status,
+                        countAllRecord,
+                        countUnidentified,
+                        countNew};
                 rowMasterReportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowMasterReportRow);
                 return rowMasterReportRow;
@@ -734,6 +1034,31 @@ namespace FSBT.HHT.App.ReportTemplate {
                 this.columnUnit = base.Columns["Unit"];
                 this.columnItemWarehouseOnHand = base.Columns["ItemWarehouseOnHand"];
                 this.columnItemFFOnhand = base.Columns["ItemFFOnhand"];
+                this.columnCountSheet = base.Columns["CountSheet"];
+                this.columnStorageLocation = base.Columns["StorageLocation"];
+                this.columnPlant = base.Columns["Plant"];
+                this.columnMCHLevel1 = base.Columns["MCHLevel1"];
+                this.columnMCHLevel2 = base.Columns["MCHLevel2"];
+                this.columnMCHLevel3 = base.Columns["MCHLevel3"];
+                this.columnMCHLevel4 = base.Columns["MCHLevel4"];
+                this.columnLocation = base.Columns["Location"];
+                this.columnPlantDesc = base.Columns["PlantDesc"];
+                this.columnStorageLocationDesc = base.Columns["StorageLocationDesc"];
+                this.columnMCHLevel1Desc = base.Columns["MCHLevel1Desc"];
+                this.columnMCHLevel2Desc = base.Columns["MCHLevel2Desc"];
+                this.columnMCHLevel3Desc = base.Columns["MCHLevel3Desc"];
+                this.columnMCHLevel4Desc = base.Columns["MCHLevel4Desc"];
+                this.columnSerialnumber = base.Columns["Serialnumber"];
+                this.columnFrontQty = base.Columns["FrontQty"];
+                this.columnFrontPrice = base.Columns["FrontPrice"];
+                this.columnFFQty = base.Columns["FFQty"];
+                this.columnFFPrice = base.Columns["FFPrice"];
+                this.columnFFWQty = base.Columns["FFWQty"];
+                this.columnFFWPrice = base.Columns["FFWPrice"];
+                this.columnStatus = base.Columns["Status"];
+                this.columncountAllRecord = base.Columns["countAllRecord"];
+                this.columncountUnidentified = base.Columns["countUnidentified"];
+                this.columncountNew = base.Columns["countNew"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -777,7 +1102,7 @@ namespace FSBT.HHT.App.ReportTemplate {
                 base.Columns.Add(this.columnItemQTYOnHand);
                 this.columnItemStockOnHand = new global::System.Data.DataColumn("ItemStockOnHand", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnItemStockOnHand);
-                this.columnTotalPrice = new global::System.Data.DataColumn("TotalPrice", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnTotalPrice = new global::System.Data.DataColumn("TotalPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotalPrice);
                 this.columnPack = new global::System.Data.DataColumn("Pack", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPack);
@@ -789,6 +1114,56 @@ namespace FSBT.HHT.App.ReportTemplate {
                 base.Columns.Add(this.columnItemWarehouseOnHand);
                 this.columnItemFFOnhand = new global::System.Data.DataColumn("ItemFFOnhand", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnItemFFOnhand);
+                this.columnCountSheet = new global::System.Data.DataColumn("CountSheet", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCountSheet);
+                this.columnStorageLocation = new global::System.Data.DataColumn("StorageLocation", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStorageLocation);
+                this.columnPlant = new global::System.Data.DataColumn("Plant", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlant);
+                this.columnMCHLevel1 = new global::System.Data.DataColumn("MCHLevel1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel1);
+                this.columnMCHLevel2 = new global::System.Data.DataColumn("MCHLevel2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel2);
+                this.columnMCHLevel3 = new global::System.Data.DataColumn("MCHLevel3", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel3);
+                this.columnMCHLevel4 = new global::System.Data.DataColumn("MCHLevel4", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel4);
+                this.columnLocation = new global::System.Data.DataColumn("Location", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLocation);
+                this.columnPlantDesc = new global::System.Data.DataColumn("PlantDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlantDesc);
+                this.columnStorageLocationDesc = new global::System.Data.DataColumn("StorageLocationDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStorageLocationDesc);
+                this.columnMCHLevel1Desc = new global::System.Data.DataColumn("MCHLevel1Desc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel1Desc);
+                this.columnMCHLevel2Desc = new global::System.Data.DataColumn("MCHLevel2Desc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel2Desc);
+                this.columnMCHLevel3Desc = new global::System.Data.DataColumn("MCHLevel3Desc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel3Desc);
+                this.columnMCHLevel4Desc = new global::System.Data.DataColumn("MCHLevel4Desc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMCHLevel4Desc);
+                this.columnSerialnumber = new global::System.Data.DataColumn("Serialnumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSerialnumber);
+                this.columnFrontQty = new global::System.Data.DataColumn("FrontQty", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFrontQty);
+                this.columnFrontPrice = new global::System.Data.DataColumn("FrontPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFrontPrice);
+                this.columnFFQty = new global::System.Data.DataColumn("FFQty", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFFQty);
+                this.columnFFPrice = new global::System.Data.DataColumn("FFPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFFPrice);
+                this.columnFFWQty = new global::System.Data.DataColumn("FFWQty", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFFWQty);
+                this.columnFFWPrice = new global::System.Data.DataColumn("FFWPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFFWPrice);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
+                this.columncountAllRecord = new global::System.Data.DataColumn("countAllRecord", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncountAllRecord);
+                this.columncountUnidentified = new global::System.Data.DataColumn("countUnidentified", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncountUnidentified);
+                this.columncountNew = new global::System.Data.DataColumn("countNew", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncountNew);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -942,6 +1317,10 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             private global::System.Data.DataColumn columnFFSummaryPrice;
             
+            private global::System.Data.DataColumn columnPlant;
+            
+            private global::System.Data.DataColumn columnPlantDesc;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public MasterSummaryDataTable() {
@@ -1057,6 +1436,22 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantColumn {
+                get {
+                    return this.columnPlant;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PlantDescColumn {
+                get {
+                    return this.columnPlantDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1092,7 +1487,7 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public MasterSummaryRow AddMasterSummaryRow(string FrontSummaryQTY, string FrontSummaryPrice, string BackSummaryQTY, string BackSummaryPrice, string StockSummaryQTY, string StockSummaryPrice, decimal FFWSummaryQTY, string FFWSummaryPrice, decimal FFSummaryQTY, string FFSummaryPrice) {
+            public MasterSummaryRow AddMasterSummaryRow(string FrontSummaryQTY, string FrontSummaryPrice, string BackSummaryQTY, string BackSummaryPrice, string StockSummaryQTY, string StockSummaryPrice, decimal FFWSummaryQTY, string FFWSummaryPrice, decimal FFSummaryQTY, string FFSummaryPrice, string Plant, string PlantDesc) {
                 MasterSummaryRow rowMasterSummaryRow = ((MasterSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FrontSummaryQTY,
@@ -1104,7 +1499,9 @@ namespace FSBT.HHT.App.ReportTemplate {
                         FFWSummaryQTY,
                         FFWSummaryPrice,
                         FFSummaryQTY,
-                        FFSummaryPrice};
+                        FFSummaryPrice,
+                        Plant,
+                        PlantDesc};
                 rowMasterSummaryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowMasterSummaryRow);
                 return rowMasterSummaryRow;
@@ -1137,6 +1534,8 @@ namespace FSBT.HHT.App.ReportTemplate {
                 this.columnFFWSummaryPrice = base.Columns["FFWSummaryPrice"];
                 this.columnFFSummaryQTY = base.Columns["FFSummaryQTY"];
                 this.columnFFSummaryPrice = base.Columns["FFSummaryPrice"];
+                this.columnPlant = base.Columns["Plant"];
+                this.columnPlantDesc = base.Columns["PlantDesc"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1162,6 +1561,10 @@ namespace FSBT.HHT.App.ReportTemplate {
                 base.Columns.Add(this.columnFFSummaryQTY);
                 this.columnFFSummaryPrice = new global::System.Data.DataColumn("FFSummaryPrice", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFFSummaryPrice);
+                this.columnPlant = new global::System.Data.DataColumn("Plant", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlant);
+                this.columnPlantDesc = new global::System.Data.DataColumn("PlantDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlantDesc);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1608,10 +2011,10 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string TotalPrice {
+            public decimal TotalPrice {
                 get {
                     try {
-                        return ((string)(this[this.tableMasterReport.TotalPriceColumn]));
+                        return ((decimal)(this[this.tableMasterReport.TotalPriceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'TotalPrice\' in table \'MasterReport\' is DBNull.", e);
@@ -1699,6 +2102,406 @@ namespace FSBT.HHT.App.ReportTemplate {
                 }
                 set {
                     this[this.tableMasterReport.ItemFFOnhandColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CountSheet {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.CountSheetColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CountSheet\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.CountSheetColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string StorageLocation {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.StorageLocationColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StorageLocation\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.StorageLocationColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Plant {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.PlantColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Plant\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.PlantColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel1\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel2\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel3 {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel3Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel3\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel3Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel4 {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel4Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel4\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel4Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Location {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.LocationColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Location\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.LocationColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PlantDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.PlantDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PlantDesc\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.PlantDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string StorageLocationDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.StorageLocationDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StorageLocationDesc\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.StorageLocationDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel1Desc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel1DescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel1Desc\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel1DescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel2Desc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel2DescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel2Desc\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel2DescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel3Desc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel3DescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel3Desc\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel3DescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MCHLevel4Desc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.MCHLevel4DescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MCHLevel4Desc\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.MCHLevel4DescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Serialnumber {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.SerialnumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Serialnumber\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.SerialnumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal FrontQty {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableMasterReport.FrontQtyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FrontQty\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.FrontQtyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal FrontPrice {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableMasterReport.FrontPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FrontPrice\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.FrontPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal FFQty {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableMasterReport.FFQtyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FFQty\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.FFQtyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal FFPrice {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableMasterReport.FFPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FFPrice\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.FFPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal FFWQty {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableMasterReport.FFWQtyColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FFWQty\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.FFWQtyColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal FFWPrice {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableMasterReport.FFWPriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FFWPrice\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.FFWPriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Status {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterReport.StatusColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Status\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.StatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int countAllRecord {
+                get {
+                    try {
+                        return ((int)(this[this.tableMasterReport.countAllRecordColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'countAllRecord\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.countAllRecordColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int countUnidentified {
+                get {
+                    try {
+                        return ((int)(this[this.tableMasterReport.countUnidentifiedColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'countUnidentified\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.countUnidentifiedColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int countNew {
+                get {
+                    try {
+                        return ((int)(this[this.tableMasterReport.countNewColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'countNew\' in table \'MasterReport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterReport.countNewColumn] = value;
                 }
             }
             
@@ -2001,6 +2804,306 @@ namespace FSBT.HHT.App.ReportTemplate {
             public void SetItemFFOnhandNull() {
                 this[this.tableMasterReport.ItemFFOnhandColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCountSheetNull() {
+                return this.IsNull(this.tableMasterReport.CountSheetColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCountSheetNull() {
+                this[this.tableMasterReport.CountSheetColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStorageLocationNull() {
+                return this.IsNull(this.tableMasterReport.StorageLocationColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStorageLocationNull() {
+                this[this.tableMasterReport.StorageLocationColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantNull() {
+                return this.IsNull(this.tableMasterReport.PlantColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantNull() {
+                this[this.tableMasterReport.PlantColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel1Null() {
+                return this.IsNull(this.tableMasterReport.MCHLevel1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel1Null() {
+                this[this.tableMasterReport.MCHLevel1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel2Null() {
+                return this.IsNull(this.tableMasterReport.MCHLevel2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel2Null() {
+                this[this.tableMasterReport.MCHLevel2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel3Null() {
+                return this.IsNull(this.tableMasterReport.MCHLevel3Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel3Null() {
+                this[this.tableMasterReport.MCHLevel3Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel4Null() {
+                return this.IsNull(this.tableMasterReport.MCHLevel4Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel4Null() {
+                this[this.tableMasterReport.MCHLevel4Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLocationNull() {
+                return this.IsNull(this.tableMasterReport.LocationColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLocationNull() {
+                this[this.tableMasterReport.LocationColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantDescNull() {
+                return this.IsNull(this.tableMasterReport.PlantDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantDescNull() {
+                this[this.tableMasterReport.PlantDescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStorageLocationDescNull() {
+                return this.IsNull(this.tableMasterReport.StorageLocationDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStorageLocationDescNull() {
+                this[this.tableMasterReport.StorageLocationDescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel1DescNull() {
+                return this.IsNull(this.tableMasterReport.MCHLevel1DescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel1DescNull() {
+                this[this.tableMasterReport.MCHLevel1DescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel2DescNull() {
+                return this.IsNull(this.tableMasterReport.MCHLevel2DescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel2DescNull() {
+                this[this.tableMasterReport.MCHLevel2DescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel3DescNull() {
+                return this.IsNull(this.tableMasterReport.MCHLevel3DescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel3DescNull() {
+                this[this.tableMasterReport.MCHLevel3DescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMCHLevel4DescNull() {
+                return this.IsNull(this.tableMasterReport.MCHLevel4DescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMCHLevel4DescNull() {
+                this[this.tableMasterReport.MCHLevel4DescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSerialnumberNull() {
+                return this.IsNull(this.tableMasterReport.SerialnumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSerialnumberNull() {
+                this[this.tableMasterReport.SerialnumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFrontQtyNull() {
+                return this.IsNull(this.tableMasterReport.FrontQtyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFrontQtyNull() {
+                this[this.tableMasterReport.FrontQtyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFrontPriceNull() {
+                return this.IsNull(this.tableMasterReport.FrontPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFrontPriceNull() {
+                this[this.tableMasterReport.FrontPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFFQtyNull() {
+                return this.IsNull(this.tableMasterReport.FFQtyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFFQtyNull() {
+                this[this.tableMasterReport.FFQtyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFFPriceNull() {
+                return this.IsNull(this.tableMasterReport.FFPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFFPriceNull() {
+                this[this.tableMasterReport.FFPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFFWQtyNull() {
+                return this.IsNull(this.tableMasterReport.FFWQtyColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFFWQtyNull() {
+                this[this.tableMasterReport.FFWQtyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFFWPriceNull() {
+                return this.IsNull(this.tableMasterReport.FFWPriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFFWPriceNull() {
+                this[this.tableMasterReport.FFWPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStatusNull() {
+                return this.IsNull(this.tableMasterReport.StatusColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStatusNull() {
+                this[this.tableMasterReport.StatusColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscountAllRecordNull() {
+                return this.IsNull(this.tableMasterReport.countAllRecordColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcountAllRecordNull() {
+                this[this.tableMasterReport.countAllRecordColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscountUnidentifiedNull() {
+                return this.IsNull(this.tableMasterReport.countUnidentifiedColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcountUnidentifiedNull() {
+                this[this.tableMasterReport.countUnidentifiedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscountNewNull() {
+                return this.IsNull(this.tableMasterReport.countNewColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcountNewNull() {
+                this[this.tableMasterReport.countNewColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -2179,6 +3282,38 @@ namespace FSBT.HHT.App.ReportTemplate {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Plant {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterSummary.PlantColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Plant\' in table \'MasterSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterSummary.PlantColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PlantDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableMasterSummary.PlantDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PlantDesc\' in table \'MasterSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMasterSummary.PlantDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFrontSummaryQTYNull() {
                 return this.IsNull(this.tableMasterSummary.FrontSummaryQTYColumn);
             }
@@ -2295,6 +3430,30 @@ namespace FSBT.HHT.App.ReportTemplate {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFFSummaryPriceNull() {
                 this[this.tableMasterSummary.FFSummaryPriceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantNull() {
+                return this.IsNull(this.tableMasterSummary.PlantColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantNull() {
+                this[this.tableMasterSummary.PlantColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPlantDescNull() {
+                return this.IsNull(this.tableMasterSummary.PlantDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPlantDescNull() {
+                this[this.tableMasterSummary.PlantDescColumn] = global::System.Convert.DBNull;
             }
         }
         

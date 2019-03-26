@@ -16,12 +16,10 @@ namespace FSBT_HHT_DAL
     {
         public string LocationCode { get; set; }
         public string SectionCode { get; set; }
-        public int ScanMode { get; set; }
+        public string StorageLocationCode { get; set; }
         public string UpdateBy { get; set; }
         public System.DateTime UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
-    
-        public virtual Section Section { get; set; }
     }
 }

@@ -9,48 +9,63 @@ namespace FSBT_HHT_Model
     public class LocationManagementModel
     {
         //ห้ามสลับที่ มีใหม่ต่อท้าย !!!
-        public string DepartmentCode { get; set; }
-        public string SectionType { get; set; }
-        public string OriginSectionCode { get; set; }
+        //public string StorageLocationName { get; set; }
+
+        public string CountSheet { get; set; }
+        public string PlantCode { get; set; }
+        public string StorageLocationCode { get; set; }
         public string SectionCode { get; set; }
         public string SectionName { get; set; }
         public string LocationFrom { get; set; }
         public string LocationTo { get; set; }
-        public string BrandCode { get; set; }
         public string FlagAction { get; set; }
-        public int ScanMode { get; set; }
-        public string OriginSectionType { get; set; }
+        public string BrandCode { get; set; }
+        public string OriginalPlantCode { get; set; }
+        public string OriginalCountSheet { get; set; }
+        public string OriginalStorageLocCode { get; set; }
+        public string OriginalSectionCode { get; set; }
+        public string OriginalSectionName { get; set; }
+        public string MCHLevel1 { get; set; }
+        public string MCHLevel2 { get; set; }
+        public string MCHLevel3 { get; set; }
+        public string MCHLevel4 { get; set; }
+
+        public string Plant { get; set; }
+
+        public string PlantDesc { get; set; }
+
     }
 
-    public class Location
-    {
-        public string LocationCode { get; set; }
+    public class LocationModel
+    {       
+        public string BrandCode { get; set; }
+        public string PlantCode { get; set; }
+        public string Countsheet { get; set; }
+        public string StorageLocationCode { get; set; }
         public string SectionCode { get; set; }
-        public int ScanMode { get; set; }
-        public string SectionType { get; set; }
+        public string SectionName { get; set; }
+        public string LocationCode { get; set; }
     }
 
-    //public class ComboboxBrandItem
-    //{
-    //    public string Text { get; set; }
-    //    public string BrandCode { get; set; }
-    //    public string BrandName { get; set; }
+    public class ParameterModel
+    {
+        public string Plant { get; set; }
+        public string Countsheet { get; set; }
+        public string StorageLocationCode { get; set; }
+        public string SectionCode { get; set; }
+        public string LocationFromCode { get; set; }
+        public string LocationToCode { get; set; }
+    }
 
-    //    public override string ToString()
-    //    {
-    //        return Text;
-    //    }
 
-    //    public string GetBrandCode()
-    //    {
-    //        return BrandCode;
-    //    }
-
-    //    public string GetBrandName()
-    //    {
-    //        return BrandName;
-    //    }
-    //}
+    public class DuplicateKeyLocationModel
+    {
+        public string PlantCode { get; set; }
+        public string CountSheet { get; set; }
+        public string StorageLocationCode { get; set; }
+        public string SectionCode { get; set; }
+        public string SectionName { get; set; }
+    }
 
 
 }

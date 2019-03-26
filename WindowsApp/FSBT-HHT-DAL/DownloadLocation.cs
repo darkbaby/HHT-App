@@ -17,9 +17,8 @@ namespace FSBT_HHT_DAL
         public string DownloadLID { get; set; }
         public string HHTName { get; set; }
         public string LocationCode { get; set; }
-        public string SectionCode { get; set; }
-        public int ScanMode { get; set; }
-        public string SectionName { get; set; }
+        public string StorageCode { get; set; }
+        public string StorageName { get; set; }
         public string BrandCode { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }

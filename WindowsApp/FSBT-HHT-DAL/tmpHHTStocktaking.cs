@@ -38,5 +38,15 @@ namespace FSBT_HHT_DAL
         public System.DateTime UpdateDate { get; set; }
         public string UpdateBy { get; set; }
         public System.DateTime ImportDate { get; set; }
+        public string SerialNumber { get; set; }
+        public string ConversionCounter { get; set; }
+        public string StorageLocation { get; set; }
+        public string StorageLocationDesc { get; set; }
+        public string Plant { get; set; }
+        public string PIDoc { get; set; }
+        public string MCHLevel1 { get; set; }
+        public string MCHLevel2 { get; set; }
+        public string MCHLevel3 { get; set; }
+        public string MaterialGroup { get; set; }
     }
 }
